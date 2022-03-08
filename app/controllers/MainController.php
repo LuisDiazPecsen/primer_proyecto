@@ -7,7 +7,7 @@ class MainController
 
    public function index()
    {
-      echo "MAINCONTROLLER</br>";
+      //echo "MAINCONTROLLER</br>";
       require_once '../app/views/index.php';
    }
 

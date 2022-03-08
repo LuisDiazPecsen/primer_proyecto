@@ -12,15 +12,16 @@ class Core
 
    public function __construct()
    {
-      echo "CORE</br>";
+      //echo "CORE</br>";
       //print_r($this->getUrl());
 
       $url = $this->getUrl();
 
       // Encontrar el controlador del índice 0 de la URL
-      if (file_exists('../app/controllers/' . ucwords($url[0]) . '.php')) {
+      //print_r('../app/controllers/' . ucwords($url[0]) . 'Controller.php');
+      if (file_exists('../app/controllers/' . ucwords($url[0]) . 'Controller.php')) {
          // Si existe, asignarlo a currentController
-         $this->currentController = ucwords($url[0]);
+         $this->currentController = ucwords($url[0]) . 'Controller';
          unset($url[0]);
       }
 

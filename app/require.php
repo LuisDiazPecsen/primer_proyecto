@@ -1,6 +1,6 @@
 <?php
 
-echo "APP/REQUIRE</br>";
+//echo "APP/REQUIRE</br>";
 
 //Require libraries from folder libraries
 require_once 'libraries/Core.php';
