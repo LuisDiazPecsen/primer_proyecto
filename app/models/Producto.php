@@ -17,9 +17,21 @@ class Producto
 
       $query = $this->conn->prepare($sql);
       $query->execute();
-      $productos = $query->fetchAll(PDO::FETCH_OBJ);
+      $productos = $query->fetchAll(PDO::FETCH_ASSOC);
 
       return $productos;
+   }
+
+   public function show($codigo)
+   {
+      $sql = 'SELECT * FROM producto WHERE codigo = :codigo';
+
+      $query = $this->conn->prepare($sql);
+      $query->bindValue(':codigo', $codigo);
+      $query->execute();
+      $producto = $query->fetchAll(PDO::FETCH_ASSOC);
+
+      return $producto;
    }
 
    public function store($datos)
@@ -48,15 +60,15 @@ class Producto
 
       $query = $this->conn->prepare($sql);
 
-      $query->bind(':codigo', $datos['codigo']);
-      $query->bind(':descripcion', $datos['descripcion']);
-      $query->bind(':precio_compra', $datos['precio_compra']);
-      $query->bind(':precio_venta', $datos['precio_venta']);
-      $query->bind(':stock', $datos['stock']);
-      $query->bind(':stock_minimo', $datos['stock_minimo']);
-      $query->bind(':marca_codigo', $datos['marca_codigo']);
-      $query->bind(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
-      $query->bind(':categoria_id', $datos['categoria_id']);
+      $query->bindValue(':codigo', $datos['codigo']);
+      $query->bindValue(':descripcion', $datos['descripcion']);
+      $query->bindValue(':precio_compra', $datos['precio_compra']);
+      $query->bindValue(':precio_venta', $datos['precio_venta']);
+      $query->bindValue(':stock', $datos['stock']);
+      $query->bindValue(':stock_minimo', $datos['stock_minimo']);
+      $query->bindValue(':marca_codigo', $datos['marca_codigo']);
+      $query->bindValue(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
+      $query->bindValue(':categoria_id', $datos['categoria_id']);
 
       if ($query->execute()) {
          return true;
@@ -80,15 +92,15 @@ class Producto
 
       $query = $this->conn->prepare($sql);
 
-      $query->bind(':codigo', $datos['codigo']);
-      $query->bind(':descripcion', $datos['descripcion']);
-      $query->bind(':precio_compra', $datos['precio_compra']);
-      $query->bind(':precio_venta', $datos['precio_venta']);
-      $query->bind(':stock', $datos['stock']);
-      $query->bind(':stock_minimo', $datos['stock_minimo']);
-      $query->bind(':marca_codigo', $datos['marca_codigo']);
-      $query->bind(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
-      $query->bind(':categoria_id', $datos['categoria_id']);
+      $query->bindValue(':codigo', $datos['codigo']);
+      $query->bindValue(':descripcion', $datos['descripcion']);
+      $query->bindValue(':precio_compra', $datos['precio_compra']);
+      $query->bindValue(':precio_venta', $datos['precio_venta']);
+      $query->bindValue(':stock', $datos['stock']);
+      $query->bindValue(':stock_minimo', $datos['stock_minimo']);
+      $query->bindValue(':marca_codigo', $datos['marca_codigo']);
+      $query->bindValue(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
+      $query->bindValue(':categoria_id', $datos['categoria_id']);
 
       if ($query->execute()) {
          return true;
@@ -102,7 +114,7 @@ class Producto
       $sql = 'DELETE FROM producto WHERE codigo = :codigo';
       $query = $this->conn->prepare($sql);
 
-      $query->bind(':codigo', $codigo);
+      $query->bindValue(':codigo', $codigo);
 
       if ($query->execute()) {
          return true;

@@ -8,6 +8,9 @@ class MainController
    public function index()
    {
       //echo "MAINCONTROLLER</br>";
+      $data = array(
+         'index' => 'Inicio'
+      );
       require_once '../app/views/index.php';
    }
 

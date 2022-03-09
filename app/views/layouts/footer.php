@@ -4,10 +4,10 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-   <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+   <strong>Copyright &copy; 2022 <a href="#">Primer proyecto</a>.</strong>
    All rights reserved.
    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>Version</b> 0.1
    </div>
 </footer>
 
@@ -48,7 +48,7 @@
 <!-- overlayScrollbars -->
 <script src="/primer_proyecto/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/primer_proyecto/public/js/adminlte.js"></script>
+<script src="/primer_proyecto/js/adminlte.js"></script>
 </body>
 
 </html>

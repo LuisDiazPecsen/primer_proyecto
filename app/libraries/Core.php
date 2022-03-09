@@ -18,11 +18,11 @@ class Core
       $url = $this->getUrl();
 
       // Encontrar el controlador del índice 0 de la URL
-      //print_r('../app/controllers/' . ucwords($url[0]) . 'Controller.php');
-      if (file_exists('../app/controllers/' . ucwords($url[0]) . 'Controller.php')) {
-         // Si existe, asignarlo a currentController
-         $this->currentController = ucwords($url[0]) . 'Controller';
-         unset($url[0]);
+      if (isset($url[0])) {
+         if (file_exists('../app/controllers/' . ucwords($url[0]) . 'Controller.php')) {
+            $this->currentController = ucwords($url[0]) . 'Controller';
+            unset($url[0]);
+         }
       }
 
       require_once '../app/controllers/' . $this->currentController . '.php';
@@ -55,19 +55,19 @@ class Core
 
    public function getUrl()
    {
-      $url = $_SERVER['REQUEST_URI'];
+      /*$url = $_SERVER['REQUEST_URI'];
       $url = explode("/", $url);
       $url = end($url);
       $url = explode(".", $url);
       //$url = $url[0];
 
-      return $url;
+      return $url;*/
 
-      /*if (isset($_GET['url'])) {
+      if (isset($_GET['url'])) {
          $url = rtrim($_GET['url'], '/');
          $url = filter_var($url, FILTER_SANITIZE_URL);
          $url = explode('/', $url);
          return $url;
-      }*/
+      }
    }
 }
