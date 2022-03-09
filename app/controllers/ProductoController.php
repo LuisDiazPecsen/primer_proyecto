@@ -21,13 +21,15 @@ class ProductoController
 
    public function index()
    {
-      //$this->marca = new Marca();
+      $this->marca = new Marca();
       $this->categoria = new Categoria();
-      //$this->unidadmedida = new UnidadMedida();
+      $this->unidadmedida = new UnidadMedida();
 
       $productos = array();
       foreach ($this->producto->index() as $producto) {
-         $productos += [$producto + ['CATEGORIA_descripcion' => $this->categoria->show($producto['CATEGORIA_id'])[0]['descripcion']]];
+         $producto += ['MARCA_descripcion' => $this->marca->show($producto['MARCA_codigo'])[0]['descripcion']];
+         $producto += ['CATEGORIA_descripcion' => $this->categoria->show($producto['CATEGORIA_id'])[0]['descripcion']];
+         $productos += [$producto + ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($producto['UNIDAD_MEDIDA_codigo'])[0]['descripcion']]];
       }
 
       $data = array(

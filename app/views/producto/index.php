@@ -35,9 +35,9 @@ require_once '../app/views/layouts/header.php';
                         <td><?php echo $producto['precio_venta']; ?></td>
                         <td><?php echo $producto['stock']; ?></td>
                         <td><?php echo $producto['stock_minimo']; ?></td>
-                        <td><?php echo $producto['UNIDAD_MEDIDA_codigo']; ?></td>
-                        <td><?php echo $producto['MARCA_codigo']; ?></td>
-                        <td><?php echo $producto['CATEGORIA_id'] . '-' . $producto['CATEGORIA_descripcion']; ?></td>
+                        <td><?php echo $producto['UNIDAD_MEDIDA_descripcion']; ?></td>
+                        <td><?php echo $producto['MARCA_descripcion']; ?></td>
+                        <td><?php echo $producto['CATEGORIA_descripcion']; ?></td>
                      </tr>
                   <?php
                   }
