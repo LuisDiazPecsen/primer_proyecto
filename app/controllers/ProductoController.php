@@ -26,11 +26,20 @@ class ProductoController
       $this->unidadmedida = new UnidadMedida();
 
       $productos = array();
-      foreach ($this->producto->index() as $producto) {
-         $producto += ['MARCA_descripcion' => $this->marca->show($producto['MARCA_codigo'])[0]['descripcion']];
-         $producto += ['CATEGORIA_descripcion' => $this->categoria->show($producto['CATEGORIA_id'])[0]['descripcion']];
-         $productos += [$producto + ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($producto['UNIDAD_MEDIDA_codigo'])[0]['descripcion']]];
+      $productos_original = $this->producto->index();
+      for ($i = 0; $i < count($productos_original); $i++) {
+         $productos += [$i => $productos_original[$i] +
+            ['MARCA_descripcion' => $this->marca->show($productos_original[$i]['MARCA_codigo'])[0]['descripcion']] +
+            ['CATEGORIA_descripcion' => $this->categoria->show($productos_original[$i]['CATEGORIA_id'])[0]['descripcion']] +
+            ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($productos_original[$i]['UNIDAD_MEDIDA_codigo'])[0]['descripcion']]];
       }
+      $productos_original = null;
+      /*foreach ($this->producto->index() as $producto) {
+         $productos += ['0' => $producto +
+            ['MARCA_descripcion' => $this->marca->show($producto['MARCA_codigo'])[0]['descripcion']] +
+            ['CATEGORIA_descripcion' => $this->categoria->show($producto['CATEGORIA_id'])[0]['descripcion']] +
+            ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($producto['UNIDAD_MEDIDA_codigo'])[0]['descripcion']]];
+      }*/
 
       $data = array(
          'index' => 'Inicio',

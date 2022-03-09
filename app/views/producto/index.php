@@ -26,7 +26,7 @@ require_once '../app/views/layouts/header.php';
                </thead>
                <tbody>
                   <?php
-                  foreach ($productos as $key => $producto) {
+                  foreach ($productos as $producto) {
                   ?>
                      <tr>
                         <td><?php echo $producto['codigo']; ?></td>
