@@ -9,12 +9,15 @@
    <!-- Google Font: Source Sans Pro -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
    <!-- Font Awesome -->
-   <link rel="stylesheet" href="/primer_proyecto/plugins/fontawesome-free/css/all.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+   </link>
    <!-- AdminLTE -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
    <!-- Bootstrap -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-
+   <!--DataTable-->
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -85,27 +88,6 @@
 
          <!-- Right navbar links -->
          <ul class="navbar-nav ml-auto">
-            <!-- Navbar Search -->
-            <li class="nav-item">
-               <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                  <i class="fas fa-search"></i>
-               </a>
-               <div class="navbar-search-block">
-                  <form class="form-inline">
-                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search">
-                        <div class="input-group-append">
-                           <button class="btn btn-navbar" type="submit">
-                              <i class="fas fa-search"></i>
-                           </button>
-                           <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                              <i class="fas fa-times"></i>
-                           </button>
-                        </div>
-                     </div>
-                  </form>
-               </div>
-            </li>
             <li class="nav-item">
                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                   <i class="fas fa-expand-arrows-alt"></i>
@@ -125,18 +107,6 @@
 
          <!-- Sidebar -->
          <div class="sidebar">
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-               <div class="input-group mt-3" data-widget="sidebar-search">
-                  <input class="form-control form-control-sidebar" type="search" placeholder="Buscar" aria-label="Search">
-                  <div class="input-group-append">
-                     <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                     </button>
-                  </div>
-               </div>
-            </div>
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

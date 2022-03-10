@@ -22,7 +22,7 @@ require_once '../app/views/layouts/header.php';
             ?>
 
             <!-- Button trigger modal -->
-            <button id="btnAgregarProducto" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalProducto"><i class='fas fa-plus'></i> Agregar producto</button>
+            <button id="btnAgregarProducto" type="button" class="btn btn-success mb-sm-3" data-toggle="modal" data-target="#modalProducto"><i class='fas fa-plus'></i> Agregar producto</button>
 
             <!-- Modal -->
             <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" aria-labelledby="productoModalTitulo" aria-hidden="true">
@@ -90,45 +90,8 @@ require_once '../app/views/layouts/header.php';
                </div>
             </div>
             <!-- Fin modal -->
-            <table id="productos_table" class="table table-bordered table-striped">
+            <table id="productos_table" class="table table-striped table-bordered dt-responsive nowrap">
                <thead>
-                  <tr>
-                     <th>Código</th>
-                     <th>Descripción</th>
-                     <th>Precio de compra</th>
-                     <th>Precio de venta</th>
-                     <th>Stock</th>
-                     <th>Stock mínimo</th>
-                     <th>Unidad de medida</th>
-                     <th>Marca</th>
-                     <th>Categoría</th>
-                     <th colspan="2">Mantenimiento</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <?php
-                  foreach ($productos as $producto) {
-                  ?>
-                     <tr>
-                        <td><?php echo $producto['codigo']; ?></td>
-                        <td><?php echo $producto['descripcion']; ?></td>
-                        <td><?php echo $producto['precio_compra']; ?></td>
-                        <td><?php echo $producto['precio_venta']; ?></td>
-                        <td><?php echo $producto['stock']; ?></td>
-                        <td><?php echo $producto['stock_minimo']; ?></td>
-                        <td value="<?php echo $producto['UNIDAD_MEDIDA_codigo'] ?>"><?php echo $producto['UNIDAD_MEDIDA_descripcion']; ?></td>
-                        <td value="<?php echo $producto['MARCA_codigo'] ?>"><?php echo $producto['MARCA_descripcion']; ?></td>
-                        <td value="<?php echo $producto['CATEGORIA_id'] ?>"><?php echo $producto['CATEGORIA_descripcion']; ?></td>
-                        <td>
-                           <button id="editar<?php echo $producto['codigo']; ?>" type="submit" class="btn btn-warning editar" data-toggle="modal" data-target="#modalProducto"><i class='fas fa-edit'></i></button>
-                           <a id="eliminar<?php echo $producto['codigo']; ?>" href="/primer_proyecto/producto/destroy?codigo=<?php echo $producto['codigo']; ?>" class="btn btn-danger eliminar"><i class='fas fa-trash-alt'></i></a>
-                        </td>
-                     </tr>
-                  <?php
-                  }
-                  ?>
-               </tbody>
-               <!--tfoot>
                   <tr>
                      <th>Código</th>
                      <th>Descripción</th>
@@ -141,7 +104,44 @@ require_once '../app/views/layouts/header.php';
                      <th>Categoría</th>
                      <th>Mantenimiento</th>
                   </tr>
-               </tfoot-->
+               </thead>
+               <tbody>
+                  <?php
+                  foreach ($productos as $producto) {
+                  ?>
+                     <tr id="<?php echo $producto['codigo']; ?>">
+                        <td><?php echo $producto['codigo']; ?></td>
+                        <td><?php echo $producto['descripcion']; ?></td>
+                        <td><?php echo $producto['precio_compra']; ?></td>
+                        <td><?php echo $producto['precio_venta']; ?></td>
+                        <td><?php echo $producto['stock']; ?></td>
+                        <td><?php echo $producto['stock_minimo']; ?></td>
+                        <td value="<?php echo $producto['UNIDAD_MEDIDA_codigo'] ?>"><?php echo $producto['UNIDAD_MEDIDA_descripcion']; ?></td>
+                        <td value="<?php echo $producto['MARCA_codigo'] ?>"><?php echo $producto['MARCA_descripcion']; ?></td>
+                        <td value="<?php echo $producto['CATEGORIA_id'] ?>"><?php echo $producto['CATEGORIA_descripcion']; ?></td>
+                        <td>
+                           <button type="submit" name="<?php echo $producto['codigo']; ?>" class="btn btn-warning editar" data-toggle="modal" data-target="#modalProducto" onclick="editar(this)"><i class='fas fa-edit'></i></button>
+                           <a id="eliminar<?php echo $producto['codigo']; ?>" href="/primer_proyecto/producto/destroy?codigo=<?php echo $producto['codigo']; ?>" class="btn btn-danger eliminar"><i class='fas fa-trash-alt'></i></a>
+                        </td>
+                     </tr>
+                  <?php
+                  }
+                  ?>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <th>Código</th>
+                     <th>Descripción</th>
+                     <th>Precio de compra</th>
+                     <th>Precio de venta</th>
+                     <th>Stock</th>
+                     <th>Stock mínimo</th>
+                     <th>Unidad de medida</th>
+                     <th>Marca</th>
+                     <th>Categoría</th>
+                     <th>Mantenimiento</th>
+                  </tr>
+               </tfoot>
             </table>
          </div>
          <!-- /.card-body -->
@@ -169,40 +169,42 @@ require_once '../app/views/layouts/header.php';
       document.getElementById("btnAceptar").setAttribute('value', 'Registrar');
    }
 
-   const $grupoEditar = document.querySelectorAll(".editar");
+   function editar(element) {
+      document.getElementById("formProducto").setAttribute('action', '/primer_proyecto/producto/update');
+      document.getElementById("productoModalTitulo").innerHTML = "Editar producto";
+      $fila = document.getElementById(element.name);
+      $columnas = $fila.children;
+      console.log($columnas);
+      var producto = {
+         codigo: $columnas[0].innerHTML,
+         descripcion: $columnas[1].innerHTML,
+         precio_compra: $columnas[2].innerHTML,
+         precio_venta: $columnas[3].innerHTML,
+         stock: $columnas[4].innerHTML,
+         stock_minimo: $columnas[5].innerHTML,
+         unidad_medida_codigo: $columnas[6].getAttribute('value'),
+         marca_codigo: $columnas[7].getAttribute('value'),
+         categoria_id: $columnas[8].getAttribute('value')
+      }
+      console.log(producto);
+      document.getElementById("txtCodigo").value = producto.codigo;
+      document.getElementById("txtDescripcion").value = producto.descripcion;
+      document.getElementById("txtPrecioCompra").setAttribute('value', producto.precio_compra);
+      document.getElementById("txtPrecioVenta").setAttribute('value', producto.precio_venta);
+      document.getElementById("txtStock").setAttribute('value', producto.stock);
+      document.getElementById("txtStockMinimo").setAttribute('value', producto.stock_minimo);
+      document.getElementById("txtUnidadMedida").setAttribute('value', producto.unidad_medida_codigo);
+      document.getElementById("txtMarca").setAttribute('value', producto.marca_codigo);
+      document.getElementById("txtCategoria").setAttribute('value', producto.categoria_id);
+      document.getElementById("btnAceptar").setAttribute('value', 'Actualizar');
+   }
+
+   /*const $grupoEditar = document.querySelectorAll(".editar");
    $grupoEditar.forEach(
       function(element, index) {
-         element.onclick = function() {
-            document.getElementById("formProducto").setAttribute('action', '/primer_proyecto/producto/update');
-            document.getElementById("productoModalTitulo").innerHTML = "Editar producto";
-            $fila = element.parentNode.parentNode;
-            $columnas = $fila.children;
-            console.log($columnas);
-            var producto = {
-               codigo: $columnas[0].innerHTML,
-               descripcion: $columnas[1].innerHTML,
-               precio_compra: $columnas[2].innerHTML,
-               precio_venta: $columnas[3].innerHTML,
-               stock: $columnas[4].innerHTML,
-               stock_minimo: $columnas[5].innerHTML,
-               unidad_medida_codigo: $columnas[6].getAttribute('value'),
-               marca_codigo: $columnas[7].getAttribute('value'),
-               categoria_id: $columnas[8].getAttribute('value')
-            }
-            console.log(producto);
-            document.getElementById("txtCodigo").value = producto.codigo;
-            document.getElementById("txtDescripcion").value = producto.descripcion;
-            document.getElementById("txtPrecioCompra").setAttribute('value', producto.precio_compra);
-            document.getElementById("txtPrecioVenta").setAttribute('value', producto.precio_venta);
-            document.getElementById("txtStock").setAttribute('value', producto.stock);
-            document.getElementById("txtStockMinimo").setAttribute('value', producto.stock_minimo);
-            document.getElementById("txtUnidadMedida").setAttribute('value', producto.unidad_medida_codigo);
-            document.getElementById("txtMarca").setAttribute('value', producto.marca_codigo);
-            document.getElementById("txtCategoria").setAttribute('value', producto.categoria_id);
-            document.getElementById("btnAceptar").setAttribute('value', 'Actualizar');
-         }
+         element.onclick = editar(element);
       }
-   );
+   );*/
 </script>
 
 <?php
