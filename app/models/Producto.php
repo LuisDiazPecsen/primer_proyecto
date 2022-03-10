@@ -26,12 +26,21 @@ class Producto
    {
       $sql = 'SELECT * FROM producto WHERE codigo = :codigo';
 
-      $query = $this->conn->prepare($sql);
-      $query->bindValue(':codigo', $codigo);
-      $query->execute();
-      $producto = $query->fetchAll(PDO::FETCH_ASSOC);
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->execute();
+         $producto = $query->fetchAll(PDO::FETCH_ASSOC);
+         print_r(count($producto));
 
-      return $producto;
+         if (count($producto) > 0) {
+            return ['EXITO', $producto];
+         } else {
+            return ['ERROR', 'No existe el producto ingresado'];
+         }
+      } catch (PDOException $e) {
+         return ['ERROR', $e];
+      }
    }
 
    public function store($datos)
@@ -92,20 +101,27 @@ class Producto
          WHERE codigo = :codigo';
 
       try {
-         $query = $this->conn->prepare($sql);
+         if (isset($datos['txtCodigo'])) {
+            if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1][0]['codigo'];
+               $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
-         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
-         $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
-         $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
-         $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
-         $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
-         $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
-         $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
-         $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
+               $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+               $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+               $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
+               $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
+               $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
+               $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
+               $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
+               $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
+               $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
-         $query->execute();
-         return true;
+               $query->execute();
+               return true;
+            } else {
+               return $this->show($datos['txtCodigo'])[1];
+            }
+         }
       } catch (PDOException $e) {
          return $e->getMessage();
       }
@@ -114,14 +130,21 @@ class Producto
    public function destroy($codigo)
    {
       $sql = 'DELETE FROM producto WHERE codigo = :codigo';
-      $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $codigo);
+      try {
+         if ($this->show($codigo)[0] == 'EXITO') {
+            $codigo = $this->show($codigo)[1][0]['codigo'];
+            $query = $this->conn->prepare($sql);
 
-      if ($query->execute()) {
-         return true;
-      } else {
-         return false;
+            $query->bindValue(':codigo', $codigo);
+
+            $query->execute();
+            return true;
+         } else {
+            return $this->show($codigo)[1];
+         }
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 }

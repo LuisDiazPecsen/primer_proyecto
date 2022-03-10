@@ -19,7 +19,7 @@ class ProductoController
       $this->producto = new Producto();
    }
 
-   private function viewIndex($productos)
+   private function viewIndex($productos, $resultado, $mensaje)
    {
       $data = array(
          'index' => 'Inicio',
@@ -28,7 +28,7 @@ class ProductoController
       require_once '../app/views/producto/index.php';
    }
 
-   public function index()
+   public function index($resultado = null, $mensaje = null)
    {
       $this->marca = new Marca();
       $this->categoria = new Categoria();
@@ -44,37 +44,54 @@ class ProductoController
       }
       $productos_original = null;
 
-      $this->viewIndex($productos);
+      $this->viewIndex($productos, $resultado, $mensaje);
    }
 
    public function store()
    {
       $resultado = null;
+      $mensaje = null;
       if (isset($_POST)) {
          $resultado = $this->producto->store($_POST);
+         if ($resultado === true) {
+            $mensaje = "¡Producto agregado con éxito!";
+         } else {
+            $mensaje = $resultado;
+         }
       }
-      echo $resultado;
-      $this->index();
+      $this->index($resultado, $mensaje);
    }
 
    public function update()
    {
       $resultado = null;
+      $mensaje = null;
       if (isset($_POST)) {
          //print_r($_POST);
          $resultado = $this->producto->update($_POST);
+         print_r($resultado);
+         if ($resultado === true) {
+            $mensaje = "¡Producto actualizado con éxito!";
+         } else {
+            $mensaje = $resultado;
+         }
       }
-      echo $resultado;
-      $this->index();
+      $this->index($resultado, $mensaje);
    }
 
    public function destroy()
    {
       $resultado = null;
-      if (isset($_GET)) {
+      $mensaje = null;
+      if (isset($_GET['codigo'])) {
          $resultado = $this->producto->destroy($_GET['codigo']);
+         if ($resultado === true) {
+            $mensaje = "¡Producto eliminado con éxito!";
+         } else {
+            $mensaje = $resultado;
+         }
       }
       echo $resultado;
-      $this->index();
+      $this->index($resultado, $mensaje);
    }
 }

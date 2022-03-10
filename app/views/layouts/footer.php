@@ -19,37 +19,15 @@
 </div>
 <!-- ./wrapper -->
 
-
-<!-- jQuery -->
-<script src="/primer_proyecto/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="/primer_proyecto/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-   $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="/primer_proyecto/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="/primer_proyecto/plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="/primer_proyecto/plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="/primer_proyecto/plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="/primer_proyecto/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="/primer_proyecto/plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="/primer_proyecto/plugins/moment/moment.min.js"></script>
-<script src="/primer_proyecto/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="/primer_proyecto/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="/primer_proyecto/plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="/primer_proyecto/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/primer_proyecto/js/adminlte.js"></script>
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<!-- JQuery UI -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- AdminLTE -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<!-- Bootstrap -->
+<!--script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -10,6 +10,17 @@ require_once '../app/views/layouts/header.php';
          </div>
          <!-- /.card-header -->
          <div class="card-body">
+            <?php
+            if (isset($resultado) && isset($mensaje)) {
+               if ($resultado === true) {
+                  echo '<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle"></i> ' . $mensaje . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                  ';
+               } else {
+                  echo '<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-triangle"></i> ' . $resultado . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+               }
+            }
+            ?>
+
             <!-- Button trigger modal -->
             <button id="btnAgregarProducto" type="button" class="btn btn-success" data-toggle="modal" data-target="#modalProducto"><i class='fas fa-plus'></i> Agregar producto</button>
 
