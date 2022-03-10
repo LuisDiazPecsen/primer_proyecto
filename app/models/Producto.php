@@ -58,22 +58,23 @@ class Producto
          :categoria_id
       )';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $datos['codigo']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
-      $query->bindValue(':precio_compra', $datos['precio_compra']);
-      $query->bindValue(':precio_venta', $datos['precio_venta']);
-      $query->bindValue(':stock', $datos['stock']);
-      $query->bindValue(':stock_minimo', $datos['stock_minimo']);
-      $query->bindValue(':marca_codigo', $datos['marca_codigo']);
-      $query->bindValue(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
-      $query->bindValue(':categoria_id', $datos['categoria_id']);
+         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+         $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
+         $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
+         $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
+         $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
+         $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
+         $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
+         $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
-      if ($query->execute()) {
+         $query->execute();
          return true;
-      } else {
-         return false;
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
@@ -90,26 +91,27 @@ class Producto
          categoria_id = :categoria_id
          WHERE codigo = :codigo';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $datos['codigo']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
-      $query->bindValue(':precio_compra', $datos['precio_compra']);
-      $query->bindValue(':precio_venta', $datos['precio_venta']);
-      $query->bindValue(':stock', $datos['stock']);
-      $query->bindValue(':stock_minimo', $datos['stock_minimo']);
-      $query->bindValue(':marca_codigo', $datos['marca_codigo']);
-      $query->bindValue(':unidad_medida_codigo', $datos['unidad_medida_codigo']);
-      $query->bindValue(':categoria_id', $datos['categoria_id']);
+         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+         $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
+         $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
+         $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
+         $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
+         $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
+         $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
+         $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
-      if ($query->execute()) {
+         $query->execute();
          return true;
-      } else {
-         return false;
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
-   public function delete($codigo)
+   public function destroy($codigo)
    {
       $sql = 'DELETE FROM producto WHERE codigo = :codigo';
       $query = $this->conn->prepare($sql);

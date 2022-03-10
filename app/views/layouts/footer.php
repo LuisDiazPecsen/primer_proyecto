@@ -19,6 +19,7 @@
 </div>
 <!-- ./wrapper -->
 
+
 <!-- jQuery -->
 <script src="/primer_proyecto/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

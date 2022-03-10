@@ -16,6 +16,7 @@ class Core
       //print_r($this->getUrl());
 
       $url = $this->getUrl();
+      //print_r($url);
 
       // Encontrar el controlador del índice 0 de la URL
       if (isset($url[0])) {
@@ -67,6 +68,8 @@ class Core
          $url = rtrim($_GET['url'], '/');
          $url = filter_var($url, FILTER_SANITIZE_URL);
          $url = explode('/', $url);
+         //print_r($_GET);
+         //print_r($url);
          return $url;
       }
    }

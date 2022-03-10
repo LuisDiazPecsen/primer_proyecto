@@ -27,10 +27,16 @@
    <link rel="stylesheet" href="/primer_proyecto/plugins/daterangepicker/daterangepicker.css">
    <!-- summernote -->
    <link rel="stylesheet" href="/primer_proyecto/plugins/summernote/summernote-bs4.min.css">
-   <!-- DataTables -->
-   <link rel="stylesheet" href="/primer_proyecto/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-   <link rel="stylesheet" href="/primer_proyecto/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-   <link rel="stylesheet" href="/primer_proyecto/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+
+
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+   <!-- Bootstrap Css -->
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -194,7 +200,7 @@
                      }
                      ?>
                      ">
-                        <i class="nav-icon far fa-copyright"></i>
+                        <i class='fas fa-tags'></i>
                         <p>
                            Marcas
                         </p>
