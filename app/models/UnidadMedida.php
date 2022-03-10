@@ -26,12 +26,21 @@ class UnidadMedida
    {
       $sql = 'SELECT * FROM unidad_medida WHERE codigo = :codigo';
 
-      $query = $this->conn->prepare($sql);
-      $query->bindValue(':codigo', $codigo);
-      $query->execute();
-      $unidadesmedida = $query->fetchAll(PDO::FETCH_ASSOC);
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->execute();
+         $unidadmedida = $query->fetchAll(PDO::FETCH_ASSOC);
+         print_r(count($unidadmedida));
 
-      return $unidadesmedida;
+         if (count($unidadmedida) > 0) {
+            return ['EXITO', $unidadmedida];
+         } else {
+            return ['ERROR', 'No existe la unidad de medida ingresada'];
+         }
+      } catch (PDOException $e) {
+         return ['ERROR', $e];
+      }
    }
 
    public function store($datos)
@@ -44,15 +53,16 @@ class UnidadMedida
          :descripcion
       )';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $datos['codigo']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
+         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
-      if ($query->execute()) {
+         $query->execute();
          return true;
-      } else {
-         return false;
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
@@ -62,29 +72,44 @@ class UnidadMedida
          descripcion = :descripcion
          WHERE codigo = :codigo';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         if (isset($datos['txtCodigo'])) {
+            if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1][0]['codigo'];
+               $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $datos['codigo']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
+               $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+               $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
-      if ($query->execute()) {
-         return true;
-      } else {
-         return false;
+               $query->execute();
+               return true;
+            } else {
+               return $this->show($datos['txtCodigo'])[1];
+            }
+         }
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
-   public function delete($codigo)
+   public function destroy($codigo)
    {
       $sql = 'DELETE FROM unidad_medida WHERE codigo = :codigo';
-      $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':codigo', $codigo);
+      try {
+         if ($this->show($codigo)[0] == 'EXITO') {
+            $codigo = $this->show($codigo)[1][0]['codigo'];
+            $query = $this->conn->prepare($sql);
 
-      if ($query->execute()) {
-         return true;
-      } else {
-         return false;
+            $query->bindValue(':codigo', $codigo);
+
+            $query->execute();
+            return true;
+         } else {
+            return $this->show($codigo)[1];
+         }
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 }

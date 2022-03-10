@@ -26,12 +26,21 @@ class Categoria
    {
       $sql = 'SELECT * FROM categoria WHERE id = :id';
 
-      $query = $this->conn->prepare($sql);
-      $query->bindValue(':id', $id);
-      $query->execute();
-      $categorias = $query->fetchAll(PDO::FETCH_ASSOC);
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $id);
+         $query->execute();
+         $categoria = $query->fetchAll(PDO::FETCH_ASSOC);
+         print_r(count($categoria));
 
-      return $categorias;
+         if (count($categoria) > 0) {
+            return ['EXITO', $categoria];
+         } else {
+            return ['ERROR', 'No existe la categoría ingresada'];
+         }
+      } catch (PDOException $e) {
+         return ['ERROR', $e];
+      }
    }
 
    public function store($datos)
@@ -44,15 +53,16 @@ class Categoria
          :descripcion
       )';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':id', $datos['id']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
+         $query->bindValue(':id', isset($datos['txtId']) ? $datos['txtId'] : '');
+         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
-      if ($query->execute()) {
+         $query->execute();
          return true;
-      } else {
-         return false;
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
@@ -62,29 +72,44 @@ class Categoria
          descripcion = :descripcion
          WHERE id = :id';
 
-      $query = $this->conn->prepare($sql);
+      try {
+         if (isset($datos['txtId'])) {
+            if ($this->show($datos['txtId'])[0] == 'EXITO') {
+               $datos['txtId'] = $this->show($datos['txtId'])[1][0]['id'];
+               $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':id', $datos['id']);
-      $query->bindValue(':descripcion', $datos['descripcion']);
+               $query->bindValue(':id', isset($datos['txtId']) ? $datos['txtId'] : '');
+               $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
-      if ($query->execute()) {
-         return true;
-      } else {
-         return false;
+               $query->execute();
+               return true;
+            } else {
+               return $this->show($datos['txtId'])[1];
+            }
+         }
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 
-   public function delete($id)
+   public function destroy($id)
    {
       $sql = 'DELETE FROM categoria WHERE id = :id';
-      $query = $this->conn->prepare($sql);
 
-      $query->bindValue(':id', $id);
+      try {
+         if ($this->show($id)[0] == 'EXITO') {
+            $id = $this->show($id)[1][0]['id'];
+            $query = $this->conn->prepare($sql);
 
-      if ($query->execute()) {
-         return true;
-      } else {
-         return false;
+            $query->bindValue(':id', $id);
+
+            $query->execute();
+            return true;
+         } else {
+            return $this->show($id)[1];
+         }
+      } catch (PDOException $e) {
+         return $e->getMessage();
       }
    }
 }
