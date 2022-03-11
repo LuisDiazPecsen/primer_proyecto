@@ -44,12 +44,10 @@ class CategoriaController
 
    public function update()
    {
-      print_r($_POST);
       $resultado = null;
       $mensaje = null;
       if (isset($_POST)) {
          $resultado = $this->categoria->update($_POST);
-         print_r($resultado);
          if ($resultado === true) {
             $mensaje = "¡Categoría actualizada con éxito!";
          } else {

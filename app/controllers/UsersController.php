@@ -49,7 +49,6 @@ class UsersController
       if (isset($_POST['Register'])) {
          $resultado = $this->user->register($_POST['txtUsername'], $_POST['txtPassword']);
          if ($resultado != null) {
-            echo '<script>alert("Registro correcto")</script>';
             header('Location: /primer_proyecto/users/login');
          } else {
             echo '<script>alert("Se ha producido un error")</script>';

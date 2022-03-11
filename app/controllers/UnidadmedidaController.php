@@ -48,7 +48,6 @@ class UnidadmedidaController
       $mensaje = null;
       if (isset($_POST)) {
          $resultado = $this->unidadmedida->update($_POST);
-         print_r($resultado);
          if ($resultado === true) {
             $mensaje = "¡Unidad de medida actualizada con éxito!";
          } else {

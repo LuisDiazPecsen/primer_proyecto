@@ -49,7 +49,6 @@ class MarcaController
       $mensaje = null;
       if (isset($_POST)) {
          $resultado = $this->marca->update($_POST);
-         print_r($resultado);
          if ($resultado === true) {
             $mensaje = "¡Marca actualizada con éxito!";
          } else {
