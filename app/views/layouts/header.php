@@ -1,3 +1,13 @@
+<?php
+if (!isset($_SESSION)) {
+   session_start();
+}
+
+if (!isset($_SESSION['username'])) {
+   header('Location: /primer_proyecto/users/login');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,9 +25,11 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
    <!-- Bootstrap -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-   <!--DataTable-->
+   <!-- DataTables -->
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+   <!-- Validate -->
+   <link rel="stylesheet" href="/primer_proyecto/styles.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -106,16 +118,16 @@
          </a>
 
          <!-- Sidebar -->
-         <div class="sidebar">
+         <div class="sidebar d-flex align-content-between flex-wrap">
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                   <li class="nav-item">
-                     <a href="pages/gallery.html" class="nav-link
+                     <a href="/primer_proyecto/users/user" class="nav-link
                      <?php
-                     if (end($data) == 'Usuario') {
+                     if (end($data) == 'Panel de usuario') {
                         echo ' active';
                      }
                      ?>
@@ -141,7 +153,7 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="pages/gallery.html" class="nav-link
+                     <a href="/primer_proyecto/marca/index" class="nav-link
                      <?php
                      if (end($data) == 'Marcas') {
                         echo ' active';
@@ -155,7 +167,7 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="pages/gallery.html" class="nav-link
+                     <a href="/primer_proyecto/categoria/index" class="nav-link
                      <?php
                      if (end($data) == 'Categorías') {
                         echo ' active';
@@ -169,7 +181,7 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="pages/gallery.html" class="nav-link
+                     <a href="/primer_proyecto/unidadmedida/index" class="nav-link
                      <?php
                      if (end($data) == 'Unidades de medida') {
                         echo ' active';
@@ -185,6 +197,18 @@
                </ul>
             </nav>
             <!-- /.sidebar-menu -->
+
+            <nav class="mt-2">
+               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                  <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                  <li class="nav-item">
+                     <a href="/primer_proyecto/users/logout" class="nav-link">
+                        <i class='fas fa-sign-out-alt'></i>
+                        <p>Cerrar sesión</p>
+                     </a>
+                  </li>
+            </nav>
          </div>
          <!-- /.sidebar -->
       </aside>

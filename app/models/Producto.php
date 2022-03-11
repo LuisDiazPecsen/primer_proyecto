@@ -31,7 +31,7 @@ class Producto
          $query->bindValue(':codigo', $codigo);
          $query->execute();
          $producto = $query->fetchAll(PDO::FETCH_ASSOC);
-         print_r(count($producto));
+         //print_r(count($producto));
 
          if (count($producto) > 0) {
             return ['EXITO', $producto];

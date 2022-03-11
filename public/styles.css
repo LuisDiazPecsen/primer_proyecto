@@ -1,0 +1,12 @@
+span.error {
+  color: red;
+  font-size: 0.8em;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

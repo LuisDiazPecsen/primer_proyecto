@@ -31,7 +31,7 @@ class Categoria
          $query->bindValue(':id', $id);
          $query->execute();
          $categoria = $query->fetchAll(PDO::FETCH_ASSOC);
-         print_r(count($categoria));
+         //print_r(count($categoria));
 
          if (count($categoria) > 0) {
             return ['EXITO', $categoria];
@@ -46,17 +46,14 @@ class Categoria
    public function store($datos)
    {
       $sql = 'INSERT INTO categoria(
-         id,
          descripcion
       ) VALUES (
-         :id,
          :descripcion
       )';
 
       try {
          $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':id', isset($datos['txtId']) ? $datos['txtId'] : '');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
          $query->execute();

@@ -38,9 +38,9 @@ class ProductoController
       $productos_original = $this->producto->index();
       for ($i = 0; $i < count($productos_original); $i++) {
          $productos += [$i => $productos_original[$i] +
-            ['MARCA_descripcion' => $this->marca->show($productos_original[$i]['MARCA_codigo'])[0]['descripcion']] +
-            ['CATEGORIA_descripcion' => $this->categoria->show($productos_original[$i]['CATEGORIA_id'])[0]['descripcion']] +
-            ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($productos_original[$i]['UNIDAD_MEDIDA_codigo'])[0]['descripcion']]];
+            ['MARCA_descripcion' => $this->marca->show($productos_original[$i]['MARCA_codigo'])[1][0]['descripcion']] +
+            ['CATEGORIA_descripcion' => $this->categoria->show($productos_original[$i]['CATEGORIA_id'])[1][0]['descripcion']] +
+            ['UNIDAD_MEDIDA_descripcion' => $this->unidadmedida->show($productos_original[$i]['UNIDAD_MEDIDA_codigo'])[1][0]['descripcion']]];
       }
       $productos_original = null;
 
@@ -69,7 +69,7 @@ class ProductoController
       if (isset($_POST)) {
          //print_r($_POST);
          $resultado = $this->producto->update($_POST);
-         print_r($resultado);
+         //print_r($resultado);
          if ($resultado === true) {
             $mensaje = "¡Producto actualizado con éxito!";
          } else {

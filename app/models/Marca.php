@@ -31,7 +31,7 @@ class Marca
          $query->bindValue(':codigo', $codigo);
          $query->execute();
          $marca = $query->fetchAll(PDO::FETCH_ASSOC);
-         print_r(count($marca));
+         //print_r(count($marca));
 
          if (count($marca) > 0) {
             return ['EXITO', $marca];

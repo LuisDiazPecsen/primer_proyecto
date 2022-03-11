@@ -8,14 +8,14 @@ class CategoriaController
 
    public function __construct()
    {
-      $this->categoria = new UnidadMedida();
+      $this->categoria = new Categoria();
    }
 
    private function viewIndex($categorias, $resultado, $mensaje)
    {
       $data = array(
          'index' => 'Inicio',
-         'categoria/index' => 'Categoría'
+         'categoria/index' => 'Categorías'
       );
       require_once '../app/views/categoria/index.php';
    }
@@ -44,6 +44,7 @@ class CategoriaController
 
    public function update()
    {
+      print_r($_POST);
       $resultado = null;
       $mensaje = null;
       if (isset($_POST)) {
@@ -63,7 +64,7 @@ class CategoriaController
       $resultado = null;
       $mensaje = null;
       if (isset($_GET['codigo'])) {
-         $resultado = $this->unidadmedida->destroy($_GET['codigo']);
+         $resultado = $this->categoria->destroy($_GET['codigo']);
          if ($resultado === true) {
             $mensaje = "¡Categoría eliminada con éxito!";
          } else {

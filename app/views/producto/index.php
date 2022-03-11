@@ -35,7 +35,7 @@ require_once '../app/views/layouts/header.php';
                         </button>
                      </div>
                      <form id="formProducto" action="" method="post">
-                        <div class="modal-body">
+                        <div id="modalBodyProducto" class="modal-body">
                            <div class="form-row">
                               <div class="form-group col-md-4">
                                  <label for="txtCodigo">Código</label>
@@ -153,20 +153,44 @@ require_once '../app/views/layouts/header.php';
 <!-- /.row -->
 
 <script>
+   /*document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("formProducto").addEventListener('submit', validarFormulario);
+   });
+
+   function validarFormulario(evento) {
+      evento.preventDefault();
+      var usuario = document.getElementById('usuario').value;
+      if (usuario.length == 0) {
+         alert('No has escrito nada en el usuario');
+         return;
+      }
+      var clave = document.getElementById('clave').value;
+      if (clave.length < 6) {
+         alert('La clave no es válida');
+         return;
+      }
+      this.submit();
+   }*/
+
    const $btnAgregarProducto = document.getElementById("btnAgregarProducto");
    $btnAgregarProducto.onclick = function() {
       document.getElementById("formProducto").setAttribute('action', '/primer_proyecto/producto/store');
       document.getElementById("productoModalTitulo").innerHTML = "Agregar producto";
-      document.getElementById("txtCodigo").setAttribute('value', '');
-      document.getElementById("txtDescripcion").setAttribute('value', '');
-      document.getElementById("txtPrecioCompra").setAttribute('value', '');
-      document.getElementById("txtPrecioVenta").setAttribute('value', '');
-      document.getElementById("txtStock").setAttribute('value', '');
-      document.getElementById("txtStockMinimo").setAttribute('value', '');
-      document.getElementById("txtUnidadMedida").setAttribute('value', '');
-      document.getElementById("txtMarca").setAttribute('value', '');
-      document.getElementById("txtCategoria").setAttribute('value', '');
-      document.getElementById("btnAceptar").setAttribute('value', 'Registrar');
+      let campos = [
+         'txtCodigo',
+         'txtDescripcion',
+         'txtPrecioCompra',
+         'txtPrecioVenta',
+         'txtStock',
+         'txtStockMinimo',
+         'txtUnidadMedida',
+         'txtMarca',
+         'txtCategoria'
+      ];
+      campos.forEach(element => {
+         document.getElementById(element).value = '';
+      });
+      document.getElementById("btnAceptar").value = 'Registrar';
    }
 
    function editar(element) {
@@ -189,14 +213,14 @@ require_once '../app/views/layouts/header.php';
       console.log(producto);
       document.getElementById("txtCodigo").value = producto.codigo;
       document.getElementById("txtDescripcion").value = producto.descripcion;
-      document.getElementById("txtPrecioCompra").setAttribute('value', producto.precio_compra);
-      document.getElementById("txtPrecioVenta").setAttribute('value', producto.precio_venta);
-      document.getElementById("txtStock").setAttribute('value', producto.stock);
-      document.getElementById("txtStockMinimo").setAttribute('value', producto.stock_minimo);
-      document.getElementById("txtUnidadMedida").setAttribute('value', producto.unidad_medida_codigo);
-      document.getElementById("txtMarca").setAttribute('value', producto.marca_codigo);
-      document.getElementById("txtCategoria").setAttribute('value', producto.categoria_id);
-      document.getElementById("btnAceptar").setAttribute('value', 'Actualizar');
+      document.getElementById("txtPrecioCompra").value = producto.precio_compra;
+      document.getElementById("txtPrecioVenta").value = producto.precio_venta;
+      document.getElementById("txtStock").value = producto.stock;
+      document.getElementById("txtStockMinimo").value = producto.stock_minimo;
+      document.getElementById("txtUnidadMedida").value = producto.unidad_medida_codigo;
+      document.getElementById("txtMarca").value = producto.marca_codigo;
+      document.getElementById("txtCategoria").value = producto.categoria_id;
+      document.getElementById("btnAceptar").value = 'Actualizar';
    }
 
    /*const $grupoEditar = document.querySelectorAll(".editar");
@@ -210,3 +234,84 @@ require_once '../app/views/layouts/header.php';
 <?php
 require_once '../app/views/layouts/footer.php';
 ?>
+
+<!-- jquery-validation -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
+
+<script>
+   $(function() {
+      $("#formProducto").validate({
+         rules: {
+            txtCodigo: {
+               required: true,
+               maxlength: 5
+            },
+            txtDescripcion: {
+               required: true,
+               maxlength: 200
+            },
+            txtPrecioCompra: {
+               required: true,
+               number: true
+            },
+            txtPrecioVenta: {
+               required: true,
+               number: true
+            },
+            txtStock: {
+               required: true,
+               number: true
+            },
+            txtStockMinimo: {
+               required: true,
+               number: true
+            },
+            txtMarca: {
+               required: true,
+               maxlength: 4
+            },
+            txtUnidadMedida: {
+               required: true,
+               maxlength: 4
+            },
+            txtCategoria: {
+               required: true,
+               digits: true
+            }
+         },
+         messages: {
+            txtCodigo: "El código de producto es obligatorio",
+            txtDescripcion: "La descripción de marca es obligatoria.",
+            txtPrecioCompra: "El precio de compra es obligatorio (solo número decimal).",
+            txtPrecioVenta: "El precio de venta es obligatorio (solo número decimal).",
+            txtStock: "El stock es obligatorio (solo número decimal).",
+            txtStockMinimo: "El stock mínimo es obligatorio (solo número decimal).",
+            txtMarca: "El código de marca es obligatorio.",
+            txtUnidadMedida: "El código de unidad de medida es obligatorio.",
+            txtCategoria: "El ID de categoría es obligatorio."
+         },
+         errorElement: 'span'
+      });
+   });
+</script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+   $('#productos_table').DataTable({
+      responsive: true,
+      autoWidth: false,
+      language: {
+         "url": "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+      }
+   });
+</script>
+
+</body>
+
+</html>

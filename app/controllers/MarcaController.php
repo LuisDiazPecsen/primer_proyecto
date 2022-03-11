@@ -17,6 +17,7 @@ class MarcaController
          'index' => 'Inicio',
          'marca/index' => 'Marcas'
       );
+
       require_once '../app/views/marca/index.php';
    }
 
@@ -62,8 +63,8 @@ class MarcaController
    {
       $resultado = null;
       $mensaje = null;
-      if (isset($_GET['id'])) {
-         $resultado = $this->marca->destroy($_GET['id']);
+      if (isset($_GET['codigo'])) {
+         $resultado = $this->marca->destroy($_GET['codigo']);
          if ($resultado === true) {
             $mensaje = "¡Marca eliminada con éxito!";
          } else {

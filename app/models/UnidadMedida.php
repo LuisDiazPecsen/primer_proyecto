@@ -31,7 +31,7 @@ class UnidadMedida
          $query->bindValue(':codigo', $codigo);
          $query->execute();
          $unidadmedida = $query->fetchAll(PDO::FETCH_ASSOC);
-         print_r(count($unidadmedida));
+         //print_r(count($unidadmedida));
 
          if (count($unidadmedida) > 0) {
             return ['EXITO', $unidadmedida];
