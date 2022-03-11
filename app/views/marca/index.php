@@ -145,7 +145,7 @@ require_once '../app/views/layouts/footer.php';
          rules: {
             txtCodigo: {
                required: true,
-               maxlength: 4
+               rangelength: [4, 4]
             },
             txtDescripcion: {
                required: true,
@@ -153,7 +153,7 @@ require_once '../app/views/layouts/footer.php';
             }
          },
          messages: {
-            txtCodigo: "El código de marca es obligatorio",
+            txtCodigo: "El código de marca es obligatorio (M000)",
             txtDescripcion: "La descripción de marca es obligatoria."
          },
          errorElement: 'span'

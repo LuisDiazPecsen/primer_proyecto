@@ -145,7 +145,7 @@ require_once '../app/views/layouts/footer.php';
          rules: {
             txtCodigo: {
                required: true,
-               maxlength: 4
+               rangelength: [4, 4]
             },
             txtDescripcion: {
                required: true,
@@ -153,7 +153,7 @@ require_once '../app/views/layouts/footer.php';
             }
          },
          messages: {
-            txtCodigo: "El código de unidad de medida es obligatorio",
+            txtCodigo: "El código de unidad de medida es obligatorio (U000).",
             txtDescripcion: "La descripción de unidad de medida es obligatoria."
          },
          errorElement: 'span'

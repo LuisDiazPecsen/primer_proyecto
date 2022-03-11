@@ -245,7 +245,7 @@ require_once '../app/views/layouts/footer.php';
          rules: {
             txtCodigo: {
                required: true,
-               maxlength: 5
+               rangelength: [4, 5]
             },
             txtDescripcion: {
                required: true,
@@ -269,11 +269,11 @@ require_once '../app/views/layouts/footer.php';
             },
             txtMarca: {
                required: true,
-               maxlength: 4
+               rangelength: [4, 4]
             },
             txtUnidadMedida: {
                required: true,
-               maxlength: 4
+               rangelength: [4, 4]
             },
             txtCategoria: {
                required: true,
@@ -281,14 +281,14 @@ require_once '../app/views/layouts/footer.php';
             }
          },
          messages: {
-            txtCodigo: "El código de producto es obligatorio",
+            txtCodigo: "El código de producto es obligatorio.",
             txtDescripcion: "La descripción de marca es obligatoria.",
             txtPrecioCompra: "El precio de compra es obligatorio (solo número decimal).",
             txtPrecioVenta: "El precio de venta es obligatorio (solo número decimal).",
             txtStock: "El stock es obligatorio (solo número decimal).",
             txtStockMinimo: "El stock mínimo es obligatorio (solo número decimal).",
-            txtMarca: "El código de marca es obligatorio.",
-            txtUnidadMedida: "El código de unidad de medida es obligatorio.",
+            txtMarca: "El código de marca es obligatorio (M000).",
+            txtUnidadMedida: "El código de unidad de medida es obligatorio (U000).",
             txtCategoria: "El ID de categoría es obligatorio."
          },
          errorElement: 'span'
