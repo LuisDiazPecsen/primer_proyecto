@@ -153,25 +153,6 @@ require_once '../app/views/layouts/header.php';
 <!-- /.row -->
 
 <script>
-   /*document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById("formProducto").addEventListener('submit', validarFormulario);
-   });
-
-   function validarFormulario(evento) {
-      evento.preventDefault();
-      var usuario = document.getElementById('usuario').value;
-      if (usuario.length == 0) {
-         alert('No has escrito nada en el usuario');
-         return;
-      }
-      var clave = document.getElementById('clave').value;
-      if (clave.length < 6) {
-         alert('La clave no es válida');
-         return;
-      }
-      this.submit();
-   }*/
-
    const $btnAgregarProducto = document.getElementById("btnAgregarProducto");
    $btnAgregarProducto.onclick = function() {
       document.getElementById("formProducto").setAttribute('action', '/primer_proyecto/producto/store');
