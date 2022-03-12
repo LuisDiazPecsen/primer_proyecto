@@ -84,7 +84,7 @@ class UnidadmedidaController
                <?php
                foreach ($unidadesMedida as $unidadMedida) {
                ?>
-                  <a href="#" onClick="selectname('<?php echo $unidadMedida['codigo'] . ' - ' . $unidadMedida['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $unidadMedida['descripcion'] ?></a>
+                  <a href="#" onClick="selectname_unidadMedida('<?php echo $unidadMedida['codigo'] . ' - ' . $unidadMedida['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $unidadMedida['descripcion'] ?></a>
                <?php
                }
                ?>

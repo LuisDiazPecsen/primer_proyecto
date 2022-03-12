@@ -49,7 +49,7 @@ class UnidadMedida
       $unidadesMedida = null;
       try {
          $query = $this->conn->prepare($sql);
-         $query->bindValue(':descripcion', '%' . $_POST['descripcionUnidadMedida'] . '%');
+         $query->bindValue(':descripcion', '%' . $descripcionUnidadMedida . '%');
          $query->execute();
          $unidadesMedida = $query->fetchAll(PDO::FETCH_ASSOC);
          return $unidadesMedida;

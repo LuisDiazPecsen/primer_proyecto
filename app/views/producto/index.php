@@ -36,6 +36,9 @@ require_once '../app/views/layouts/header.php';
                      </div>
                      <form id="formProducto" action="" method="post">
                         <div id="modalBodyProducto" class="modal-body">
+                           <div id="filaError">
+
+                           </div>
                            <div class="form-row">
                               <div class="form-group col-md-4">
                                  <label for="txtCodigo">Código</label>
@@ -65,27 +68,25 @@ require_once '../app/views/layouts/header.php';
                                  <label for="txtStockMinimo">Stock mínimo</label>
                                  <input type="text" class="form-control" id="txtStockMinimo" name="txtStockMinimo" placeholder="0">
                               </div>
-                           </div>
-                           <div class="form-row">
-                              <div class="form-group col-md-6">
-                                 <label for="txtBuscarUnidadMedida">Buscar unidad de medida</label>
-                                 <input type="text" class="form-control" id="txtBuscarUnidadMedida" name="txtBuscarUnidadMedida" placeholder="">
-                                 <span id="unidadMedidaList"></span>
-                              </div>
                               <div class="form-group col-md-6">
                                  <label for="txtUnidadMedida">Unidad de medida</label>
-                                 <input type="text" class="form-control" id="txtUnidadMedida" name="txtUnidadMedida" placeholder="" readonly>
+                                 <input type="text" class="form-control" id="txtUnidadMedida" name="txtUnidadMedida" placeholder="Buscar...">
+                                 <a href="#" id="btnCambiarUnidadMedida" class="btn btn-warning" hidden>Cambiar</a>
+                                 <span id="unidadMedidaList"></span>
                               </div>
-
                            </div>
                            <div class="form-row">
                               <div class="form-group col-md-6">
                                  <label for="txtMarca">Marca</label>
-                                 <input type="text" class="form-control" id="txtMarca" name="txtMarca" placeholder="M000">
+                                 <input type="text" class="form-control" id="txtMarca" name="txtMarca" placeholder="Buscar...">
+                                 <a href="#" id="btnCambiarMarca" class="btn btn-warning" hidden>Cambiar</a>
+                                 <span id="marcaList"></span>
                               </div>
                               <div class="form-group col-md-6">
                                  <label for="txtCategoria">Categoría</label>
-                                 <input type="text" class="form-control" id="txtCategoria" name="txtCategoria" placeholder="0">
+                                 <input type="text" class="form-control" id="txtCategoria" name="txtCategoria" placeholder="Buscar...">
+                                 <a href="#" id="btnCambiarCategoria" class="btn btn-warning" hidden>Cambiar</a>
+                                 <span id="categoriaList"></span>
                               </div>
                            </div>
                         </div>
@@ -160,6 +161,12 @@ require_once '../app/views/layouts/header.php';
 </div>
 <!-- /.row -->
 
+
+
+<?php
+require_once '../app/views/layouts/footer.php';
+?>
+
 <script>
    const $btnAgregarProducto = document.getElementById("btnAgregarProducto");
    $btnAgregarProducto.onclick = function() {
@@ -179,6 +186,8 @@ require_once '../app/views/layouts/header.php';
       campos.forEach(element => {
          document.getElementById(element).value = '';
       });
+      vaciarListas();
+      quitarAlerta();
       document.getElementById("btnAceptar").value = 'Registrar';
    }
 
@@ -196,38 +205,42 @@ require_once '../app/views/layouts/header.php';
          stock: $columnas[4].innerHTML,
          stock_minimo: $columnas[5].innerHTML,
          unidad_medida: $columnas[6].getAttribute('value') + ' - ' + $columnas[6].innerHTML,
-         marca_codigo: $columnas[7].getAttribute('value'),
-         categoria_id: $columnas[8].getAttribute('value')
+         marca: $columnas[7].getAttribute('value') + ' - ' + $columnas[7].innerHTML,
+         categoria: $columnas[8].getAttribute('value') + ' - ' + $columnas[8].innerHTML
       }
       console.log(producto);
+      quitarAlerta();
       document.getElementById("txtCodigo").value = producto.codigo;
       document.getElementById("txtDescripcion").value = producto.descripcion;
       document.getElementById("txtPrecioCompra").value = producto.precio_compra;
       document.getElementById("txtPrecioVenta").value = producto.precio_venta;
       document.getElementById("txtStock").value = producto.stock;
       document.getElementById("txtStockMinimo").value = producto.stock_minimo;
-      document.getElementById("txtUnidadMedida").value = producto.unidad_medida;
-      document.getElementById("txtMarca").value = producto.marca_codigo;
-      document.getElementById("txtCategoria").value = producto.categoria_id;
+
+      const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
+      $txtUnidadMedida.readOnly = true;
+      $txtUnidadMedida.value = producto.unidad_medida;
+      document.getElementById('btnCambiarUnidadMedida').hidden = false;
+
+      const $txtMarca = document.getElementById('txtMarca');
+      $txtMarca.readOnly = true;
+      $txtMarca.value = producto.marca;
+      document.getElementById('btnCambiarMarca').hidden = false;
+
+      const $txtCategoria = document.getElementById('txtCategoria');
+      $txtCategoria.readOnly = true;
+      $txtCategoria.value = producto.categoria;
+      document.getElementById('btnCambiarCategoria').hidden = false;
+
       document.getElementById("btnAceptar").value = 'Actualizar';
    }
-
-   /*const $grupoEditar = document.querySelectorAll(".editar");
-   $grupoEditar.forEach(
-      function(element, index) {
-         element.onclick = editar(element);
-      }
-   );*/
 </script>
 
-<?php
-require_once '../app/views/layouts/footer.php';
-?>
-
-<!-- autocomplete search bar -->
+<!-- Autocomplete search bar -->
 <script>
-   $('#txtBuscarUnidadMedida').keyup(function() {
-      let descripcionUnidadMedida = $(this).val();
+   const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
+   $txtUnidadMedida.onkeyup = function() {
+      let descripcionUnidadMedida = this.value;
       if (descripcionUnidadMedida != '') {
          console.log(descripcionUnidadMedida);
          $.ajax({
@@ -238,18 +251,132 @@ require_once '../app/views/layouts/footer.php';
             },
             success: function(data) {
                console.log(data);
-               $("#unidadMedidaList").show();
-               $('#unidadMedidaList').html(data);
+               const $unidadMedidaList = document.getElementById('unidadMedidaList');
+               $unidadMedidaList.hidden = false;
+               $unidadMedidaList.innerHTML = data;
             }
          });
       } else {
          $('#unidadMedidaList').html('');
       }
-   })
+   }
 
-   function selectname(selected_value) {
-      $("#txtUnidadMedida").val(selected_value);
-      $("#unidadMedidaList").hide();
+   const $txtMarca = document.getElementById('txtMarca');
+   $txtMarca.onkeyup = function() {
+      let descripcionMarca = this.value;
+      if (descripcionMarca != '') {
+         console.log(descripcionMarca);
+         $.ajax({
+            url: '/primer_proyecto/marca/searchMarca',
+            method: 'POST',
+            data: {
+               descripcionMarca
+            },
+            success: function(data) {
+               console.log(data);
+               const $marcaList = document.getElementById('marcaList');
+               $marcaList.hidden = false;
+               $marcaList.innerHTML = data;
+            }
+         });
+      } else {
+         $('#marcaList').html('');
+      }
+   }
+
+   const $txtCategoria = document.getElementById('txtCategoria');
+   $txtCategoria.onkeyup = function() {
+      let descripcionCategoria = this.value;
+      if (descripcionCategoria != '') {
+         console.log(descripcionCategoria);
+         $.ajax({
+            url: '/primer_proyecto/categoria/searchCategoria',
+            method: 'POST',
+            data: {
+               descripcionCategoria
+            },
+            success: function(data) {
+               console.log(data);
+               const $categoriaList = document.getElementById('categoriaList');
+               $categoriaList.hidden = false;
+               $categoriaList.innerHTML = data;
+            }
+         });
+      } else {
+         $('#categoriaList').html('');
+      }
+   }
+
+   const $btnCambiarUnidadMedida = document.getElementById('btnCambiarUnidadMedida');
+   $btnCambiarUnidadMedida.onclick = function() {
+      vaciarUnidadMedida();
+   }
+
+   const $btnCambiarMarca = document.getElementById('btnCambiarMarca');
+   $btnCambiarMarca.onclick = function() {
+      vaciarMarca();
+   }
+
+   const $btnCambiarCategoria = document.getElementById('btnCambiarCategoria');
+   $btnCambiarCategoria.onclick = function() {
+      vaciarCategoria();
+   }
+
+   function selectname_unidadMedida(selected_value) {
+      const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
+      $txtUnidadMedida.readOnly = true;
+      $txtUnidadMedida.value = selected_value;
+
+      document.getElementById('unidadMedidaList').hidden = true;
+      document.getElementById('btnCambiarUnidadMedida').hidden = false;
+   }
+
+   function selectname_marca(selected_value) {
+      const $txtMarca = document.getElementById('txtMarca');
+      $txtMarca.readOnly = true;
+      $txtMarca.value = selected_value;
+
+      document.getElementById('marcaList').hidden = true;
+      document.getElementById('btnCambiarMarca').hidden = false;
+   }
+
+   function selectname_categoria(selected_value) {
+      const $txtCategoria = document.getElementById('txtCategoria');
+      $txtCategoria.readOnly = true;
+      $txtCategoria.value = selected_value;
+
+      document.getElementById('categoriaList').hidden = true;
+      document.getElementById('btnCambiarCategoria').hidden = false;
+   }
+
+   function vaciarListas() {
+      vaciarUnidadMedida();
+      vaciarMarca();
+      vaciarCategoria();
+   }
+
+   function vaciarUnidadMedida() {
+      const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
+      $txtUnidadMedida.value = '';
+      $txtUnidadMedida.readOnly = false;
+
+      document.getElementById('btnCambiarUnidadMedida').hidden = true;
+   }
+
+   function vaciarMarca() {
+      const $txtMarca = document.getElementById('txtMarca');
+      $txtMarca.value = '';
+      $txtMarca.readOnly = false;
+
+      document.getElementById('btnCambiarMarca').hidden = true;
+   }
+
+   function vaciarCategoria() {
+      const $txtCategoria = document.getElementById('txtCategoria');
+      $txtCategoria.value = '';
+      $txtCategoria.readOnly = false;
+
+      document.getElementById('btnCambiarCategoria').hidden = true;
    }
 </script>
 
@@ -258,59 +385,142 @@ require_once '../app/views/layouts/footer.php';
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
 
 <script>
-   $(function() {
-      $("#formProducto").validate({
-         rules: {
-            txtCodigo: {
-               required: true,
-               rangelength: [4, 5]
-            },
-            txtDescripcion: {
-               required: true,
-               maxlength: 200
-            },
-            txtPrecioCompra: {
-               required: true,
-               number: true
-            },
-            txtPrecioVenta: {
-               required: true,
-               number: true
-            },
-            txtStock: {
-               required: true,
-               number: true
-            },
-            txtStockMinimo: {
-               required: true,
-               number: true
-            },
-            txtMarca: {
-               required: true,
-               rangelength: [4, 4]
-            },
-            txtUnidadMedida: {
-               required: true
-            },
-            txtCategoria: {
-               required: true,
-               digits: true
-            }
-         },
-         messages: {
-            txtCodigo: "El código de producto es obligatorio.",
-            txtDescripcion: "La descripción de marca es obligatoria.",
-            txtPrecioCompra: "El precio de compra es obligatorio (solo número decimal).",
-            txtPrecioVenta: "El precio de venta es obligatorio (solo número decimal).",
-            txtStock: "El stock es obligatorio (solo número decimal).",
-            txtStockMinimo: "El stock mínimo es obligatorio (solo número decimal).",
-            txtMarca: "El código de marca es obligatorio (M000).",
-            txtUnidadMedida: "La unidad de medida es obligatoria.",
-            txtCategoria: "El ID de categoría es obligatorio."
-         },
-         errorElement: 'span'
-      });
-   });
+   function quitarAlerta() {
+      if (document.getElementById('errorDiv')) {
+         document.getElementById('filaError').removeChild(document.getElementById('errorDiv'));
+      }
+   }
+
+   function validar() {
+      var $inputsList = [];
+      var errorList = [];
+      const numeroDecimal = /^\d+(?:.\d+)?$/;
+
+      $formProducto = document.getElementById('formProducto');
+      $inputsList = $formProducto.getElementsByTagName('input');
+
+      for (const $input of $inputsList) {
+         switch ($input.name) {
+            case 'txtDescripcion':
+               if ($input.value == '') {
+                  errorList.push('La descripción es obligatoria.');
+               } else {
+                  if ($input.value.length > 200) {
+                     errorList.push('No puedes superar los 200 caracteres.');
+                  }
+               }
+               break;
+            case 'txtPrecioCompra':
+               if ($input.value == '') {
+                  errorList.push('El precio de compra es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     console.log("NO VALIDO");
+                     errorList.push('El precio de compra no es válido');
+                  }
+               }
+               break;
+            case 'txtPrecioVenta':
+               if ($input.value == '') {
+                  errorList.push('El precio de venta es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El precio de venta no es válido');
+                  }
+               }
+               break;
+            case 'txtStock':
+               if ($input.value == '') {
+                  errorList.push('El stock es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El stock no es válido');
+                  }
+               }
+               break;
+            case 'txtStockMinimo':
+               if ($input.value == '') {
+                  errorList.push('El stock mínimo es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El stock mínimo no es válido');
+                  }
+               }
+               break;
+            case 'txtMarca':
+               if ($input.value == '') {
+                  errorList.push('La marca es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
+               }
+               break;
+            case 'txtUnidadMedida':
+               if ($input.value == '') {
+                  errorList.push('La unidad de medida es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
+               }
+               break;
+            case 'txtCategoria':
+               if ($input.value == '') {
+                  errorList.push('La categoría es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
+               }
+
+               break;
+            default:
+               break;
+         }
+      }
+
+      if (errorList.length != 0) {
+         var summary = "";
+         errorList.forEach(error => {
+            summary += "<li>" + error + "</li>";
+         });
+         console.log(summary);
+
+         quitarAlerta();
+
+         const $errorDiv = document.createElement('div');
+         $errorDiv.setAttribute('id', 'errorDiv');
+         $errorDiv.setAttribute('class', 'alert alert-danger alert-dismissible fade show');
+         $errorDiv.setAttribute('role', 'alert');
+         const $ul = document.createElement('ul');
+         $ul.setAttribute('id', 'listaErrores');
+         const $button = document.createElement('button');
+         $button.setAttribute('type', 'button');
+         $button.setAttribute('class', 'close');
+         $button.setAttribute('data-dismiss', 'alert');
+         $button.setAttribute('aria-label', 'Close');
+         const $span = document.createElement('span');
+         $span.setAttribute('aria-hidden', 'true');
+         $span.innerHTML = "&times;";
+         $button.appendChild($span);
+         $errorDiv.appendChild($ul);
+         $errorDiv.appendChild($button);
+
+         document.getElementById('filaError').appendChild($errorDiv);
+         document.getElementById('listaErrores').innerHTML = summary;
+
+         return false;
+      } else {
+         return true;
+      }
+   }
+
+   document.getElementById('formProducto').onsubmit = function(event) {
+      if (!validar()) {
+         event.preventDefault();
+      }
+   }
 </script>
 
 <!-- DataTables -->

@@ -43,6 +43,21 @@ class Categoria
       }
    }
 
+   public function searchCategoria($descripcionCategoria)
+   {
+      $sql = 'SELECT * FROM categoria WHERE descripcion LIKE :descripcion ORDER BY descripcion LIMIT 10';
+      $categorias = null;
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':descripcion', '%' . $descripcionCategoria . '%');
+         $query->execute();
+         $categorias = $query->fetchAll(PDO::FETCH_ASSOC);
+         return $categorias;
+      } catch (PDOException $e) {
+         return $categorias;
+      }
+   }
+
    public function store($datos)
    {
       $sql = 'INSERT INTO categoria(

@@ -43,6 +43,21 @@ class Marca
       }
    }
 
+   public function searchMarca($descripcionMarca)
+   {
+      $sql = 'SELECT * FROM marca WHERE descripcion LIKE :descripcion ORDER BY descripcion LIMIT 10';
+      $marcas = null;
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':descripcion', '%' . $descripcionMarca . '%');
+         $query->execute();
+         $marcas = $query->fetchAll(PDO::FETCH_ASSOC);
+         return $marcas;
+      } catch (PDOException $e) {
+         return $marcas;
+      }
+   }
+
    public function store($datos)
    {
       $sql = 'INSERT INTO marca(

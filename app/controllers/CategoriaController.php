@@ -72,4 +72,25 @@ class CategoriaController
       echo $resultado;
       $this->index($resultado, $mensaje);
    }
+
+   public function searchCategoria()
+   {
+      if (isset($_POST['descripcionCategoria'])) {
+         $categorias = $this->categoria->searchCategoria($_POST['descripcionCategoria']);
+
+         if (count($categorias) != 0) {
+?>
+            <div class="list-group">
+               <?php
+               foreach ($categorias as $categoria) {
+               ?>
+                  <a href="#" onClick="selectname_categoria('<?php echo $categoria['id'] . ' - ' . $categoria['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $categoria['descripcion'] ?></a>
+               <?php
+               }
+               ?>
+            </div>
+<?php
+         }
+      }
+   }
 }
