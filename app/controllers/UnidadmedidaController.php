@@ -72,4 +72,25 @@ class UnidadmedidaController
       echo $resultado;
       $this->index($resultado, $mensaje);
    }
+
+   public function searchUnidadMedida()
+   {
+      if (isset($_POST['descripcionUnidadMedida'])) {
+         $unidadesMedida = $this->unidadmedida->searchUnidadMedida($_POST['descripcionUnidadMedida']);
+
+         if (count($unidadesMedida) != 0) {
+?>
+            <div class="list-group">
+               <?php
+               foreach ($unidadesMedida as $unidadMedida) {
+               ?>
+                  <a href="#" onClick="selectname('<?php echo $unidadMedida['codigo'] . ' - ' . $unidadMedida['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $unidadMedida['descripcion'] ?></a>
+               <?php
+               }
+               ?>
+            </div>
+<?php
+         }
+      }
+   }
 }

@@ -52,6 +52,7 @@ class ProductoController
       $resultado = null;
       $mensaje = null;
       if (isset($_POST)) {
+         $_POST['txtUnidadMedida'] = substr($_POST['txtUnidadMedida'], 0, 4);
          $resultado = $this->producto->store($_POST);
          if ($resultado === true) {
             $mensaje = "¡Producto agregado con éxito!";
@@ -67,6 +68,7 @@ class ProductoController
       $resultado = null;
       $mensaje = null;
       if (isset($_POST)) {
+         $_POST['txtUnidadMedida'] = substr($_POST['txtUnidadMedida'], 0, 4);
          //print_r($_POST);
          $resultado = $this->producto->update($_POST);
          //print_r($resultado);

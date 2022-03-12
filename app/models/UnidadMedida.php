@@ -43,6 +43,21 @@ class UnidadMedida
       }
    }
 
+   public function searchUnidadMedida($descripcionUnidadMedida)
+   {
+      $sql = 'SELECT * FROM unidad_medida WHERE descripcion LIKE :descripcion ORDER BY descripcion LIMIT 10';
+      $unidadesMedida = null;
+      try {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':descripcion', '%' . $_POST['descripcionUnidadMedida'] . '%');
+         $query->execute();
+         $unidadesMedida = $query->fetchAll(PDO::FETCH_ASSOC);
+         return $unidadesMedida;
+      } catch (PDOException $e) {
+         return $unidadesMedida;
+      }
+   }
+
    public function store($datos)
    {
       $sql = 'INSERT INTO unidad_medida(

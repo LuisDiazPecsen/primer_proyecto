@@ -65,18 +65,10 @@ require_once '../app/views/layouts/header.php';
                                  <label for="txtStockMinimo">Stock mínimo</label>
                                  <input type="text" class="form-control" id="txtStockMinimo" name="txtStockMinimo" placeholder="0">
                               </div>
-                           </div>
-                           <div class="form-row">
-                              <div class="form-group col-md-6">
-                                 <label for="txtBuscarUnidadMedida">Buscar unidad de medida</label>
-                                 <input type="text" class="form-control" id="txtBuscarUnidadMedida" name="txtBuscarUnidadMedida" placeholder="">
-                                 <span id="unidadMedidaList"></span>
-                              </div>
                               <div class="form-group col-md-6">
                                  <label for="txtUnidadMedida">Unidad de medida</label>
-                                 <input type="text" class="form-control" id="txtUnidadMedida" name="txtUnidadMedida" placeholder="" readonly>
+                                 <input type="text" class="form-control" id="txtUnidadMedida" name="txtUnidadMedida" placeholder="U000">
                               </div>
-
                            </div>
                            <div class="form-row">
                               <div class="form-group col-md-6">
@@ -195,7 +187,7 @@ require_once '../app/views/layouts/header.php';
          precio_venta: $columnas[3].innerHTML,
          stock: $columnas[4].innerHTML,
          stock_minimo: $columnas[5].innerHTML,
-         unidad_medida: $columnas[6].getAttribute('value') + ' - ' + $columnas[6].innerHTML,
+         unidad_medida_codigo: $columnas[6].getAttribute('value'),
          marca_codigo: $columnas[7].getAttribute('value'),
          categoria_id: $columnas[8].getAttribute('value')
       }
@@ -206,7 +198,7 @@ require_once '../app/views/layouts/header.php';
       document.getElementById("txtPrecioVenta").value = producto.precio_venta;
       document.getElementById("txtStock").value = producto.stock;
       document.getElementById("txtStockMinimo").value = producto.stock_minimo;
-      document.getElementById("txtUnidadMedida").value = producto.unidad_medida;
+      document.getElementById("txtUnidadMedida").value = producto.unidad_medida_codigo;
       document.getElementById("txtMarca").value = producto.marca_codigo;
       document.getElementById("txtCategoria").value = producto.categoria_id;
       document.getElementById("btnAceptar").value = 'Actualizar';
@@ -223,35 +215,6 @@ require_once '../app/views/layouts/header.php';
 <?php
 require_once '../app/views/layouts/footer.php';
 ?>
-
-<!-- autocomplete search bar -->
-<script>
-   $('#txtBuscarUnidadMedida').keyup(function() {
-      let descripcionUnidadMedida = $(this).val();
-      if (descripcionUnidadMedida != '') {
-         console.log(descripcionUnidadMedida);
-         $.ajax({
-            url: '/primer_proyecto/unidadmedida/searchUnidadMedida',
-            method: 'POST',
-            data: {
-               descripcionUnidadMedida
-            },
-            success: function(data) {
-               console.log(data);
-               $("#unidadMedidaList").show();
-               $('#unidadMedidaList').html(data);
-            }
-         });
-      } else {
-         $('#unidadMedidaList').html('');
-      }
-   })
-
-   function selectname(selected_value) {
-      $("#txtUnidadMedida").val(selected_value);
-      $("#unidadMedidaList").hide();
-   }
-</script>
 
 <!-- jquery-validation -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
@@ -290,7 +253,8 @@ require_once '../app/views/layouts/footer.php';
                rangelength: [4, 4]
             },
             txtUnidadMedida: {
-               required: true
+               required: true,
+               rangelength: [4, 4]
             },
             txtCategoria: {
                required: true,
@@ -305,7 +269,7 @@ require_once '../app/views/layouts/footer.php';
             txtStock: "El stock es obligatorio (solo número decimal).",
             txtStockMinimo: "El stock mínimo es obligatorio (solo número decimal).",
             txtMarca: "El código de marca es obligatorio (M000).",
-            txtUnidadMedida: "La unidad de medida es obligatoria.",
+            txtUnidadMedida: "El código de unidad de medida es obligatorio (U000).",
             txtCategoria: "El ID de categoría es obligatorio."
          },
          errorElement: 'span'
