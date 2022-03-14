@@ -18,7 +18,7 @@ var tipo = 'index';
 const $fragment = document.createDocumentFragment();
 
 function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 // Revisa qué item de la SideBar debe activarse
@@ -60,21 +60,21 @@ function formulario() {
       const $divFormRow0 = document.createElement('div');
       $divFormRow0.setAttribute('class', 'form-row');
 
-         // Grupo 01 - Fila 00
-         const $divFormGroup01 = document.createElement('div');
-         $divFormGroup01.setAttribute('class', 'form-group col-md-12');
-            const $inputCodigo = document.createElement('input');
-            $inputCodigo.setAttribute('type', 'text');
-            $inputCodigo.setAttribute('class', 'form-control');
-            $inputCodigo.setAttribute('id', 'txtCodigo');
-            $inputCodigo.setAttribute('name', 'txtCodigo');
-            $inputCodigo.setAttribute('readOnly', 'true');
-            $inputCodigo.setAttribute('value', '');
-         $divFormGroup01.appendChild($inputCodigo);
-         $divFormRow0.appendChild($divFormGroup01);
-         $divFormRow0.setAttribute('hidden', 'true');
-         //console.log($divFormRow0);
-         // FIN Grupo 01 - Fila 00
+      // Grupo 01 - Fila 00
+      const $divFormGroup01 = document.createElement('div');
+      $divFormGroup01.setAttribute('class', 'form-group col-md-12');
+      const $inputCodigo = document.createElement('input');
+      $inputCodigo.setAttribute('type', 'text');
+      $inputCodigo.setAttribute('class', 'form-control');
+      $inputCodigo.setAttribute('id', 'txtCodigo');
+      $inputCodigo.setAttribute('name', 'txtCodigo');
+      $inputCodigo.setAttribute('readOnly', 'true');
+      $inputCodigo.setAttribute('value', '');
+      $divFormGroup01.appendChild($inputCodigo);
+      $divFormRow0.appendChild($divFormGroup01);
+      $divFormRow0.setAttribute('hidden', 'true');
+      //console.log($divFormRow0);
+      // FIN Grupo 01 - Fila 00
 
       // FIN Fila 00
 
@@ -82,36 +82,36 @@ function formulario() {
       const $divFormRow1 = document.createElement('div');
       $divFormRow1.setAttribute('class', 'form-row');
 
-         // Grupo 01 - Fila 01
-         const $divFormGroup11 = document.createElement('div');
-         $divFormGroup11.setAttribute('class', 'form-group col-md-12');
-            const $label11 = document.createElement('label');
-            $label11.setAttribute('for', 'txtDescipcion');
-            $label11.innerHTML = 'Descripción';
-            const $inputDescripcion = document.createElement('input');
-            $inputDescripcion.setAttribute('type', 'text');
-            $inputDescripcion.setAttribute('class', 'form-control');
-            $inputDescripcion.setAttribute('id', 'txtDescripcion');
-            $inputDescripcion.setAttribute('name', 'txtDescripcion');
-            switch (tipo) {
-               case 'producto':
-                  $inputDescripcion.setAttribute('placeholder', 'Descripción del producto');
-                  break;
-               case 'marca':
-                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la marca');
-                  break;
-               case 'categoria':
-                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la categoría');
-                  break;
-               case 'unidadMedida':
-                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la unidad de medida');
-                  break;
-            }
-         $divFormGroup11.appendChild($label11);
-         $divFormGroup11.appendChild($inputDescripcion);
-         $divFormRow1.appendChild($divFormGroup11);
-         //console.log($divFormRow1);
-         // FIN Grupo 01 - Fila 01
+      // Grupo 01 - Fila 01
+      const $divFormGroup11 = document.createElement('div');
+      $divFormGroup11.setAttribute('class', 'form-group col-md-12');
+      const $label11 = document.createElement('label');
+      $label11.setAttribute('for', 'txtDescipcion');
+      $label11.innerHTML = 'Descripción';
+      const $inputDescripcion = document.createElement('input');
+      $inputDescripcion.setAttribute('type', 'text');
+      $inputDescripcion.setAttribute('class', 'form-control');
+      $inputDescripcion.setAttribute('id', 'txtDescripcion');
+      $inputDescripcion.setAttribute('name', 'txtDescripcion');
+      switch (tipo) {
+         case 'producto':
+            $inputDescripcion.setAttribute('placeholder', 'Descripción del producto');
+            break;
+         case 'marca':
+            $inputDescripcion.setAttribute('placeholder', 'Descripción de la marca');
+            break;
+         case 'categoria':
+            $inputDescripcion.setAttribute('placeholder', 'Descripción de la categoría');
+            break;
+         case 'unidadMedida':
+            $inputDescripcion.setAttribute('placeholder', 'Descripción de la unidad de medida');
+            break;
+      }
+      $divFormGroup11.appendChild($label11);
+      $divFormGroup11.appendChild($inputDescripcion);
+      $divFormRow1.appendChild($divFormGroup11);
+      //console.log($divFormRow1);
+      // FIN Grupo 01 - Fila 01
 
       // FIN Fila 01
 
@@ -123,39 +123,39 @@ function formulario() {
          const $divFormRow2 = document.createElement('div');
          $divFormRow2.setAttribute('class', 'form-row');
 
-            // Grupo 01 - Fila 02
-            const $divFormGroup21 = document.createElement('div');
-            $divFormGroup21.setAttribute('class', 'form-group col-md-6');
-               const $label21 = document.createElement('label');
-               $label21.setAttribute('for', 'txtPrecioCompra');
-               $label21.innerHTML = 'Precio de compra';
-               const $inputPrecioCompra = document.createElement('input');
-               $inputPrecioCompra.setAttribute('type', 'text');
-               $inputPrecioCompra.setAttribute('class', 'form-control');
-               $inputPrecioCompra.setAttribute('id', 'txtPrecioCompra');
-               $inputPrecioCompra.setAttribute('name', 'txtPrecioCompra');
-               $inputPrecioCompra.setAttribute('placeholder', '0.00');
-            $divFormGroup21.appendChild($label21);
-            $divFormGroup21.appendChild($inputPrecioCompra);
-            $divFormRow2.appendChild($divFormGroup21);
-            // FIN Grupo 01 - Fila 02
+         // Grupo 01 - Fila 02
+         const $divFormGroup21 = document.createElement('div');
+         $divFormGroup21.setAttribute('class', 'form-group col-md-6');
+         const $label21 = document.createElement('label');
+         $label21.setAttribute('for', 'txtPrecioCompra');
+         $label21.innerHTML = 'Precio de compra';
+         const $inputPrecioCompra = document.createElement('input');
+         $inputPrecioCompra.setAttribute('type', 'text');
+         $inputPrecioCompra.setAttribute('class', 'form-control');
+         $inputPrecioCompra.setAttribute('id', 'txtPrecioCompra');
+         $inputPrecioCompra.setAttribute('name', 'txtPrecioCompra');
+         $inputPrecioCompra.setAttribute('placeholder', '0.00');
+         $divFormGroup21.appendChild($label21);
+         $divFormGroup21.appendChild($inputPrecioCompra);
+         $divFormRow2.appendChild($divFormGroup21);
+         // FIN Grupo 01 - Fila 02
 
-            // Grupo 02 - Fila 02
-            const $divFormGroup22 = document.createElement('div');
-            $divFormGroup22.setAttribute('class', 'form-group col-md-6');
-               const $label22 = document.createElement('label');
-               $label22.setAttribute('for', 'txtPrecioVenta');
-               $label22.innerHTML = 'Precio de venta';
-               const $inputPrecioVenta = document.createElement('input');
-               $inputPrecioVenta.setAttribute('type', 'text');
-               $inputPrecioVenta.setAttribute('class', 'form-control');
-               $inputPrecioVenta.setAttribute('id', 'txtPrecioVenta');
-               $inputPrecioVenta.setAttribute('name', 'txtPrecioVenta');
-               $inputPrecioVenta.setAttribute('placeholder', '0.00');
-            $divFormGroup22.appendChild($label22);
-            $divFormGroup22.appendChild($inputPrecioVenta);
-            $divFormRow2.appendChild($divFormGroup22);
-            // FIN Grupo 02 - Fila 02
+         // Grupo 02 - Fila 02
+         const $divFormGroup22 = document.createElement('div');
+         $divFormGroup22.setAttribute('class', 'form-group col-md-6');
+         const $label22 = document.createElement('label');
+         $label22.setAttribute('for', 'txtPrecioVenta');
+         $label22.innerHTML = 'Precio de venta';
+         const $inputPrecioVenta = document.createElement('input');
+         $inputPrecioVenta.setAttribute('type', 'text');
+         $inputPrecioVenta.setAttribute('class', 'form-control');
+         $inputPrecioVenta.setAttribute('id', 'txtPrecioVenta');
+         $inputPrecioVenta.setAttribute('name', 'txtPrecioVenta');
+         $inputPrecioVenta.setAttribute('placeholder', '0.00');
+         $divFormGroup22.appendChild($label22);
+         $divFormGroup22.appendChild($inputPrecioVenta);
+         $divFormRow2.appendChild($divFormGroup22);
+         // FIN Grupo 02 - Fila 02
 
          // Fila 02
 
@@ -164,67 +164,67 @@ function formulario() {
          const $divFormRow3 = document.createElement('div');
          $divFormRow3.setAttribute('class', 'form-row');
 
-            // Grupo 01 - Fila 03
-            const $divFormGroup31 = document.createElement('div');
-            $divFormGroup31.setAttribute('class', 'form-group col-md-3');
-               const $label31 = document.createElement('label');
-               $label31.setAttribute('for', 'txtStock');
-               $label31.innerHTML = 'Stock';
-               const $inputStock = document.createElement('input');
-               $inputStock.setAttribute('type', 'text');
-               $inputStock.setAttribute('class', 'form-control');
-               $inputStock.setAttribute('id', 'txtStock');
-               $inputStock.setAttribute('name', 'txtStock');
-               $inputStock.setAttribute('placeholder', '0.00');
-            $divFormGroup31.appendChild($label31);
-            $divFormGroup31.appendChild($inputStock);
-            $divFormRow3.appendChild($divFormGroup31);
-            // FIN Grupo 01 - Fila 03
+         // Grupo 01 - Fila 03
+         const $divFormGroup31 = document.createElement('div');
+         $divFormGroup31.setAttribute('class', 'form-group col-md-3');
+         const $label31 = document.createElement('label');
+         $label31.setAttribute('for', 'txtStock');
+         $label31.innerHTML = 'Stock';
+         const $inputStock = document.createElement('input');
+         $inputStock.setAttribute('type', 'text');
+         $inputStock.setAttribute('class', 'form-control');
+         $inputStock.setAttribute('id', 'txtStock');
+         $inputStock.setAttribute('name', 'txtStock');
+         $inputStock.setAttribute('placeholder', '0.00');
+         $divFormGroup31.appendChild($label31);
+         $divFormGroup31.appendChild($inputStock);
+         $divFormRow3.appendChild($divFormGroup31);
+         // FIN Grupo 01 - Fila 03
 
-            // Grupo 02 - Fila 03
-            const $divFormGroup32 = document.createElement('div');
-            $divFormGroup32.setAttribute('class', 'form-group col-md-3');
-               const $label32 = document.createElement('label');
-               $label32.setAttribute('for', 'txtStockMinimo');
-               $label32.innerHTML = 'Stock mínimo';
-               const $inputStockMinimo = document.createElement('input');
-               $inputStockMinimo.setAttribute('type', 'text');
-               $inputStockMinimo.setAttribute('class', 'form-control');
-               $inputStockMinimo.setAttribute('id', 'txtStockMinimo');
-               $inputStockMinimo.setAttribute('name', 'txtStockMinimo');
-               $inputStockMinimo.setAttribute('placeholder', '0.00');
-            $divFormGroup32.appendChild($label32);
-            $divFormGroup32.appendChild($inputStockMinimo);
-            $divFormRow3.appendChild($divFormGroup32);
-            // FIN Grupo 02 - Fila 03
+         // Grupo 02 - Fila 03
+         const $divFormGroup32 = document.createElement('div');
+         $divFormGroup32.setAttribute('class', 'form-group col-md-3');
+         const $label32 = document.createElement('label');
+         $label32.setAttribute('for', 'txtStockMinimo');
+         $label32.innerHTML = 'Stock mínimo';
+         const $inputStockMinimo = document.createElement('input');
+         $inputStockMinimo.setAttribute('type', 'text');
+         $inputStockMinimo.setAttribute('class', 'form-control');
+         $inputStockMinimo.setAttribute('id', 'txtStockMinimo');
+         $inputStockMinimo.setAttribute('name', 'txtStockMinimo');
+         $inputStockMinimo.setAttribute('placeholder', '0.00');
+         $divFormGroup32.appendChild($label32);
+         $divFormGroup32.appendChild($inputStockMinimo);
+         $divFormRow3.appendChild($divFormGroup32);
+         // FIN Grupo 02 - Fila 03
 
-            // Grupo 03 - Fila 03
-            const $divFormGroup33 = document.createElement('div');
-            $divFormGroup33.setAttribute('class', 'form-group col-md-6');
-               const $label33 = document.createElement('label');
-               $label33.setAttribute('for', 'txtUnidadMedida');
-               $label33.innerHTML = 'Unidad de medida';
-               const $inputUnidadMedida = document.createElement('input');
-               $inputUnidadMedida.setAttribute('type', 'text');
-               $inputUnidadMedida.setAttribute('class', 'form-control');
-               $inputUnidadMedida.setAttribute('id', 'txtUnidadMedida');
-               $inputUnidadMedida.setAttribute('name', 'txtUnidadMedida');
-               $inputUnidadMedida.setAttribute('placeholder', 'Buscar...');
-               const $aUnidadMedida = document.createElement('a');
-               $aUnidadMedida.setAttribute('href', '#');
-               $aUnidadMedida.setAttribute('id', 'btnCambiarUnidadMedida');
-               $aUnidadMedida.setAttribute('class', 'btn btn-warning');
-               $aUnidadMedida.setAttribute('hidden', 'true');
-               $aUnidadMedida.innerHTML = 'Cambiar';
-               const $spanUnidadMedida = document.createElement('span');
-               $spanUnidadMedida.setAttribute('id', 'unidadMedidaList');
+         // Grupo 03 - Fila 03
+         const $divFormGroup33 = document.createElement('div');
+         $divFormGroup33.setAttribute('class', 'form-group col-md-6');
+         const $label33 = document.createElement('label');
+         $label33.setAttribute('for', 'txtUnidadMedida');
+         $label33.innerHTML = 'Unidad de medida';
+         const $inputUnidadMedida = document.createElement('input');
+         $inputUnidadMedida.setAttribute('type', 'text');
+         $inputUnidadMedida.setAttribute('class', 'form-control');
+         $inputUnidadMedida.setAttribute('id', 'txtUnidadMedida');
+         $inputUnidadMedida.setAttribute('name', 'txtUnidadMedida');
+         $inputUnidadMedida.setAttribute('placeholder', 'Buscar...');
+         const $aUnidadMedida = document.createElement('a');
+         $aUnidadMedida.setAttribute('href', '#');
+         $aUnidadMedida.setAttribute('id', 'btnCambiarUnidadMedida');
+         $aUnidadMedida.setAttribute('class', 'btn btn-warning');
+         $aUnidadMedida.setAttribute('hidden', 'true');
+         $aUnidadMedida.innerHTML = 'Cambiar';
+         const $spanUnidadMedida = document.createElement('span');
+         $spanUnidadMedida.setAttribute('id', 'unidadMedidaList');
 
-            $divFormGroup33.appendChild($label33);
-            $divFormGroup33.appendChild($inputUnidadMedida);
-            $divFormGroup33.appendChild($aUnidadMedida);
-            $divFormGroup33.appendChild($spanUnidadMedida);
-            $divFormRow3.appendChild($divFormGroup33);
-            // FIN Grupo 03 - Fila 03
+         $divFormGroup33.appendChild($label33);
+         $divFormGroup33.appendChild($inputUnidadMedida);
+         $divFormGroup33.appendChild($aUnidadMedida);
+         $divFormGroup33.appendChild($spanUnidadMedida);
+         $divFormRow3.appendChild($divFormGroup33);
+         // FIN Grupo 03 - Fila 03
 
          // Fila 03
 
@@ -233,85 +233,78 @@ function formulario() {
          const $divFormRow4 = document.createElement('div');
          $divFormRow4.setAttribute('class', 'form-row');
 
-            // Grupo 01 - Fila 04
-            const $divFormGroup41 = document.createElement('div');
-            $divFormGroup41.setAttribute('class', 'form-group col-md-6');
-               const $label41 = document.createElement('label');
-               $label41.setAttribute('for', 'txtMarca');
-               $label41.innerHTML = 'Marca';
-               const $inputMarca = document.createElement('input');
-               $inputMarca.setAttribute('type', 'text');
-               $inputMarca.setAttribute('class', 'form-control');
-               $inputMarca.setAttribute('id', 'txtMarca');
-               $inputMarca.setAttribute('name', 'txtMarca');
-               $inputMarca.setAttribute('placeholder', 'Buscar...');
-               const $aMarca = document.createElement('a');
-               $aMarca.setAttribute('href', '#');
-               $aMarca.setAttribute('id', 'btnCambiarMarca');
-               $aMarca.setAttribute('class', 'btn btn-warning');
-               $aMarca.setAttribute('hidden', 'true');
-               $aMarca.innerHTML = 'Cambiar';
-               const $spanMarca = document.createElement('span');
-               $spanMarca.setAttribute('id', 'marcaList');
+         // Grupo 01 - Fila 04
+         const $divFormGroup41 = document.createElement('div');
+         $divFormGroup41.setAttribute('class', 'form-group col-md-6');
+         const $label41 = document.createElement('label');
+         $label41.setAttribute('for', 'txtMarca');
+         $label41.innerHTML = 'Marca';
+         const $inputMarca = document.createElement('input');
+         $inputMarca.setAttribute('type', 'text');
+         $inputMarca.setAttribute('class', 'form-control');
+         $inputMarca.setAttribute('id', 'txtMarca');
+         $inputMarca.setAttribute('name', 'txtMarca');
+         $inputMarca.setAttribute('placeholder', 'Buscar...');
+         const $aMarca = document.createElement('a');
+         $aMarca.setAttribute('href', '#');
+         $aMarca.setAttribute('id', 'btnCambiarMarca');
+         $aMarca.setAttribute('class', 'btn btn-warning');
+         $aMarca.setAttribute('hidden', 'true');
+         $aMarca.innerHTML = 'Cambiar';
+         const $spanMarca = document.createElement('span');
+         $spanMarca.setAttribute('id', 'marcaList');
 
-            $divFormGroup41.appendChild($label41);
-            $divFormGroup41.appendChild($inputMarca);
-            $divFormGroup41.appendChild($aMarca);
-            $divFormGroup41.appendChild($spanMarca);
-            $divFormRow4.appendChild($divFormGroup41);
-            // FIN Grupo 01 - Fila 04
+         $divFormGroup41.appendChild($label41);
+         $divFormGroup41.appendChild($inputMarca);
+         $divFormGroup41.appendChild($aMarca);
+         $divFormGroup41.appendChild($spanMarca);
+         $divFormRow4.appendChild($divFormGroup41);
+         // FIN Grupo 01 - Fila 04
 
-            // Grupo 02 - Fila 04
-            const $divFormGroup42 = document.createElement('div');
-            $divFormGroup42.setAttribute('class', 'form-group col-md-6');
-               const $label42 = document.createElement('label');
-               $label42.setAttribute('for', 'txtCategoria');
-               $label42.innerHTML = 'Categoría';
-               const $inputCategoria = document.createElement('input');
-               $inputCategoria.setAttribute('type', 'text');
-               $inputCategoria.setAttribute('class', 'form-control');
-               $inputCategoria.setAttribute('id', 'txtCategoria');
-               $inputCategoria.setAttribute('name', 'txtCategoria');
-               $inputCategoria.setAttribute('placeholder', 'Buscar...');
-               const $aCategoria = document.createElement('a');
-               $aCategoria.setAttribute('href', '#');
-               $aCategoria.setAttribute('id', 'btnCambiarCategoria');
-               $aCategoria.setAttribute('class', 'btn btn-warning');
-               $aCategoria.setAttribute('hidden', 'true');
-               $aCategoria.innerHTML = 'Cambiar';
-               const $spanCategoria = document.createElement('span');
-               $spanCategoria.setAttribute('id', 'categoriaList');
+         // Grupo 02 - Fila 04
+         const $divFormGroup42 = document.createElement('div');
+         $divFormGroup42.setAttribute('class', 'form-group col-md-6');
+         const $label42 = document.createElement('label');
+         $label42.setAttribute('for', 'txtCategoria');
+         $label42.innerHTML = 'Categoría';
+         const $inputCategoria = document.createElement('input');
+         $inputCategoria.setAttribute('type', 'text');
+         $inputCategoria.setAttribute('class', 'form-control');
+         $inputCategoria.setAttribute('id', 'txtCategoria');
+         $inputCategoria.setAttribute('name', 'txtCategoria');
+         $inputCategoria.setAttribute('placeholder', 'Buscar...');
+         const $aCategoria = document.createElement('a');
+         $aCategoria.setAttribute('href', '#');
+         $aCategoria.setAttribute('id', 'btnCambiarCategoria');
+         $aCategoria.setAttribute('class', 'btn btn-warning');
+         $aCategoria.setAttribute('hidden', 'true');
+         $aCategoria.innerHTML = 'Cambiar';
+         const $spanCategoria = document.createElement('span');
+         $spanCategoria.setAttribute('id', 'categoriaList');
 
-            $divFormGroup42.appendChild($label42);
-            $divFormGroup42.appendChild($inputCategoria);
-            $divFormGroup42.appendChild($aCategoria);
-            $divFormGroup42.appendChild($spanCategoria);
-            $divFormRow4.appendChild($divFormGroup42);
-            // FIN Grupo 02 - Fila 04
+         $divFormGroup42.appendChild($label42);
+         $divFormGroup42.appendChild($inputCategoria);
+         $divFormGroup42.appendChild($aCategoria);
+         $divFormGroup42.appendChild($spanCategoria);
+         $divFormRow4.appendChild($divFormGroup42);
+         // FIN Grupo 02 - Fila 04
 
          // FIN Fila 04
-      
+
          $modalBody.appendChild($divFormRow2);
          $modalBody.appendChild($divFormRow3);
          $modalBody.appendChild($divFormRow4);
-         
-         autocompleteSearchBars();
 
-         document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (validar()) {
-               submit();
-            }
-         });
+         autocompleteSearchBars();
       }
 
-       document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (validar()) {
-               submit();
-            }
-         });
-   } 
+      document.getElementById('form').addEventListener('submit', function (event) {
+         event.preventDefault();
+         if (validar()) {
+            submit();
+         }
+      });
+   }
    // FIN - Formulario
 }
 
@@ -323,7 +316,7 @@ function btnAgregar() {
       $btnAgregar.setAttribute('type', 'button');
       $btnAgregar.setAttribute('class', 'btn btn-success mb-sm-3');
       $btnAgregar.setAttribute('data-toggle', 'modal');
-      $btnAgregar.addEventListener('click', function() {
+      $btnAgregar.addEventListener('click', function () {
          $('#modal').modal('show');
          accion = 'registrar';
       });
@@ -331,7 +324,7 @@ function btnAgregar() {
       $iconPlus.setAttribute('class', 'fas fa-plus');
       $btnAgregar.appendChild($iconPlus);
       $btnAgregar.innerHTML = 'Agregar nuevo';
-      $btnAgregar.addEventListener('click', function() {agregar();});
+      $btnAgregar.addEventListener('click', function () { agregar(); });
 
       $cuerpoCard.appendChild($btnAgregar);
    }
@@ -441,14 +434,34 @@ const listarTable = function listarTable(json) {
       let $tr = document.createElement('tr');
       $tr.setAttribute('id', elemento.codigo);
       for (const [clave, valor] of Object.entries(elemento)) {
+         let crear = true;
          let $td = document.createElement('td');
-         $td.innerHTML = valor;
-         if (clave == 'unidad_medida_codigo'
-            || clave == 'marca_codigo'
-            || clave == 'categoria_id') {
-            $td.setAttribute('value', valor);
+         switch (clave) {
+            case 'unidad_medida_id':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.unidad_medida_descripcion;
+               break;
+            case 'marca_id':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.marca_descripcion;
+               break;
+            case 'categoria_id':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.categoria_descripcion;
+               break;
+            case 'unidad_medida_descripcion':
+            case 'marca_descripcion':
+            case 'categoria_descripcion':
+               crear = false;
+               break;
+            default:
+               $td.innerHTML = valor;
+               break;
          }
-         $tr.appendChild($td);
+         if (crear) {
+            $tr.appendChild($td);
+         }
+         crear = true;
       }
 
       let $td = document.createElement('td');
@@ -468,7 +481,7 @@ const listarTable = function listarTable(json) {
 
       let $btnEliminar = document.createElement('button');
       $btnEliminar.setAttribute('type', 'button');
-      $btnEliminar.setAttribute('id', 'eliminar'+elemento.codigo);
+      $btnEliminar.setAttribute('id', 'eliminar' + elemento.codigo);
       $btnEliminar.setAttribute('class', 'btn btn-danger eliminar');
       $btnEliminar.setAttribute('onclick', 'eliminar(this)');
       /*$btnEliminar.addEventListener('click', function() {
@@ -505,35 +518,39 @@ const listarTable = function listarTable(json) {
 
    $cuerpoCard.appendChild($table);
 
-   let $tabla = $('#'+tipo+'_table').DataTable({
+   let $tabla = $('#' + tipo + '_table').DataTable({
       responsive: true,
       autoWidth: false,
       lengthChange: false,
       dom: 'Bfrtip',
-      buttons: 
+      buttons:
          [
             {
                extend: 'copy',
+               title: capitalizeFirstLetter(tipo),
                exportOptions: {
-                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+                  columns: (tipo == 'producto') ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2]
                }
-            }, 
+            },
             {
                extend: 'excel',
+               title: capitalizeFirstLetter(tipo),
                exportOptions: {
-                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+                  columns: (tipo == 'producto') ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2]
                }
-            }, 
+            },
             {
                extend: 'pdf',
+               title: capitalizeFirstLetter(tipo),
                exportOptions: {
-                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+                  columns: (tipo == 'producto') ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2]
                }
-            }, 
+            },
             {
                extend: 'print',
+               title: capitalizeFirstLetter(tipo),
                exportOptions: {
-                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+                  columns: (tipo == 'producto') ? [0, 1, 2, 3, 4, 5, 6, 7, 8] : [0, 1, 2]
                }
             }
          ],
@@ -543,27 +560,93 @@ const listarTable = function listarTable(json) {
    });
 
    $tabla.buttons().container()
-        .appendTo( '#'+tipo+'_table_wrapper .col-md-6:eq(0)' );
+      .appendTo('#' + tipo + '_table_wrapper .col-md-6:eq(0)');
 }
 
 // Inicializa panel de usuario
-const panelUsuario = function panelUsuario() {
-   const $formUsuario = document.createElement('form');
-   $formUsuario.setAttribute('id', 'formUser');
-   const $formGroup1 = document.createElement('div');
-   $formGroup1.setAttribute('class', 'form-group');
-   const $label1 = document.createElement('label');
-   $label1.innerHTML = 'Nombre de usuario';
-   const $br1 = document.createElement('br');
-   const username = '<?php echo $username; ?>';
-   const $username = document.createTextNode(username);
-   $formGroup1.appendChild($label1);
-   $formGroup1.appendChild($br1);
-   $formGroup1.appendChild($username);
+const panelUsuario = async function panelUsuario() {
+   try {
+      loading();
+      let response = await fetch('/primer_proyecto/users/user'),
+         json = await response.json();
 
-   $formUsuario.appendChild($formGroup1);
+      if (!response.ok) {
+         throw {
+            status: response.status,
+            statusText: response.statusText
+         };
+      }
 
-   $cuerpoCard.appendChild($formUsuario);
+      const $formUsuario = document.createElement('form');
+      $formUsuario.setAttribute('id', 'formUser');
+
+      const $formGroup1 = document.createElement('div');
+      $formGroup1.setAttribute('class', 'form-group col-md-6');
+      const $label1 = document.createElement('label');
+      $label1.innerHTML = 'Nombre de usuario';
+      const $br1 = document.createElement('br');
+      const $username = document.createTextNode(json.username);
+      $formGroup1.appendChild($label1);
+      $formGroup1.appendChild($br1);
+      $formGroup1.appendChild($username);
+
+      const $formGroup2 = document.createElement('div');
+      $formGroup2.setAttribute('class', 'form-group col-md-6');
+      const $label2 = document.createElement('label');
+      $label2.setAttribute('for', 'txtPasswordAntigua');
+      $label2.innerHTML = 'Contraseña antigua';
+      const $inputPasswordAntigua = document.createElement('input');
+      $inputPasswordAntigua.setAttribute('type', 'password');
+      $inputPasswordAntigua.setAttribute('name', 'txtPasswordAntigua');
+      $inputPasswordAntigua.setAttribute('class', 'form-control');
+      $inputPasswordAntigua.setAttribute('id', 'txtPasswordAntigua');
+      $formGroup2.appendChild($label2);
+      $formGroup2.appendChild($inputPasswordAntigua);
+
+      const $formGroup3 = document.createElement('div');
+      $formGroup3.setAttribute('class', 'form-group col-md-6');
+      const $label3 = document.createElement('label');
+      $label3.setAttribute('for', 'txtPasswordNueva');
+      $label3.innerHTML = 'Nueva contraseña';
+      const $inputPasswordNueva = document.createElement('input');
+      $inputPasswordNueva.setAttribute('type', 'password');
+      $inputPasswordNueva.setAttribute('name', 'txtPasswordNueva');
+      $inputPasswordNueva.setAttribute('class', 'form-control');
+      $inputPasswordNueva.setAttribute('id', 'txtPasswordNueva');
+      $formGroup3.appendChild($label3);
+      $formGroup3.appendChild($inputPasswordNueva);
+
+      const $formGroup4 = document.createElement('div');
+      $formGroup4.setAttribute('class', 'form-group col-md-6');
+      const $aLogout = document.createElement('a');
+      $aLogout.setAttribute('href', '/primer_proyecto/users/logout');
+      $aLogout.setAttribute('type', 'button');
+      $aLogout.setAttribute('class', 'btn btn-danger');
+      $aLogout.innerHTML = 'Cerrar sesión';
+
+      const $inputSubmit = document.createElement('input');
+      $inputSubmit.setAttribute('type', 'submit');
+      $inputSubmit.setAttribute('class', 'btn btn-primary');
+      $inputSubmit.setAttribute('value', 'Cambiar contraseña');
+      $formGroup4.appendChild($aLogout);
+      $formGroup4.appendChild($inputSubmit);
+
+      $formUsuario.appendChild($formGroup1);
+      $formUsuario.appendChild($formGroup2);
+      $formUsuario.appendChild($formGroup3);
+      /*$formUsuario.appendChild($aLogout);
+      $formUsuario.appendChild($inputSubmit);*/
+      $formUsuario.appendChild($formGroup4);
+
+
+      $cuerpoCard.appendChild($formUsuario);
+      removeLoading();
+
+   } catch (error) {
+      let message = error.statusText || "Ocurrió un error";
+      $cuerpoCard.innerHTML = error;
+   }
+   
 }
 
 // Agregar cargando
@@ -583,9 +666,9 @@ const getPage = async () => {
    try {
       if (tipo != 'usuario') {
          loading();
-         let response = await fetch('/primer_proyecto/'+tipo+'/index'),
+         let response = await fetch('/primer_proyecto/' + tipo + '/index'),
             json = await response.json();
-         
+
          if (!response.ok) {
             throw {
                status: response.status,
@@ -601,64 +684,64 @@ const getPage = async () => {
       } else {
          panelUsuario();
       }
-      
+
    } catch (error) {
       let message = error.statusText || "Ocurrió un error";
       $cuerpoCard.innerHTML = error;
    }
-} 
+}
 
 // Inicializa LeftBar y SideBar
 function inicializarBotonesDireccion() {
-   $btnSBIindex.addEventListener('click', function() {
+   $btnSBIindex.addEventListener('click', function () {
       tipo = 'index';
       index();
    });
-   $btnSBUsuario.addEventListener('click', function() {
+   $btnSBUsuario.addEventListener('click', function () {
       tipo = 'usuario';
       index();
       getPage();
    });
-   $btnSBProducto.addEventListener('click', function() {
+   $btnSBProducto.addEventListener('click', function () {
       tipo = 'producto';
       index();
       getPage();
    });
-   $btnSBMarca.addEventListener('click', function() {
+   $btnSBMarca.addEventListener('click', function () {
       tipo = 'marca';
       index();
       getPage();
    });
-   $btnSBCategoria.addEventListener('click', function() {
+   $btnSBCategoria.addEventListener('click', function () {
       tipo = 'categoria';
       index();
       getPage();
    });
-   $btnSBUnidadMedida.addEventListener('click', function() {
+   $btnSBUnidadMedida.addEventListener('click', function () {
       tipo = 'unidadMedida';
       index();
       getPage();
    });
-   $btnLBIindex.addEventListener('click', function() {
+   $btnLBIindex.addEventListener('click', function () {
       tipo = 'index';
       index();
    })
-   $btnLBProducto.addEventListener('click', function() {
+   $btnLBProducto.addEventListener('click', function () {
       tipo = 'producto';
       index();
       getPage();
    });
-   $btnLBMarca.addEventListener('click', function() {
+   $btnLBMarca.addEventListener('click', function () {
       tipo = 'marca';
       index();
       getPage();
    });
-   $btnLBCategoria.addEventListener('click', function() {
+   $btnLBCategoria.addEventListener('click', function () {
       tipo = 'categoria';
       index();
       getPage();
    });
-   $btnLBUnidadMedida.addEventListener('click', function() {
+   $btnLBUnidadMedida.addEventListener('click', function () {
       tipo = 'unidadMedida';
       index();
       getPage();
@@ -669,7 +752,7 @@ inicializarBotonesDireccion();
 
 // Al hacer click muestra modal en modo "Agregar registro"
 const agregar = function agregar() {
-   document.getElementById("modalTitulo").innerHTML = "Agregar "+tipo;
+   document.getElementById("modalTitulo").innerHTML = "Agregar " + tipo;
    let campos = [];
    switch (tipo) {
       case 'producto':
@@ -718,7 +801,7 @@ const agregar = function agregar() {
 
 // Al hacer click muestra modal en modo "Editar registro"
 const editar = function editar(element) {
-   document.getElementById("modalTitulo").innerHTML = "Editar "+tipo;
+   document.getElementById("modalTitulo").innerHTML = "Editar " + tipo;
    $fila = document.getElementById(element.name);
    $columnas = $fila.children;
    console.log($columnas);
@@ -735,7 +818,7 @@ const editar = function editar(element) {
             marca: $columnas[7].getAttribute('value') + ' - ' + $columnas[7].innerHTML,
             categoria: $columnas[8].getAttribute('value') + ' - ' + $columnas[8].innerHTML
          }
-         
+
          document.getElementById("txtCodigo").setAttribute('value', producto.codigo);
          document.getElementById("txtDescripcion").value = producto.descripcion;
          document.getElementById("txtPrecioCompra").value = producto.precio_compra;
@@ -763,7 +846,7 @@ const editar = function editar(element) {
             codigo: $columnas[0].innerHTML,
             descripcion: $columnas[1].innerHTML
          }
-         
+
          document.getElementById("txtCodigo").setAttribute('value', marca.codigo);
          document.getElementById("txtDescripcion").value = marca.descripcion;
          break;
@@ -772,7 +855,7 @@ const editar = function editar(element) {
             codigo: $columnas[0].innerHTML,
             descripcion: $columnas[1].innerHTML
          }
-         
+
          document.getElementById("txtCodigo").setAttribute('value', categoria.codigo);
          document.getElementById("txtDescripcion").value = categoria.descripcion;
          break;
@@ -781,14 +864,14 @@ const editar = function editar(element) {
             codigo: $columnas[0].innerHTML,
             descripcion: $columnas[1].innerHTML
          }
-         
+
          document.getElementById("txtCodigo").setAttribute('value', unidadMedida.codigo);
          document.getElementById("txtDescripcion").value = unidadMedida.descripcion;
          break;
       default:
          break;
    }
-   
+
    quitarAlerta();
    document.getElementById("btnAceptar").value = 'Actualizar';
 }
@@ -806,13 +889,13 @@ const eliminar = async function eliminar(element) {
    console.log($codigo);
    try {
       let options = {
-            method: 'POST',
-            body: JSON.stringify({codigo: $codigo}),
-            headers:{
-               'Content-Type': 'application/json'
-            }
-         },
-         response = await fetch('/primer_proyecto/'+tipo+'/destroy', options),
+         method: 'POST',
+         body: JSON.stringify({ codigo: $codigo }),
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      },
+         response = await fetch('/primer_proyecto/' + tipo + '/destroy', options),
          json = await response.json();
       if (!response.ok) {
          throw {
@@ -835,7 +918,7 @@ const eliminar = async function eliminar(element) {
       } else {
          $iconCheck.setAttribute('class', 'fas fa-exclamation-triangle');
       }
-      const $mensaje = document.createTextNode(' '+json[1]);
+      const $mensaje = document.createTextNode(' ' + json[1]);
       const $btnClose = document.createElement('button');
       $btnClose.setAttribute('type', 'button');
       $btnClose.setAttribute('class', 'close alertaResultado');
@@ -873,10 +956,10 @@ const submit = async function submit() {
       //console.log(form);
       try {
          let options = {
-               method: 'POST',
-               body: form
-            },
-            response = await fetch('/primer_proyecto/'+tipo+'/store', options),
+            method: 'POST',
+            body: form
+         },
+            response = await fetch('/primer_proyecto/' + tipo + '/store', options),
             json = await response.json();
          if (!response.ok) {
             throw {
@@ -899,7 +982,7 @@ const submit = async function submit() {
          } else {
             $iconCheck.setAttribute('class', 'fas fa-exclamation-triangle');
          }
-         const $mensaje = document.createTextNode(' '+json[1]);
+         const $mensaje = document.createTextNode(' ' + json[1]);
          const $btnClose = document.createElement('button');
          $btnClose.setAttribute('type', 'button');
          $btnClose.setAttribute('class', 'close');
@@ -916,6 +999,9 @@ const submit = async function submit() {
 
          // Mostrar alerta de éxito o de error en POST
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
+         setTimeout(() => {
+         $('.alertaResultado').alert('close');
+      }, 3000);
          // Listar elementos
          getPage();
 
@@ -929,10 +1015,10 @@ const submit = async function submit() {
       //console.log(form);
       try {
          let options = {
-               method: 'POST',
-               body: form
-            },
-            response = await fetch('/primer_proyecto/'+tipo+'/update', options),
+            method: 'POST',
+            body: form
+         },
+            response = await fetch('/primer_proyecto/' + tipo + '/update', options),
             json = await response.json();
          if (!response.ok) {
             throw {
@@ -955,7 +1041,7 @@ const submit = async function submit() {
          } else {
             $iconCheck.setAttribute('class', 'fas fa-exclamation-triangle');
          }
-         const $mensaje = document.createTextNode(' '+json[1]);
+         const $mensaje = document.createTextNode(' ' + json[1]);
          const $btnClose = document.createElement('button');
          $btnClose.setAttribute('type', 'button');
          $btnClose.setAttribute('class', 'close');
@@ -972,6 +1058,9 @@ const submit = async function submit() {
 
          // Mostrar alerta de éxito o de error en PUT
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
+         setTimeout(() => {
+         $('.alertaResultado').alert('close');
+      }, 3000);
          // Listar elementos
          getPage();
 
@@ -986,7 +1075,7 @@ const submit = async function submit() {
 // ********   AUTOCOMPLETE SEARCH BARS   ********
 const autocompleteSearchBars = function autocompleteSearchBars() {
    const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
-   $txtUnidadMedida.addEventListener('keyup', function(){
+   $txtUnidadMedida.addEventListener('keyup', function () {
       let descripcionUnidadMedida = this.value;
       if (descripcionUnidadMedida != '') {
          //console.log(descripcionUnidadMedida);
@@ -996,7 +1085,7 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
             data: {
                descripcionUnidadMedida
             },
-            success: function(data) {
+            success: function (data) {
                //console.log(data);
                const $unidadMedidaList = document.getElementById('unidadMedidaList');
                $unidadMedidaList.hidden = false;
@@ -1008,7 +1097,7 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
       }
    });
    const $txtMarca = document.getElementById('txtMarca');
-   $txtMarca.addEventListener('keyup', function() {
+   $txtMarca.addEventListener('keyup', function () {
       let descripcionMarca = this.value;
       if (descripcionMarca != '') {
          //console.log(descripcionMarca);
@@ -1018,7 +1107,7 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
             data: {
                descripcionMarca
             },
-            success: function(data) {
+            success: function (data) {
                //console.log(data);
                const $marcaList = document.getElementById('marcaList');
                $marcaList.hidden = false;
@@ -1030,7 +1119,7 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
       }
    });
    const $txtCategoria = document.getElementById('txtCategoria');
-   $txtCategoria.addEventListener('keyup', function() {
+   $txtCategoria.addEventListener('keyup', function () {
       let descripcionCategoria = this.value;
       if (descripcionCategoria != '') {
          //console.log(descripcionCategoria);
@@ -1040,7 +1129,7 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
             data: {
                descripcionCategoria
             },
-            success: function(data) {
+            success: function (data) {
                //console.log(data);
                const $categoriaList = document.getElementById('categoriaList');
                $categoriaList.hidden = false;
@@ -1053,15 +1142,15 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
    });
 
    const $btnCambiarUnidadMedida = document.getElementById('btnCambiarUnidadMedida');
-   $btnCambiarUnidadMedida.addEventListener('click', function() {
+   $btnCambiarUnidadMedida.addEventListener('click', function () {
       vaciarUnidadMedida();
    });
    const $btnCambiarMarca = document.getElementById('btnCambiarMarca');
-   $btnCambiarMarca.addEventListener('click', function() {
+   $btnCambiarMarca.addEventListener('click', function () {
       vaciarMarca();
    });
    const $btnCambiarCategoria = document.getElementById('btnCambiarCategoria');
-   $btnCambiarCategoria.addEventListener('click', function() {
+   $btnCambiarCategoria.addEventListener('click', function () {
       vaciarCategoria();
    });
 }
@@ -1268,7 +1357,7 @@ function validar() {
 const index = function index() {
    titulo();
    activarSideBar();
-   
+
    while ($cuerpoCard.firstChild) {
       $cuerpoCard.removeChild($cuerpoCard.firstChild);
    }

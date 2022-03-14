@@ -47,7 +47,7 @@ class CategoriaController
                <?php
                foreach ($categorias as $categoria) {
                ?>
-                  <a href="#" onClick="selectname_categoria('<?php echo $categoria['id'] . ' - ' . $categoria['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $categoria['descripcion'] ?></a>
+                  <a href="#" onClick="selectname_categoria('<?php echo $categoria['codigo'] . ' - ' . $categoria['descripcion']; ?>');" class="list-group-item list-group-item-action"><?php echo $categoria['descripcion'] ?></a>
                <?php
                }
                ?>

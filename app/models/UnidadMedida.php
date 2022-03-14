@@ -63,12 +63,10 @@ class UnidadMedida
    public function store($datos)
    {
       $sql = 'INSERT INTO unidad_medida(
-         id,
          codigo,
          descripcion,
          estado
       ) VALUES (
-         :id,
          :codigo,
          :descripcion,
          :estado
@@ -77,15 +75,12 @@ class UnidadMedida
       try {
          $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':id', ($this->conn->lastInsertId() == 0) ? 1 : null);
          $query->bindValue(':codigo', 'U');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
          $query->bindValue(':estado', 1);
 
          $query->execute();
 
-         $this->conn = null;
-         $this->conn = $this->conexion->getConexion();
          $ultimoID = $this->conn->lastInsertId();
 
          $codigo = 'U' . $ultimoID;

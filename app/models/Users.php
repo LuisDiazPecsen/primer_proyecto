@@ -11,9 +11,22 @@ class Users
       $this->conn = $this->conexion->getConexion();
    }
 
+   public function user($username)
+   {
+      $sql = 'SELECT username FROM users WHERE username = :username AND estado = 1';
+
+      $query = $this->conn->prepare($sql);
+      $query->bindValue(':username', $username);
+      $query->execute();
+      $user = $query->fetch(PDO::FETCH_ASSOC);
+
+      $cadena = $this->conexion->arrayToJSONFormat($user);
+      return $cadena;
+   }
+
    public function login($username, $password)
    {
-      $sql = 'SELECT * FROM users WHERE username = :username AND password = md5(:password)';
+      $sql = 'SELECT * FROM users WHERE username = :username AND password = md5(:password) AND estado = 1';
 
       try {
          $query = $this->conn->prepare($sql);
@@ -37,7 +50,7 @@ class Users
 
    public function register($username, $password)
    {
-      $sql = 'INSERT INTO users(username, password) VALUES(:username, md5(:password))';
+      $sql = 'INSERT INTO users(username, password, estado) VALUES(:username, md5(:password), 1)';
 
       try {
          $query = $this->conn->prepare($sql);

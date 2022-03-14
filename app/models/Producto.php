@@ -26,8 +26,57 @@ class Producto
       $query = $this->conn->prepare($sql);
       $query->execute();
       $productos = $query->fetchAll(PDO::FETCH_ASSOC);
+      $arrayFinal = array();
 
-      $cadena = $this->conexion->arrayToJSONFormat($productos);
+      foreach ($productos as $key => $producto) {
+         $sql = 'SELECT descripcion FROM unidad_medida WHERE id = :id';
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $producto['unidad_medida_id']);
+         $query->execute();
+         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['unidad_medida_descripcion'] = $descripcion['descripcion'];
+
+         $sql = 'SELECT descripcion FROM marca WHERE id = :id';
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $producto['marca_id']);
+         $query->execute();
+         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['marca_descripcion'] = $descripcion['descripcion'];
+
+         $sql = 'SELECT descripcion FROM categoria WHERE id = :id';
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $producto['categoria_id']);
+         $query->execute();
+         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['categoria_descripcion'] = $descripcion['descripcion'];
+
+         $arrayFinal[] = $producto;
+      }
+
+      /*$sql = 'SELECT descripcion FROM marca WHERE id = :id';
+
+      foreach ($arrayFinal as $key => $producto) {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $producto['marca_id']);
+         $query->execute();
+         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['marca_descripcion'] = $descripcion['descripcion'];
+         echo $producto['marca_descripcion'];
+      }
+
+      $sql = 'SELECT descripcion FROM categoria WHERE id = :id';
+
+      foreach ($arrayFinal as $producto) {
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':id', $producto['categoria_id']);
+         $query->execute();
+         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['categoria_descripcion'] = $descripcion['descripcion'];
+         echo $producto['categoria_descripcion'];
+      }*/
+
+      //print_r($arrayFinal);
+      $cadena = $this->conexion->arrayToJSONFormat($arrayFinal);
       return $cadena;
    }
 
@@ -39,8 +88,8 @@ class Producto
          precio_venta,
          stock,
          stock_minimo,
-         unidad_medida_codigo,
-         marca_codigo,
+         unidad_medida_id,
+         marca_id,
          categoria_id FROM producto WHERE codigo = :codigo AND estado = 1';
 
       try {
@@ -69,8 +118,8 @@ class Producto
          stock,
          stock_minimo,
          estado,
-         marca_codigo,
-         unidad_medida_codigo,
+         marca_id,
+         unidad_medida_id,
          categoria_id
       ) VALUES (
          :codigo,
@@ -80,8 +129,8 @@ class Producto
          :stock,
          :stock_minimo,
          :estado,
-         :marca_codigo,
-         :unidad_medida_codigo,
+         :marca_id,
+         :unidad_medida_id,
          :categoria_id
       )';
 
@@ -89,15 +138,15 @@ class Producto
          $query = $this->conn->prepare($sql);
 
          $query->bindValue(':codigo', 'P');
-         $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
-         $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
-         $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
-         $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
-         $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
+         $query->bindValue(':descripcion', $datos['txtDescripcion']);
+         $query->bindValue(':precio_compra', $datos['txtPrecioCompra']);
+         $query->bindValue(':precio_venta', $datos['txtPrecioVenta']);
+         $query->bindValue(':stock', $datos['txtStock']);
+         $query->bindValue(':stock_minimo', $datos['txtStockMinimo']);
          $query->bindValue(':estado', 1);
-         $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
-         $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
-         $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
+         $query->bindValue(':marca_id', intval(substr(explode(' - ', $datos['txtMarca'])[0], 1)));
+         $query->bindValue(':unidad_medida_id', intval(substr(explode(' - ', $datos['txtUnidadMedida'])[0], 1)));
+         $query->bindValue(':categoria_id', intval(substr(explode(' - ', $datos['txtCategoria'])[0], 1)));
 
          $query->execute();
 
@@ -131,8 +180,8 @@ class Producto
          precio_venta = :precio_venta,
          stock = :stock,
          stock_minimo = :stock_minimo,
-         marca_codigo = :marca_codigo,
-         unidad_medida_codigo = :unidad_medida_codigo,
+         marca_id = :marca_id,
+         unidad_medida_id = :unidad_medida_id,
          categoria_id = :categoria_id
          WHERE codigo = :codigo';
 
@@ -148,8 +197,8 @@ class Producto
                $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
                $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
                $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
-               $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
-               $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
+               $query->bindValue(':marca_id', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
+               $query->bindValue(':unidad_medida_id', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
                $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
                $query->execute();

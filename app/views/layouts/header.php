@@ -6,8 +6,6 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION['username'])) {
    header('Location: /primer_proyecto/users/login');
 }
-
-$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>

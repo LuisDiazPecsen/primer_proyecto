@@ -92,7 +92,11 @@ class UsersController
 
    public function user()
    {
-      require_once '../app/views/users/user.php';
+      session_start();
+      if (isset($_SESSION)) {
+         $cadena = $this->user->user($_SESSION['username']);
+         echo $cadena;
+      }
    }
 
    public function index()
