@@ -13,27 +13,43 @@ class Producto
 
    public function index()
    {
-      $sql = 'SELECT * FROM producto ORDER BY codigo';
+      $sql = 'SELECT codigo,
+         descripcion,
+         precio_compra,
+         precio_venta,
+         stock,
+         stock_minimo,
+         unidad_medida_codigo,
+         marca_codigo,
+         categoria_id FROM producto WHERE estado = 1 ORDER BY codigo';
 
       $query = $this->conn->prepare($sql);
       $query->execute();
       $productos = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      return $productos;
+      $cadena = $this->conexion->arrayToJSONFormat($productos);
+      return $cadena;
    }
 
    public function show($codigo)
    {
-      $sql = 'SELECT * FROM producto WHERE codigo = :codigo';
+      $sql = 'SELECT codigo,
+         descripcion,
+         precio_compra,
+         precio_venta,
+         stock,
+         stock_minimo,
+         unidad_medida_codigo,
+         marca_codigo,
+         categoria_id FROM producto WHERE codigo = :codigo AND estado = 1';
 
       try {
          $query = $this->conn->prepare($sql);
          $query->bindValue(':codigo', $codigo);
          $query->execute();
-         $producto = $query->fetchAll(PDO::FETCH_ASSOC);
-         //print_r(count($producto));
+         $producto = $query->fetch(PDO::FETCH_ASSOC);
 
-         if (count($producto) > 0) {
+         if ($producto != null) {
             return ['EXITO', $producto];
          } else {
             return ['ERROR', 'No existe el producto ingresado'];
@@ -52,6 +68,7 @@ class Producto
          precio_venta,
          stock,
          stock_minimo,
+         estado,
          marca_codigo,
          unidad_medida_codigo,
          categoria_id
@@ -62,6 +79,7 @@ class Producto
          :precio_venta,
          :stock,
          :stock_minimo,
+         :estado,
          :marca_codigo,
          :unidad_medida_codigo,
          :categoria_id
@@ -70,20 +88,38 @@ class Producto
       try {
          $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':codigo', 'P');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
          $query->bindValue(':precio_compra', isset($datos['txtPrecioCompra']) ? $datos['txtPrecioCompra'] : '');
          $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
          $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
          $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
+         $query->bindValue(':estado', 1);
          $query->bindValue(':marca_codigo', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
          $query->bindValue(':unidad_medida_codigo', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
          $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
          $query->execute();
-         return true;
+
+         $ultimoID = $this->conn->lastInsertId();
+
+         $codigo = 'P' . $ultimoID;
+
+         $sql = 'UPDATE producto SET
+         codigo = :codigo
+         WHERE id = :id';
+
+         $query = null;
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->bindValue(':id', $ultimoID);
+         $query->execute();
+
+         $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Producto agregado con éxito!'));
+         return $cadena;
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
@@ -103,7 +139,7 @@ class Producto
       try {
          if (isset($datos['txtCodigo'])) {
             if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
-               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1][0]['codigo'];
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1]['codigo'];
                $query = $this->conn->prepare($sql);
 
                $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
@@ -117,34 +153,42 @@ class Producto
                $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
 
                $query->execute();
-               return true;
+               $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Producto actualizado con éxito!'));
+               return $cadena;
             } else {
-               return $this->show($datos['txtCodigo'])[1];
+               $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($datos['txtCodigo'])[1]));
+               return $cadena;
             }
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
    public function destroy($codigo)
    {
-      $sql = 'DELETE FROM producto WHERE codigo = :codigo';
+      $sql = 'UPDATE producto SET
+         estado = 0
+         WHERE codigo = :codigo';
 
       try {
          if ($this->show($codigo)[0] == 'EXITO') {
-            $codigo = $this->show($codigo)[1][0]['codigo'];
+            $codigo = $this->show($codigo)[1]['codigo'];
             $query = $this->conn->prepare($sql);
 
             $query->bindValue(':codigo', $codigo);
 
             $query->execute();
-            return true;
+            $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Producto eliminado con éxito!'));
+            return $cadena;
          } else {
-            return $this->show($codigo)[1];
+            $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($codigo)[1]));
+            return $cadena;
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 }

@@ -32,4 +32,13 @@ class Conexion
    {
       return $this->conexion;
    }
+
+   public function arrayToJSONFormat($array)
+   {
+      if (isset($array) && count($array) != 0) {
+         return json_encode($array);
+      } else {
+         return json_encode(array());
+      }
+   }
 }

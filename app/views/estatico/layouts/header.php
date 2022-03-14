@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Primer proyecto</title>
+   <title><?php echo $titulo; ?></title>
 
    <!-- Google Font: Source Sans Pro -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -28,7 +28,6 @@ if (!isset($_SESSION['username'])) {
    <!-- DataTables -->
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
-   <!-- Validate -->
    <!-- Validate -->
    <link rel="stylesheet" href="/primer_proyecto/styles.css">
 </head>
@@ -73,7 +72,7 @@ if (!isset($_SESSION['username'])) {
                   echo '/primer_proyecto/marca/index';
                }
                ?>
-               " class="nav-link btnMarca">Marcas</a>
+               " class="nav-link">Marcas</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                <a href="
@@ -84,7 +83,7 @@ if (!isset($_SESSION['username'])) {
                   echo '/primer_proyecto/categoria/index';
                }
                ?>
-               " class="nav-link btnCategoria">Categorías</a>
+               " class="nav-link">Categorías</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                <a href="
@@ -95,7 +94,7 @@ if (!isset($_SESSION['username'])) {
                   echo '/primer_proyecto/unidadmedida/index';
                }
                ?>
-               " class="nav-link btnUnidadMedida">Unidades de medida</a>
+               " class="nav-link">Unidades de medida</a>
             </li>
          </ul>
 
@@ -126,33 +125,73 @@ if (!isset($_SESSION['username'])) {
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                   <li class="nav-item">
-                     <a href="/primer_proyecto/users/user" class="nav-link">
+                     <a href="/primer_proyecto/users/user" class="nav-link
+                     <?php
+                     if (end($data) == 'Panel de usuario') {
+                        echo ' active';
+                     }
+                     ?>
+                     ">
                         <i class="nav-icon far fa-user-circle"></i>
-                        <p>Usuario</p>
+                        <p>
+                           Usuario
+                        </p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a id="btnSBProducto" type="button" class="nav-link">
+                     <a href="/primer_proyecto/producto/index" class="nav-link
+                     <?php
+                     if (end($data) == 'Productos') {
+                        echo ' active';
+                     }
+                     ?>
+                     ">
                         <i class="nav-icon fas fa-box"></i>
-                        <p>Productos</p>
+                        <p>
+                           Productos
+                        </p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/marca/index" class="nav-link">
+                     <a href="/primer_proyecto/marca/index" class="nav-link
+                     <?php
+                     if (end($data) == 'Marcas') {
+                        echo ' active';
+                     }
+                     ?>
+                     ">
                         <i class='fas fa-tags'></i>
-                        <p>Marcas</p>
+                        <p>
+                           Marcas
+                        </p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/categoria/index" class="nav-link">
+                     <a href="/primer_proyecto/categoria/index" class="nav-link
+                     <?php
+                     if (end($data) == 'Categorías') {
+                        echo ' active';
+                     }
+                     ?>
+                     ">
                         <i class="nav-icon fas fa-clipboard-list"></i>
-                        <p>Categorías</p>
+                        <p>
+                           Categorías
+                        </p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/unidadmedida/index" class="nav-link">
+                     <a href="/primer_proyecto/unidadmedida/index" class="nav-link
+                     <?php
+                     if (end($data) == 'Unidades de medida') {
+                        echo ' active';
+                     }
+                     ?>
+                     ">
                         <i class="nav-icon fas fa-ruler"></i>
-                        <p>Unidades de medida</p>
+                        <p>
+                           Unidades de medida
+                        </p>
                      </a>
                   </li>
                </ul>
@@ -181,10 +220,23 @@ if (!isset($_SESSION['username'])) {
             <div class="container-fluid">
                <div class="row mb-2">
                   <div class="col-sm-6">
-                     <h1 class="m-0" id="tituloPagina"></h1>
+                     <h1 class="m-0"><?php echo $titulo; ?></h1>
                   </div><!-- /.col -->
                   <div class="col-sm-6">
-                     <ol id="listaURL" class="breadcrumb float-sm-right">
+                     <ol class="breadcrumb float-sm-right">
+                        <?php
+                        $contador = 0;
+                        foreach ($data as $key => $value) {
+                           echo '<li class="breadcrumb-item';
+                           if ($contador == count($data) - 1) {
+                              echo ' active">' . $value . '</li>';
+                           } else {
+                              echo '"><a href="/primer_proyecto/' . $key . '">' . $value . '</a></li>';
+                           }
+                           $contador++;
+                        }
+                        ?>
+
                         <!--li class=" breadcrumb-item"><a href="#">Home</a></li-->
                         <!--li class="breadcrumb-item active">Dashboard v1</li-->
                      </ol>
