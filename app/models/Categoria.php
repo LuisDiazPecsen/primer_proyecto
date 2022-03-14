@@ -13,28 +13,30 @@ class Categoria
 
    public function index()
    {
-      $sql = 'SELECT * FROM categoria ORDER BY id';
+      $sql = 'SELECT codigo,
+         descripcion FROM categoria WHERE estado = 1 ORDER BY codigo';
 
       $query = $this->conn->prepare($sql);
       $query->execute();
-      $categorias = $query->fetchAll(PDO::FETCH_ASSOC);
+      $marcas = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      return $categorias;
+      $cadena = $this->conexion->arrayToJSONFormat($marcas);
+      return $cadena;
    }
 
-   public function show($id)
+   public function show($codigo)
    {
-      $sql = 'SELECT * FROM categoria WHERE id = :id';
+      $sql = 'SELECT codigo,
+         descripcion FROM categoria WHERE codigo = :codigo AND estado = 1';
 
       try {
          $query = $this->conn->prepare($sql);
-         $query->bindValue(':id', $id);
+         $query->bindValue(':codigo', $codigo);
          $query->execute();
-         $categoria = $query->fetchAll(PDO::FETCH_ASSOC);
-         //print_r(count($categoria));
+         $marca = $query->fetch(PDO::FETCH_ASSOC);
 
-         if (count($categoria) > 0) {
-            return ['EXITO', $categoria];
+         if ($marca != null) {
+            return ['EXITO', $marca];
          } else {
             return ['ERROR', 'No existe la categoría ingresada'];
          }
@@ -61,20 +63,43 @@ class Categoria
    public function store($datos)
    {
       $sql = 'INSERT INTO categoria(
-         descripcion
+         codigo,
+         descripcion,
+         estado
       ) VALUES (
-         :descripcion
+         :codigo,
+         :descripcion,
+         :estado
       )';
 
       try {
          $query = $this->conn->prepare($sql);
 
+         $query->bindValue(':codigo', 'C');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+         $query->bindValue(':estado', 1);
 
          $query->execute();
-         return true;
+
+         $ultimoID = $this->conn->lastInsertId();
+
+         $codigo = 'C' . $ultimoID;
+
+         $sql = 'UPDATE categoria SET
+         codigo = :codigo
+         WHERE id = :id';
+
+         $query = null;
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->bindValue(':id', $ultimoID);
+         $query->execute();
+
+         $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Categoría agregada con éxito!'));
+         return $cadena;
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
@@ -82,46 +107,54 @@ class Categoria
    {
       $sql = 'UPDATE categoria SET
          descripcion = :descripcion
-         WHERE id = :id';
+         WHERE codigo = :codigo';
 
       try {
-         if (isset($datos['txtId'])) {
-            if ($this->show($datos['txtId'])[0] == 'EXITO') {
-               $datos['txtId'] = $this->show($datos['txtId'])[1][0]['id'];
+         if (isset($datos['txtCodigo'])) {
+            if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1]['codigo'];
                $query = $this->conn->prepare($sql);
 
-               $query->bindValue(':id', isset($datos['txtId']) ? $datos['txtId'] : '');
+               $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
                $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
                $query->execute();
-               return true;
+               $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Categoría actualizada con éxito!'));
+               return $cadena;
             } else {
-               return $this->show($datos['txtId'])[1];
+               $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($datos['txtCodigo'])[1]));
+               return $cadena;
             }
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
-   public function destroy($id)
+   public function destroy($codigo)
    {
-      $sql = 'DELETE FROM categoria WHERE id = :id';
+      $sql = 'UPDATE categoria SET
+         estado = 0
+         WHERE codigo = :codigo';
 
       try {
-         if ($this->show($id)[0] == 'EXITO') {
-            $id = $this->show($id)[1][0]['id'];
+         if ($this->show($codigo)[0] == 'EXITO') {
+            $codigo = $this->show($codigo)[1]['codigo'];
             $query = $this->conn->prepare($sql);
 
-            $query->bindValue(':id', $id);
+            $query->bindValue(':codigo', $codigo);
 
             $query->execute();
-            return true;
+            $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Categoría eliminada con éxito!'));
+            return $cadena;
          } else {
-            return $this->show($id)[1];
+            $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($codigo)[1]));
+            return $cadena;
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 }

@@ -11,66 +11,29 @@ class CategoriaController
       $this->categoria = new Categoria();
    }
 
-   private function viewIndex($categorias, $resultado, $mensaje)
+   public function index()
    {
-      $data = array(
-         'index' => 'Inicio',
-         'categoria/index' => 'Categorías'
-      );
-      require_once '../app/views/categoria/index.php';
-   }
-
-   public function index($resultado = null, $mensaje = null)
-   {
-      $categorias = $this->categoria->index();
-
-      $this->viewIndex($categorias, $resultado, $mensaje);
+      $cadena = $this->categoria->index();
+      echo $cadena;
    }
 
    public function store()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->categoria->store($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Categoría agregada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->categoria->store($_POST);
+      echo $cadena;
    }
 
    public function update()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->categoria->update($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Categoría actualizada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->categoria->update($_POST);
+      echo $cadena;
    }
 
    public function destroy()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_GET['codigo'])) {
-         $resultado = $this->categoria->destroy($_GET['codigo']);
-         if ($resultado === true) {
-            $mensaje = "¡Categoría eliminada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      echo $resultado;
-      $this->index($resultado, $mensaje);
+      $params = json_decode(file_get_contents('php://input'), true);
+      $cadena = $this->categoria->destroy($params['codigo']);
+      echo $cadena;
    }
 
    public function searchCategoria()

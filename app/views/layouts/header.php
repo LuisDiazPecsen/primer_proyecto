@@ -6,6 +6,8 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION['username'])) {
    header('Location: /primer_proyecto/users/login');
 }
+
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -28,13 +30,20 @@ if (!isset($_SESSION['username'])) {
    <!-- DataTables -->
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
-   <!-- Validate -->
+   <!--link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"-->
+   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
    <!-- Validate -->
    <link rel="stylesheet" href="/primer_proyecto/styles.css">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" id="body">
+   <!-- Preloader -->
+   <div id="contenedor_carga" style="visibility: hidden;">
+      <div id="carga">
+      </div>
+   </div>
    <div class="wrapper">
+
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
          <!-- Left navbar links -->
@@ -43,59 +52,19 @@ if (!isset($_SESSION['username'])) {
                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-               <a href="
-               <?php
-               if (end($data) == 'Inicio') {
-                  echo '#';
-               } else {
-                  echo '/primer_proyecto/index';
-               }
-               ?>
-               " class="nav-link">Inicio</a>
+               <a id="btnLBIndex" type="button" class="nav-link">Inicio</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-               <a href="
-               <?php
-               if (end($data) == 'Productos') {
-                  echo '#';
-               } else {
-                  echo '/primer_proyecto/producto/index';
-               }
-               ?>
-               " class="nav-link">Productos</a>
+               <a id="btnLBProducto" type="button" class="nav-link">Productos</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-               <a href="
-               <?php
-               if (end($data) == 'Marcas') {
-                  echo '#';
-               } else {
-                  echo '/primer_proyecto/marca/index';
-               }
-               ?>
-               " class="nav-link btnMarca">Marcas</a>
+               <a id="btnLBMarca" type="button" class="nav-link btnMarca">Marcas</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-               <a href="
-               <?php
-               if (end($data) == 'Categorías') {
-                  echo '#';
-               } else {
-                  echo '/primer_proyecto/categoria/index';
-               }
-               ?>
-               " class="nav-link btnCategoria">Categorías</a>
+               <a id="btnLBCategoria" type="button" class="nav-link btnCategoria">Categorías</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-               <a href="
-               <?php
-               if (end($data) == 'Unidades de medida') {
-                  echo '#';
-               } else {
-                  echo '/primer_proyecto/unidadmedida/index';
-               }
-               ?>
-               " class="nav-link btnUnidadMedida">Unidades de medida</a>
+               <a id="btnLBUnidadMedida" type="button" class="nav-link btnUnidadMedida">Unidades de medida</a>
             </li>
          </ul>
 
@@ -113,7 +82,7 @@ if (!isset($_SESSION['username'])) {
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
          <!-- Brand Logo -->
-         <a href="/primer_proyecto/index" class="brand-link">
+         <a id="btnSBIndex" type="button" class="brand-link">
             <img src="/primer_proyecto/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Primer proyecto</span>
          </a>
@@ -126,7 +95,7 @@ if (!isset($_SESSION['username'])) {
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                   <li class="nav-item">
-                     <a href="/primer_proyecto/users/user" class="nav-link">
+                     <a id="btnSBUsuario" type="button" class="nav-link">
                         <i class="nav-icon far fa-user-circle"></i>
                         <p>Usuario</p>
                      </a>
@@ -138,19 +107,19 @@ if (!isset($_SESSION['username'])) {
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/marca/index" class="nav-link">
+                     <a id="btnSBMarca" type="button" class="nav-link">
                         <i class='fas fa-tags'></i>
                         <p>Marcas</p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/categoria/index" class="nav-link">
+                     <a id="btnSBCategoria" type="button" class="nav-link">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p>Categorías</p>
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="/primer_proyecto/unidadmedida/index" class="nav-link">
+                     <a id="btnSBUnidadMedida" type="button" class="nav-link">
                         <i class="nav-icon fas fa-ruler"></i>
                         <p>Unidades de medida</p>
                      </a>

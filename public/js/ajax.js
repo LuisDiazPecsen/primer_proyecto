@@ -1,11 +1,19 @@
 const $tituloPagina = document.getElementById('tituloPagina');
 const $tituloCard = document.getElementById('tituloCard');
 const $cuerpoCard = document.getElementById('cuerpoCard');
-const $btnsMarca = document.querySelectorAll('btnMarca');
-const $btnsCategoria = document.querySelectorAll('btnCategoria');
-const $btnsUnidadMedida = document.querySelectorAll('btnUnidadMedida');
+const $btnSBIindex = document.getElementById('btnSBIndex');
+const $btnSBUsuario = document.getElementById('btnSBUsuario');
+const $btnSBProducto = document.getElementById('btnSBProducto');
+const $btnSBMarca = document.getElementById('btnSBMarca');
+const $btnSBCategoria = document.getElementById('btnSBCategoria');
+const $btnSBUnidadMedida = document.getElementById('btnSBUnidadMedida');
+const $btnLBIindex = document.getElementById('btnLBIndex');
+const $btnLBProducto = document.getElementById('btnLBProducto');
+const $btnLBMarca = document.getElementById('btnLBMarca');
+const $btnLBCategoria = document.getElementById('btnLBCategoria');
+const $btnLBUnidadMedida = document.getElementById('btnLBUnidadMedida');
 let $btnAgregar = document.createElement('button');
-var tipo = '';
+var tipo = 'index';
 
 const $fragment = document.createDocumentFragment();
 
@@ -13,22 +21,38 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+// Revisa qué item de la SideBar debe activarse
 function activarSideBar() {
-   const $btnSBProducto = document.getElementById('btnSB' + capitalizeFirstLetter(tipo));
+   $btnSBUsuario.classList.remove('active');
    $btnSBProducto.classList.remove('active');
+   $btnSBMarca.classList.remove('active');
+   $btnSBCategoria.classList.remove('active');
+   $btnSBUnidadMedida.classList.remove('active');
    switch (tipo) {
+      case 'usuario':
+         $btnSBUsuario.classList.add('active');
+         break;
       case 'producto':
          $btnSBProducto.classList.add('active');
          break;
-   
+      case 'marca':
+         $btnSBMarca.classList.add('active');
+         break;
+      case 'categoria':
+         $btnSBCategoria.classList.add('active');
+         break;
+      case 'unidadMedida':
+         $btnSBUnidadMedida.classList.add('active');
+         break;
       default:
          break;
    }
 }
 
-function formularioProducto() {
+// Inserta formulario de Producto
+function formulario() {
    // INICIO - Formulario
-   if (document.getElementById('modalBody').children != 1) {
+   if (document.getElementById('modalBody').children.length < 2) {
       // Obtener formulario
       const $modalBody = document.getElementById('modalBody');
 
@@ -45,6 +69,7 @@ function formularioProducto() {
             $inputCodigo.setAttribute('id', 'txtCodigo');
             $inputCodigo.setAttribute('name', 'txtCodigo');
             $inputCodigo.setAttribute('readOnly', 'true');
+            $inputCodigo.setAttribute('value', '');
          $divFormGroup01.appendChild($inputCodigo);
          $divFormRow0.appendChild($divFormGroup01);
          $divFormRow0.setAttribute('hidden', 'true');
@@ -68,7 +93,20 @@ function formularioProducto() {
             $inputDescripcion.setAttribute('class', 'form-control');
             $inputDescripcion.setAttribute('id', 'txtDescripcion');
             $inputDescripcion.setAttribute('name', 'txtDescripcion');
-            $inputDescripcion.setAttribute('placeholder', 'Descripción del producto');
+            switch (tipo) {
+               case 'producto':
+                  $inputDescripcion.setAttribute('placeholder', 'Descripción del producto');
+                  break;
+               case 'marca':
+                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la marca');
+                  break;
+               case 'categoria':
+                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la categoría');
+                  break;
+               case 'unidadMedida':
+                  $inputDescripcion.setAttribute('placeholder', 'Descripción de la unidad de medida');
+                  break;
+            }
          $divFormGroup11.appendChild($label11);
          $divFormGroup11.appendChild($inputDescripcion);
          $divFormRow1.appendChild($divFormGroup11);
@@ -77,193 +115,207 @@ function formularioProducto() {
 
       // FIN Fila 01
 
-
-      // Fila 02
-      const $divFormRow2 = document.createElement('div');
-      $divFormRow2.setAttribute('class', 'form-row');
-
-         // Grupo 01 - Fila 02
-         const $divFormGroup21 = document.createElement('div');
-         $divFormGroup21.setAttribute('class', 'form-group col-md-6');
-            const $label21 = document.createElement('label');
-            $label21.setAttribute('for', 'txtPrecioCompra');
-            $label21.innerHTML = 'Precio de compra';
-            const $inputPrecioCompra = document.createElement('input');
-            $inputPrecioCompra.setAttribute('type', 'text');
-            $inputPrecioCompra.setAttribute('class', 'form-control');
-            $inputPrecioCompra.setAttribute('id', 'txtPrecioCompra');
-            $inputPrecioCompra.setAttribute('name', 'txtPrecioCompra');
-            $inputPrecioCompra.setAttribute('placeholder', '0.00');
-         $divFormGroup21.appendChild($label21);
-         $divFormGroup21.appendChild($inputPrecioCompra);
-         $divFormRow2.appendChild($divFormGroup21);
-         // FIN Grupo 01 - Fila 02
-
-         // Grupo 02 - Fila 02
-         const $divFormGroup22 = document.createElement('div');
-         $divFormGroup22.setAttribute('class', 'form-group col-md-6');
-            const $label22 = document.createElement('label');
-            $label22.setAttribute('for', 'txtPrecioVenta');
-            $label22.innerHTML = 'Precio de venta';
-            const $inputPrecioVenta = document.createElement('input');
-            $inputPrecioVenta.setAttribute('type', 'text');
-            $inputPrecioVenta.setAttribute('class', 'form-control');
-            $inputPrecioVenta.setAttribute('id', 'txtPrecioVenta');
-            $inputPrecioVenta.setAttribute('name', 'txtPrecioVenta');
-            $inputPrecioVenta.setAttribute('placeholder', '0.00');
-         $divFormGroup22.appendChild($label22);
-         $divFormGroup22.appendChild($inputPrecioVenta);
-         $divFormRow2.appendChild($divFormGroup22);
-         // FIN Grupo 02 - Fila 02
-
-      // Fila 02
-
-
-      // Fila 03
-      const $divFormRow3 = document.createElement('div');
-      $divFormRow3.setAttribute('class', 'form-row');
-
-         // Grupo 01 - Fila 03
-         const $divFormGroup31 = document.createElement('div');
-         $divFormGroup31.setAttribute('class', 'form-group col-md-3');
-            const $label31 = document.createElement('label');
-            $label31.setAttribute('for', 'txtStock');
-            $label31.innerHTML = 'Stock';
-            const $inputStock = document.createElement('input');
-            $inputStock.setAttribute('type', 'text');
-            $inputStock.setAttribute('class', 'form-control');
-            $inputStock.setAttribute('id', 'txtStock');
-            $inputStock.setAttribute('name', 'txtStock');
-            $inputStock.setAttribute('placeholder', '0.00');
-         $divFormGroup31.appendChild($label31);
-         $divFormGroup31.appendChild($inputStock);
-         $divFormRow3.appendChild($divFormGroup31);
-         // FIN Grupo 01 - Fila 03
-
-         // Grupo 02 - Fila 03
-         const $divFormGroup32 = document.createElement('div');
-         $divFormGroup32.setAttribute('class', 'form-group col-md-3');
-            const $label32 = document.createElement('label');
-            $label32.setAttribute('for', 'txtStockMinimo');
-            $label32.innerHTML = 'Stock mínimo';
-            const $inputStockMinimo = document.createElement('input');
-            $inputStockMinimo.setAttribute('type', 'text');
-            $inputStockMinimo.setAttribute('class', 'form-control');
-            $inputStockMinimo.setAttribute('id', 'txtStockMinimo');
-            $inputStockMinimo.setAttribute('name', 'txtStockMinimo');
-            $inputStockMinimo.setAttribute('placeholder', '0.00');
-         $divFormGroup32.appendChild($label32);
-         $divFormGroup32.appendChild($inputStockMinimo);
-         $divFormRow3.appendChild($divFormGroup32);
-         // FIN Grupo 02 - Fila 03
-
-         // Grupo 03 - Fila 03
-         const $divFormGroup33 = document.createElement('div');
-         $divFormGroup33.setAttribute('class', 'form-group col-md-6');
-            const $label33 = document.createElement('label');
-            $label33.setAttribute('for', 'txtUnidadMedida');
-            $label33.innerHTML = 'Unidad de medida';
-            const $inputUnidadMedida = document.createElement('input');
-            $inputUnidadMedida.setAttribute('type', 'text');
-            $inputUnidadMedida.setAttribute('class', 'form-control');
-            $inputUnidadMedida.setAttribute('id', 'txtUnidadMedida');
-            $inputUnidadMedida.setAttribute('name', 'txtUnidadMedida');
-            $inputUnidadMedida.setAttribute('placeholder', 'Buscar...');
-            const $aUnidadMedida = document.createElement('a');
-            $aUnidadMedida.setAttribute('href', '#');
-            $aUnidadMedida.setAttribute('id', 'btnCambiarUnidadMedida');
-            $aUnidadMedida.setAttribute('class', 'btn btn-warning');
-            $aUnidadMedida.setAttribute('hidden', 'true');
-            $aUnidadMedida.innerHTML = 'Cambiar';
-            const $spanUnidadMedida = document.createElement('span');
-            $spanUnidadMedida.setAttribute('id', 'unidadMedidaList');
-
-         $divFormGroup33.appendChild($label33);
-         $divFormGroup33.appendChild($inputUnidadMedida);
-         $divFormGroup33.appendChild($aUnidadMedida);
-         $divFormGroup33.appendChild($spanUnidadMedida);
-         $divFormRow3.appendChild($divFormGroup33);
-         // FIN Grupo 03 - Fila 03
-
-      // Fila 03
-
-
-      // Fila 04
-      const $divFormRow4 = document.createElement('div');
-      $divFormRow4.setAttribute('class', 'form-row');
-
-         // Grupo 01 - Fila 04
-         const $divFormGroup41 = document.createElement('div');
-         $divFormGroup41.setAttribute('class', 'form-group col-md-6');
-            const $label41 = document.createElement('label');
-            $label41.setAttribute('for', 'txtMarca');
-            $label41.innerHTML = 'Marca';
-            const $inputMarca = document.createElement('input');
-            $inputMarca.setAttribute('type', 'text');
-            $inputMarca.setAttribute('class', 'form-control');
-            $inputMarca.setAttribute('id', 'txtMarca');
-            $inputMarca.setAttribute('name', 'txtMarca');
-            $inputMarca.setAttribute('placeholder', 'Buscar...');
-            const $aMarca = document.createElement('a');
-            $aMarca.setAttribute('href', '#');
-            $aMarca.setAttribute('id', 'btnCambiarMarca');
-            $aMarca.setAttribute('class', 'btn btn-warning');
-            $aMarca.setAttribute('hidden', 'true');
-            $aMarca.innerHTML = 'Cambiar';
-            const $spanMarca = document.createElement('span');
-            $spanMarca.setAttribute('id', 'marcaList');
-
-         $divFormGroup41.appendChild($label41);
-         $divFormGroup41.appendChild($inputMarca);
-         $divFormGroup41.appendChild($aMarca);
-         $divFormGroup41.appendChild($spanMarca);
-         $divFormRow4.appendChild($divFormGroup41);
-         // FIN Grupo 01 - Fila 04
-
-         // Grupo 02 - Fila 04
-         const $divFormGroup42 = document.createElement('div');
-         $divFormGroup42.setAttribute('class', 'form-group col-md-6');
-            const $label42 = document.createElement('label');
-            $label42.setAttribute('for', 'txtCategoria');
-            $label42.innerHTML = 'Categoría';
-            const $inputCategoria = document.createElement('input');
-            $inputCategoria.setAttribute('type', 'text');
-            $inputCategoria.setAttribute('class', 'form-control');
-            $inputCategoria.setAttribute('id', 'txtCategoria');
-            $inputCategoria.setAttribute('name', 'txtCategoria');
-            $inputCategoria.setAttribute('placeholder', 'Buscar...');
-            const $aCategoria = document.createElement('a');
-            $aCategoria.setAttribute('href', '#');
-            $aCategoria.setAttribute('id', 'btnCambiarCategoria');
-            $aCategoria.setAttribute('class', 'btn btn-warning');
-            $aCategoria.setAttribute('hidden', 'true');
-            $aCategoria.innerHTML = 'Cambiar';
-            const $spanCategoria = document.createElement('span');
-            $spanCategoria.setAttribute('id', 'categoriaList');
-
-         $divFormGroup42.appendChild($label42);
-         $divFormGroup42.appendChild($inputCategoria);
-         $divFormGroup42.appendChild($aCategoria);
-         $divFormGroup42.appendChild($spanCategoria);
-         $divFormRow4.appendChild($divFormGroup42);
-         // FIN Grupo 02 - Fila 04
-
-      // FIN Fila 04
-
-      //console.log($modalBody);
       $modalBody.appendChild($divFormRow0);
       $modalBody.appendChild($divFormRow1);
-      $modalBody.appendChild($divFormRow2);
-      $modalBody.appendChild($divFormRow3);
-      $modalBody.appendChild($divFormRow4);
-      //console.log($modalBody);
 
-      autocompleteSearchBars();
+      if (tipo == 'producto') {
+         // Fila 02
+         const $divFormRow2 = document.createElement('div');
+         $divFormRow2.setAttribute('class', 'form-row');
 
+            // Grupo 01 - Fila 02
+            const $divFormGroup21 = document.createElement('div');
+            $divFormGroup21.setAttribute('class', 'form-group col-md-6');
+               const $label21 = document.createElement('label');
+               $label21.setAttribute('for', 'txtPrecioCompra');
+               $label21.innerHTML = 'Precio de compra';
+               const $inputPrecioCompra = document.createElement('input');
+               $inputPrecioCompra.setAttribute('type', 'text');
+               $inputPrecioCompra.setAttribute('class', 'form-control');
+               $inputPrecioCompra.setAttribute('id', 'txtPrecioCompra');
+               $inputPrecioCompra.setAttribute('name', 'txtPrecioCompra');
+               $inputPrecioCompra.setAttribute('placeholder', '0.00');
+            $divFormGroup21.appendChild($label21);
+            $divFormGroup21.appendChild($inputPrecioCompra);
+            $divFormRow2.appendChild($divFormGroup21);
+            // FIN Grupo 01 - Fila 02
+
+            // Grupo 02 - Fila 02
+            const $divFormGroup22 = document.createElement('div');
+            $divFormGroup22.setAttribute('class', 'form-group col-md-6');
+               const $label22 = document.createElement('label');
+               $label22.setAttribute('for', 'txtPrecioVenta');
+               $label22.innerHTML = 'Precio de venta';
+               const $inputPrecioVenta = document.createElement('input');
+               $inputPrecioVenta.setAttribute('type', 'text');
+               $inputPrecioVenta.setAttribute('class', 'form-control');
+               $inputPrecioVenta.setAttribute('id', 'txtPrecioVenta');
+               $inputPrecioVenta.setAttribute('name', 'txtPrecioVenta');
+               $inputPrecioVenta.setAttribute('placeholder', '0.00');
+            $divFormGroup22.appendChild($label22);
+            $divFormGroup22.appendChild($inputPrecioVenta);
+            $divFormRow2.appendChild($divFormGroup22);
+            // FIN Grupo 02 - Fila 02
+
+         // Fila 02
+
+
+         // Fila 03
+         const $divFormRow3 = document.createElement('div');
+         $divFormRow3.setAttribute('class', 'form-row');
+
+            // Grupo 01 - Fila 03
+            const $divFormGroup31 = document.createElement('div');
+            $divFormGroup31.setAttribute('class', 'form-group col-md-3');
+               const $label31 = document.createElement('label');
+               $label31.setAttribute('for', 'txtStock');
+               $label31.innerHTML = 'Stock';
+               const $inputStock = document.createElement('input');
+               $inputStock.setAttribute('type', 'text');
+               $inputStock.setAttribute('class', 'form-control');
+               $inputStock.setAttribute('id', 'txtStock');
+               $inputStock.setAttribute('name', 'txtStock');
+               $inputStock.setAttribute('placeholder', '0.00');
+            $divFormGroup31.appendChild($label31);
+            $divFormGroup31.appendChild($inputStock);
+            $divFormRow3.appendChild($divFormGroup31);
+            // FIN Grupo 01 - Fila 03
+
+            // Grupo 02 - Fila 03
+            const $divFormGroup32 = document.createElement('div');
+            $divFormGroup32.setAttribute('class', 'form-group col-md-3');
+               const $label32 = document.createElement('label');
+               $label32.setAttribute('for', 'txtStockMinimo');
+               $label32.innerHTML = 'Stock mínimo';
+               const $inputStockMinimo = document.createElement('input');
+               $inputStockMinimo.setAttribute('type', 'text');
+               $inputStockMinimo.setAttribute('class', 'form-control');
+               $inputStockMinimo.setAttribute('id', 'txtStockMinimo');
+               $inputStockMinimo.setAttribute('name', 'txtStockMinimo');
+               $inputStockMinimo.setAttribute('placeholder', '0.00');
+            $divFormGroup32.appendChild($label32);
+            $divFormGroup32.appendChild($inputStockMinimo);
+            $divFormRow3.appendChild($divFormGroup32);
+            // FIN Grupo 02 - Fila 03
+
+            // Grupo 03 - Fila 03
+            const $divFormGroup33 = document.createElement('div');
+            $divFormGroup33.setAttribute('class', 'form-group col-md-6');
+               const $label33 = document.createElement('label');
+               $label33.setAttribute('for', 'txtUnidadMedida');
+               $label33.innerHTML = 'Unidad de medida';
+               const $inputUnidadMedida = document.createElement('input');
+               $inputUnidadMedida.setAttribute('type', 'text');
+               $inputUnidadMedida.setAttribute('class', 'form-control');
+               $inputUnidadMedida.setAttribute('id', 'txtUnidadMedida');
+               $inputUnidadMedida.setAttribute('name', 'txtUnidadMedida');
+               $inputUnidadMedida.setAttribute('placeholder', 'Buscar...');
+               const $aUnidadMedida = document.createElement('a');
+               $aUnidadMedida.setAttribute('href', '#');
+               $aUnidadMedida.setAttribute('id', 'btnCambiarUnidadMedida');
+               $aUnidadMedida.setAttribute('class', 'btn btn-warning');
+               $aUnidadMedida.setAttribute('hidden', 'true');
+               $aUnidadMedida.innerHTML = 'Cambiar';
+               const $spanUnidadMedida = document.createElement('span');
+               $spanUnidadMedida.setAttribute('id', 'unidadMedidaList');
+
+            $divFormGroup33.appendChild($label33);
+            $divFormGroup33.appendChild($inputUnidadMedida);
+            $divFormGroup33.appendChild($aUnidadMedida);
+            $divFormGroup33.appendChild($spanUnidadMedida);
+            $divFormRow3.appendChild($divFormGroup33);
+            // FIN Grupo 03 - Fila 03
+
+         // Fila 03
+
+
+         // Fila 04
+         const $divFormRow4 = document.createElement('div');
+         $divFormRow4.setAttribute('class', 'form-row');
+
+            // Grupo 01 - Fila 04
+            const $divFormGroup41 = document.createElement('div');
+            $divFormGroup41.setAttribute('class', 'form-group col-md-6');
+               const $label41 = document.createElement('label');
+               $label41.setAttribute('for', 'txtMarca');
+               $label41.innerHTML = 'Marca';
+               const $inputMarca = document.createElement('input');
+               $inputMarca.setAttribute('type', 'text');
+               $inputMarca.setAttribute('class', 'form-control');
+               $inputMarca.setAttribute('id', 'txtMarca');
+               $inputMarca.setAttribute('name', 'txtMarca');
+               $inputMarca.setAttribute('placeholder', 'Buscar...');
+               const $aMarca = document.createElement('a');
+               $aMarca.setAttribute('href', '#');
+               $aMarca.setAttribute('id', 'btnCambiarMarca');
+               $aMarca.setAttribute('class', 'btn btn-warning');
+               $aMarca.setAttribute('hidden', 'true');
+               $aMarca.innerHTML = 'Cambiar';
+               const $spanMarca = document.createElement('span');
+               $spanMarca.setAttribute('id', 'marcaList');
+
+            $divFormGroup41.appendChild($label41);
+            $divFormGroup41.appendChild($inputMarca);
+            $divFormGroup41.appendChild($aMarca);
+            $divFormGroup41.appendChild($spanMarca);
+            $divFormRow4.appendChild($divFormGroup41);
+            // FIN Grupo 01 - Fila 04
+
+            // Grupo 02 - Fila 04
+            const $divFormGroup42 = document.createElement('div');
+            $divFormGroup42.setAttribute('class', 'form-group col-md-6');
+               const $label42 = document.createElement('label');
+               $label42.setAttribute('for', 'txtCategoria');
+               $label42.innerHTML = 'Categoría';
+               const $inputCategoria = document.createElement('input');
+               $inputCategoria.setAttribute('type', 'text');
+               $inputCategoria.setAttribute('class', 'form-control');
+               $inputCategoria.setAttribute('id', 'txtCategoria');
+               $inputCategoria.setAttribute('name', 'txtCategoria');
+               $inputCategoria.setAttribute('placeholder', 'Buscar...');
+               const $aCategoria = document.createElement('a');
+               $aCategoria.setAttribute('href', '#');
+               $aCategoria.setAttribute('id', 'btnCambiarCategoria');
+               $aCategoria.setAttribute('class', 'btn btn-warning');
+               $aCategoria.setAttribute('hidden', 'true');
+               $aCategoria.innerHTML = 'Cambiar';
+               const $spanCategoria = document.createElement('span');
+               $spanCategoria.setAttribute('id', 'categoriaList');
+
+            $divFormGroup42.appendChild($label42);
+            $divFormGroup42.appendChild($inputCategoria);
+            $divFormGroup42.appendChild($aCategoria);
+            $divFormGroup42.appendChild($spanCategoria);
+            $divFormRow4.appendChild($divFormGroup42);
+            // FIN Grupo 02 - Fila 04
+
+         // FIN Fila 04
+      
+         $modalBody.appendChild($divFormRow2);
+         $modalBody.appendChild($divFormRow3);
+         $modalBody.appendChild($divFormRow4);
+         
+         autocompleteSearchBars();
+
+         document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validar()) {
+               submit();
+            }
+         });
+      }
+
+       document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (validar()) {
+               submit();
+            }
+         });
    } 
    // FIN - Formulario
 }
 
+// Inserta botón de agregar nuevo registro
 function btnAgregar() {
    // Button trigger modal
    if (document.getElementById('btnAgregar') == null) {
@@ -286,7 +338,44 @@ function btnAgregar() {
    // FIN - Button trigger modal
 }
 
+// Actualizar títulos del index.php
+function titulo() {
+   switch (tipo) {
+      case 'index':
+         $tituloPagina.innerHTML = 'Inicio';
+         $tituloCard.innerHTML = 'Inicio';
+         break;
+      case 'usuario':
+         $tituloPagina.innerHTML = 'Panel de usuario';
+         $tituloCard.innerHTML = 'Panel de usuario';
+         break;
+      case 'producto':
+         $tituloPagina.innerHTML = 'Productos';
+         $tituloCard.innerHTML = 'Productos';
+         break;
+      case 'marca':
+         $tituloPagina.innerHTML = 'Marcas';
+         $tituloCard.innerHTML = 'Marcas';
+         break;
+      case 'categoria':
+         $tituloPagina.innerHTML = 'Categorías';
+         $tituloCard.innerHTML = 'Categorías';
+         break;
+      case 'unidadMedida':
+         $tituloPagina.innerHTML = 'Unidades de medida';
+         $tituloCard.innerHTML = 'Unidades de medida';
+         break;
+      default:
+         break;
+   }
+}
+titulo();
+
+// Inserta tabla de 'productos, unidades de medida, marcas y categorías
 const listarTable = function listarTable(json) {
+   if (document.getElementById(tipo + '_table') != null) {
+      document.getElementById(tipo + '_table').remove();
+   }
    if (document.getElementById(tipo + '_table_wrapper') != null) {
       document.getElementById(tipo + '_table_wrapper').remove();
    }
@@ -310,6 +399,27 @@ const listarTable = function listarTable(json) {
             'Unidad de medida',
             'Marca',
             'Categoría',
+            'Mantenimiento'
+         ]);
+         break;
+      case 'marca':
+         titulosColumnas.push(...[
+            'Código',
+            'Descripción',
+            'Mantenimiento'
+         ]);
+         break;
+      case 'categoria':
+         titulosColumnas.push(...[
+            'Código',
+            'Descripción',
+            'Mantenimiento'
+         ]);
+         break;
+      case 'unidadMedida':
+         titulosColumnas.push(...[
+            'Código',
+            'Descripción',
             'Mantenimiento'
          ]);
          break;
@@ -395,41 +505,102 @@ const listarTable = function listarTable(json) {
 
    $cuerpoCard.appendChild($table);
 
-   $('#'+tipo+'_table').DataTable({
+   let $tabla = $('#'+tipo+'_table').DataTable({
       responsive: true,
       autoWidth: false,
+      lengthChange: false,
+      dom: 'Bfrtip',
+      buttons: 
+         [
+            {
+               extend: 'copy',
+               exportOptions: {
+                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+               }
+            }, 
+            {
+               extend: 'excel',
+               exportOptions: {
+                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+               }
+            }, 
+            {
+               extend: 'pdf',
+               exportOptions: {
+                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+               }
+            }, 
+            {
+               extend: 'print',
+               exportOptions: {
+                  columns: (tipo == 'producto')?[0,1,2,3,4,5,6,7,8]:[0,1,2]
+               }
+            }
+         ],
       language: {
          "url": "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
       }
    });
+
+   $tabla.buttons().container()
+        .appendTo( '#'+tipo+'_table_wrapper .col-md-6:eq(0)' );
 }
 
-const getList = async () => {
+// Inicializa panel de usuario
+const panelUsuario = function panelUsuario() {
+   const $formUsuario = document.createElement('form');
+   $formUsuario.setAttribute('id', 'formUser');
+   const $formGroup1 = document.createElement('div');
+   $formGroup1.setAttribute('class', 'form-group');
+   const $label1 = document.createElement('label');
+   $label1.innerHTML = 'Nombre de usuario';
+   const $br1 = document.createElement('br');
+   const username = '<?php echo $username; ?>';
+   const $username = document.createTextNode(username);
+   $formGroup1.appendChild($label1);
+   $formGroup1.appendChild($br1);
+   $formGroup1.appendChild($username);
+
+   $formUsuario.appendChild($formGroup1);
+
+   $cuerpoCard.appendChild($formUsuario);
+}
+
+// Agregar cargando
+
+const loading = function loading() {
+   const $contenedorCarga = document.getElementById('contenedor_carga');
+   $contenedorCarga.style.visibility = 'visible';
+}
+
+const removeLoading = function removeLoading() {
+   const $contenedorCarga = document.getElementById('contenedor_carga');
+   $contenedorCarga.style.visibility = 'hidden';
+}
+
+// Simula cambio entre páginas (actualiza títulos, activa la SideBar, inserta formulario, inserta botón de nuevo registro y lista los registros en una tabla)
+const getPage = async () => {
    try {
-      let response = await fetch('/primer_proyecto/'+tipo+'/index'),
-         json = await response.json();
-      
-      if (!response.ok) {
-         throw {
-            status: response.status,
-            statusText: response.statusText
-         };
-      }
+      if (tipo != 'usuario') {
+         loading();
+         let response = await fetch('/primer_proyecto/'+tipo+'/index'),
+            json = await response.json();
+         
+         if (!response.ok) {
+            throw {
+               status: response.status,
+               statusText: response.statusText
+            };
+         }
 
-      switch (tipo) {
-         case 'producto':
-            $tituloPagina.innerHTML = 'Productos';
-            $tituloCard.innerHTML = 'Productos';
-            break;
-         default:
-            break;
+         activarSideBar();
+         formulario();
+         btnAgregar();
+         listarTable(json);
+         removeLoading();
+      } else {
+         panelUsuario();
       }
-      
-      activarSideBar();
-      formularioProducto();
-      btnAgregar();
-
-      listarTable(json);
       
    } catch (error) {
       let message = error.statusText || "Ocurrió un error";
@@ -437,13 +608,66 @@ const getList = async () => {
    }
 } 
 
-const $btnSBProducto = document.getElementById('btnSBProducto');
-$btnSBProducto.addEventListener('click', function() {
-   tipo = 'producto';
-   getList();
-});
+// Inicializa LeftBar y SideBar
+function inicializarBotonesDireccion() {
+   $btnSBIindex.addEventListener('click', function() {
+      tipo = 'index';
+      index();
+   });
+   $btnSBUsuario.addEventListener('click', function() {
+      tipo = 'usuario';
+      index();
+      getPage();
+   });
+   $btnSBProducto.addEventListener('click', function() {
+      tipo = 'producto';
+      index();
+      getPage();
+   });
+   $btnSBMarca.addEventListener('click', function() {
+      tipo = 'marca';
+      index();
+      getPage();
+   });
+   $btnSBCategoria.addEventListener('click', function() {
+      tipo = 'categoria';
+      index();
+      getPage();
+   });
+   $btnSBUnidadMedida.addEventListener('click', function() {
+      tipo = 'unidadMedida';
+      index();
+      getPage();
+   });
+   $btnLBIindex.addEventListener('click', function() {
+      tipo = 'index';
+      index();
+   })
+   $btnLBProducto.addEventListener('click', function() {
+      tipo = 'producto';
+      index();
+      getPage();
+   });
+   $btnLBMarca.addEventListener('click', function() {
+      tipo = 'marca';
+      index();
+      getPage();
+   });
+   $btnLBCategoria.addEventListener('click', function() {
+      tipo = 'categoria';
+      index();
+      getPage();
+   });
+   $btnLBUnidadMedida.addEventListener('click', function() {
+      tipo = 'unidadMedida';
+      index();
+      getPage();
+   });
+}
+inicializarBotonesDireccion();
 
 
+// Al hacer click muestra modal en modo "Agregar registro"
 const agregar = function agregar() {
    document.getElementById("modalTitulo").innerHTML = "Agregar "+tipo;
    let campos = [];
@@ -461,16 +685,38 @@ const agregar = function agregar() {
             'txtCategoria'
          ]);
          break;
+      case 'marca':
+         campos.push(...[
+            'txtCodigo',
+            'txtDescripcion'
+         ]);
+         break;
+      case 'categoria':
+         campos.push(...[
+            'txtCodigo',
+            'txtDescripcion'
+         ]);
+         break;
+      case 'unidadMedida':
+         campos.push(...[
+            'txtCodigo',
+            'txtDescripcion'
+         ]);
+         break;
       default:
          break;
    }
    campos.forEach(element => {
       document.getElementById(element).value = '';
    });
-   vaciarListas();
+   if (tipo == 'producto') {
+      vaciarListas();
+   }
    quitarAlerta();
    document.getElementById("btnAceptar").value = 'Registrar';
 }
+
+// Al hacer click muestra modal en modo "Editar registro"
 const editar = function editar(element) {
    document.getElementById("modalTitulo").innerHTML = "Editar "+tipo;
    $fila = document.getElementById(element.name);
@@ -512,6 +758,33 @@ const editar = function editar(element) {
          $txtCategoria.value = producto.categoria;
          document.getElementById('btnCambiarCategoria').hidden = false;
          break;
+      case 'marca':
+         let marca = {
+            codigo: $columnas[0].innerHTML,
+            descripcion: $columnas[1].innerHTML
+         }
+         
+         document.getElementById("txtCodigo").setAttribute('value', marca.codigo);
+         document.getElementById("txtDescripcion").value = marca.descripcion;
+         break;
+      case 'categoria':
+         let categoria = {
+            codigo: $columnas[0].innerHTML,
+            descripcion: $columnas[1].innerHTML
+         }
+         
+         document.getElementById("txtCodigo").setAttribute('value', categoria.codigo);
+         document.getElementById("txtDescripcion").value = categoria.descripcion;
+         break;
+      case 'unidadMedida':
+         let unidadMedida = {
+            codigo: $columnas[0].innerHTML,
+            descripcion: $columnas[1].innerHTML
+         }
+         
+         document.getElementById("txtCodigo").setAttribute('value', unidadMedida.codigo);
+         document.getElementById("txtDescripcion").value = unidadMedida.descripcion;
+         break;
       default:
          break;
    }
@@ -519,6 +792,15 @@ const editar = function editar(element) {
    quitarAlerta();
    document.getElementById("btnAceptar").value = 'Actualizar';
 }
+
+// Quitar alerta de error del modal
+function quitarAlerta() {
+   if (document.getElementById('errorDiv')) {
+      document.getElementById('filaError').removeChild(document.getElementById('errorDiv'));
+   }
+}
+
+// Al hacer click elimina el registro y actualiza la página
 const eliminar = async function eliminar(element) {
    let $codigo = element.getAttribute('id').substring(8);
    console.log($codigo);
@@ -573,14 +855,15 @@ const eliminar = async function eliminar(element) {
       setTimeout(() => {
          $('.alertaResultado').alert('close');
       }, 3000);
-      // Listar elementos
-      getList();
+      // Actualizar página
+      getPage();
    } catch (error) {
       let message = error.statusText || "Ocurrió un error";
       $cuerpoCard.innerHTML = error;
    }
 }
 
+// Cuando se envía formulario, se ejecuta
 const submit = async function submit() {
    let form = new FormData(document.getElementById('form'));
    const $txtCodigo = document.getElementById('txtCodigo');
@@ -634,7 +917,7 @@ const submit = async function submit() {
          // Mostrar alerta de éxito o de error en POST
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          // Listar elementos
-         getList();
+         getPage();
 
          $('#modal').modal('hide');
       } catch (error) {
@@ -690,7 +973,7 @@ const submit = async function submit() {
          // Mostrar alerta de éxito o de error en PUT
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          // Listar elementos
-         getList();
+         getPage();
 
          $('#modal').modal('hide');
       } catch (error) {
@@ -782,7 +1065,6 @@ const autocompleteSearchBars = function autocompleteSearchBars() {
       vaciarCategoria();
    });
 }
-
 // Vaciar los seleccionados
 function vaciarListas() {
    vaciarUnidadMedida();
@@ -810,7 +1092,6 @@ function vaciarCategoria() {
 
    document.getElementById('btnCambiarCategoria').hidden = true;
 }
-
 // Seleccionar listas
 function selectname_unidadMedida(selected_value) {
    const $txtUnidadMedida = document.getElementById('txtUnidadMedida');
@@ -836,17 +1117,7 @@ function selectname_categoria(selected_value) {
    document.getElementById('categoriaList').hidden = true;
    document.getElementById('btnCambiarCategoria').hidden = false;
 }
-// FIN - Seleccionar listas
-
 // ********   FIN - AUTOCOMPLETE SEARCH BARS   ********
-
-
-// Quitar alerta del modal
-function quitarAlerta() {
-   if (document.getElementById('errorDiv')) {
-      document.getElementById('filaError').removeChild(document.getElementById('errorDiv'));
-   }
-}
 
 
 // ********   VALIDACIÓN FORMULARIO   ********
@@ -858,84 +1129,101 @@ function validar() {
    let $form = document.getElementById('form');
    $inputsList = $form.getElementsByTagName('input');
 
-   for (const $input of $inputsList) {
-      switch ($input.name) {
-         case 'txtDescripcion':
-            if ($input.value == '') {
-               errorList.push('La descripción es obligatoria.');
-            } else {
-               if ($input.value.length > 200) {
-                  errorList.push('No puedes superar los 200 caracteres.');
+   if (tipo == 'producto') {
+      for (const $input of $inputsList) {
+         switch ($input.name) {
+            case 'txtDescripcion':
+               if ($input.value == '') {
+                  errorList.push('La descripción es obligatoria.');
+               } else {
+                  if ($input.value.length > 200) {
+                     errorList.push('No puedes superar los 200 caracteres.');
+                  }
                }
-            }
-            break;
-         case 'txtPrecioCompra':
-            if ($input.value == '') {
-               errorList.push('El precio de compra es obligatorio.');
-            } else {
-               if (!numeroDecimal.test($input.value)) {
-                  //console.log("NO VALIDO");
-                  errorList.push('El precio de compra no es válido');
+               break;
+            case 'txtPrecioCompra':
+               if ($input.value == '') {
+                  errorList.push('El precio de compra es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     //console.log("NO VALIDO");
+                     errorList.push('El precio de compra no es válido');
+                  }
                }
-            }
-            break;
-         case 'txtPrecioVenta':
-            if ($input.value == '') {
-               errorList.push('El precio de venta es obligatorio.');
-            } else {
-               if (!numeroDecimal.test($input.value)) {
-                  errorList.push('El precio de venta no es válido');
+               break;
+            case 'txtPrecioVenta':
+               if ($input.value == '') {
+                  errorList.push('El precio de venta es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El precio de venta no es válido');
+                  }
                }
-            }
-            break;
-         case 'txtStock':
-            if ($input.value == '') {
-               errorList.push('El stock es obligatorio.');
-            } else {
-               if (!numeroDecimal.test($input.value)) {
-                  errorList.push('El stock no es válido');
+               break;
+            case 'txtStock':
+               if ($input.value == '') {
+                  errorList.push('El stock es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El stock no es válido');
+                  }
                }
-            }
-            break;
-         case 'txtStockMinimo':
-            if ($input.value == '') {
-               errorList.push('El stock mínimo es obligatorio.');
-            } else {
-               if (!numeroDecimal.test($input.value)) {
-                  errorList.push('El stock mínimo no es válido');
+               break;
+            case 'txtStockMinimo':
+               if ($input.value == '') {
+                  errorList.push('El stock mínimo es obligatorio.');
+               } else {
+                  if (!numeroDecimal.test($input.value)) {
+                     errorList.push('El stock mínimo no es válido');
+                  }
                }
-            }
-            break;
-         case 'txtMarca':
-            if ($input.value == '') {
-               errorList.push('La marca es obligatoria.');
-            } else {
-               if (!$input.readOnly) {
-                  errorList.push('Debes seleccionar un elemento de la lista');
+               break;
+            case 'txtMarca':
+               if ($input.value == '') {
+                  errorList.push('La marca es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
                }
-            }
-            break;
-         case 'txtUnidadMedida':
-            if ($input.value == '') {
-               errorList.push('La unidad de medida es obligatoria.');
-            } else {
-               if (!$input.readOnly) {
-                  errorList.push('Debes seleccionar un elemento de la lista');
+               break;
+            case 'txtUnidadMedida':
+               if ($input.value == '') {
+                  errorList.push('La unidad de medida es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
                }
-            }
-            break;
-         case 'txtCategoria':
-            if ($input.value == '') {
-               errorList.push('La categoría es obligatoria.');
-            } else {
-               if (!$input.readOnly) {
-                  errorList.push('Debes seleccionar un elemento de la lista');
+               break;
+            case 'txtCategoria':
+               if ($input.value == '') {
+                  errorList.push('La categoría es obligatoria.');
+               } else {
+                  if (!$input.readOnly) {
+                     errorList.push('Debes seleccionar un elemento de la lista');
+                  }
                }
-            }
-
-            break;
-         default:
-            break;
+               break;
+            default:
+               break;
+         }
+      }
+   } else {
+      for (const $input of $inputsList) {
+         switch ($input.name) {
+            case 'txtDescripcion':
+               if ($input.value == '') {
+                  errorList.push('La descripción es obligatoria.');
+               } else {
+                  if ($input.value.length > 100) {
+                     errorList.push('No puedes superar los 100 caracteres.');
+                  }
+               }
+               break;
+            default:
+               break;
+         }
       }
    }
 
@@ -974,10 +1262,71 @@ function validar() {
       return true;
    }
 }
-document.getElementById('form').addEventListener('submit', function(event) {
-   event.preventDefault();
-   if (validar()) {
-      submit();
-   }
-});
 // ********   FIN - VALIDACIÓN FORMULARIO   ********
+
+
+const index = function index() {
+   titulo();
+   activarSideBar();
+   
+   while ($cuerpoCard.firstChild) {
+      $cuerpoCard.removeChild($cuerpoCard.firstChild);
+   }
+
+   const $modal = document.createElement('div');
+   $modal.setAttribute('class', 'modal fade');
+   $modal.setAttribute('id', 'modal');
+   $modal.setAttribute('tabindex', '-1');
+   $modal.setAttribute('role', 'dialog');
+   $modal.setAttribute('aria-labelledby', 'modalTitulo');
+   $modal.setAttribute('aria-hidden', 'true');
+   const $modalDialog = document.createElement('div');
+   $modalDialog.setAttribute('class', 'modal-dialog modal-dialog-centered');
+   $modalDialog.setAttribute('role', 'document');
+   const $modalContent = document.createElement('div');
+   $modalContent.setAttribute('class', 'modal-content');
+   const $modalHeader = document.createElement('div');
+   $modalHeader.setAttribute('class', 'modal-header');
+   const $modalTitle = document.createElement('h5');
+   $modalTitle.setAttribute('class', 'modal-title');
+   $modalTitle.setAttribute('id', 'modalTitulo');
+   const $btnClose = document.createElement('button');
+   $btnClose.setAttribute('type', 'button');
+   $btnClose.setAttribute('class', 'close');
+   $btnClose.setAttribute('data-dismiss', 'modal');
+   $btnClose.setAttribute('aria-label', 'Close');
+   const $span = document.createElement('span');
+   $span.setAttribute('aria-hidden', 'true');
+   $span.innerHTML = "&times;";
+   $btnClose.appendChild($span);
+   $modalHeader.appendChild($modalTitle);
+   $modalHeader.appendChild($btnClose);
+   const $form = document.createElement('form');
+   $form.setAttribute('id', 'form');
+   const $modalBody = document.createElement('div');
+   $modalBody.setAttribute('id', 'modalBody');
+   $modalBody.setAttribute('class', 'modal-body');
+   const $filaError = document.createElement('div');
+   $filaError.setAttribute('id', 'filaError');
+   $modalBody.appendChild($filaError);
+   const $modalFooter = document.createElement('div');
+   $modalFooter.setAttribute('class', 'modal-footer');
+   const $btnCancelar = document.createElement('button');
+   $btnCancelar.setAttribute('type', 'button');
+   $btnCancelar.setAttribute('class', 'btn btn-secondary');
+   $btnCancelar.setAttribute('data-dismiss', 'modal');
+   $btnCancelar.innerHTML = 'Cancelar';
+   const $btnAceptar = document.createElement('input');
+   $btnAceptar.setAttribute('id', 'btnAceptar');
+   $btnAceptar.setAttribute('type', 'submit');
+   $btnAceptar.setAttribute('class', 'btn btn-primary');
+   $modalFooter.appendChild($btnCancelar);
+   $modalFooter.appendChild($btnAceptar);
+   $form.appendChild($modalBody);
+   $form.appendChild($modalFooter);
+   $modalContent.appendChild($modalHeader);
+   $modalContent.appendChild($form);
+   $modalDialog.appendChild($modalContent);
+   $modal.appendChild($modalDialog);
+   $cuerpoCard.appendChild($modal);
+}

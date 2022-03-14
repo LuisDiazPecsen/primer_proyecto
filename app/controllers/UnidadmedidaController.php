@@ -11,66 +11,29 @@ class UnidadmedidaController
       $this->unidadmedida = new UnidadMedida();
    }
 
-   private function viewIndex($unidadesmedida, $resultado, $mensaje)
-   {
-      $data = array(
-         'index' => 'Inicio',
-         'unidadmedida/index' => 'Unidades de medida'
-      );
-      require_once '../app/views/unidadmedida/index.php';
-   }
-
    public function index($resultado = null, $mensaje = null)
    {
-      $unidadesmedida = $this->unidadmedida->index();
-
-      $this->viewIndex($unidadesmedida, $resultado, $mensaje);
+      $cadena = $this->unidadmedida->index();
+      echo $cadena;
    }
 
    public function store()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->unidadmedida->store($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Unidad de medida agregada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->unidadmedida->store($_POST);
+      echo $cadena;
    }
 
    public function update()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->unidadmedida->update($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Unidad de medida actualizada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->unidadmedida->update($_POST);
+      echo $cadena;
    }
 
    public function destroy()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_GET['codigo'])) {
-         $resultado = $this->unidadmedida->destroy($_GET['codigo']);
-         if ($resultado === true) {
-            $mensaje = "¡Unidad de medida eliminada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      echo $resultado;
-      $this->index($resultado, $mensaje);
+      $params = json_decode(file_get_contents('php://input'), true);
+      $cadena = $this->unidadmedida->destroy($params['codigo']);
+      echo $cadena;
    }
 
    public function searchUnidadMedida()

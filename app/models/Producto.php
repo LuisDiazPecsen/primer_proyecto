@@ -19,8 +19,8 @@ class Producto
          precio_venta,
          stock,
          stock_minimo,
-         unidad_medida_codigo,
-         marca_codigo,
+         unidad_medida_id,
+         marca_id,
          categoria_id FROM producto WHERE estado = 1 ORDER BY codigo';
 
       $query = $this->conn->prepare($sql);

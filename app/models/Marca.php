@@ -13,27 +13,29 @@ class Marca
 
    public function index()
    {
-      $sql = 'SELECT * FROM marca ORDER BY codigo';
+      $sql = 'SELECT codigo,
+         descripcion FROM marca WHERE estado = 1 ORDER BY codigo';
 
       $query = $this->conn->prepare($sql);
       $query->execute();
       $marcas = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      return $marcas;
+      $cadena = $this->conexion->arrayToJSONFormat($marcas);
+      return $cadena;
    }
 
    public function show($codigo)
    {
-      $sql = 'SELECT * FROM marca WHERE codigo = :codigo';
+      $sql = 'SELECT codigo,
+         descripcion FROM marca WHERE codigo = :codigo AND estado = 1';
 
       try {
          $query = $this->conn->prepare($sql);
          $query->bindValue(':codigo', $codigo);
          $query->execute();
-         $marca = $query->fetchAll(PDO::FETCH_ASSOC);
-         //print_r(count($marca));
+         $marca = $query->fetch(PDO::FETCH_ASSOC);
 
-         if (count($marca) > 0) {
+         if ($marca != null) {
             return ['EXITO', $marca];
          } else {
             return ['ERROR', 'No existe la marca ingresada'];
@@ -45,7 +47,7 @@ class Marca
 
    public function searchMarca($descripcionMarca)
    {
-      $sql = 'SELECT * FROM marca WHERE descripcion LIKE :descripcion ORDER BY descripcion LIMIT 10';
+      $sql = 'SELECT * FROM marca WHERE descripcion LIKE :descripcion AND estado = 1 ORDER BY descripcion LIMIT 10';
       $marcas = null;
       try {
          $query = $this->conn->prepare($sql);
@@ -62,22 +64,42 @@ class Marca
    {
       $sql = 'INSERT INTO marca(
          codigo,
-         descripcion
+         descripcion,
+         estado
       ) VALUES (
          :codigo,
-         :descripcion
+         :descripcion,
+         :estado
       )';
 
       try {
          $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':codigo', 'M');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+         $query->bindValue(':estado', 1);
 
          $query->execute();
-         return true;
+
+         $ultimoID = $this->conn->lastInsertId();
+
+         $codigo = 'M' . $ultimoID;
+
+         $sql = 'UPDATE marca SET
+         codigo = :codigo
+         WHERE id = :id';
+
+         $query = null;
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->bindValue(':id', $ultimoID);
+         $query->execute();
+
+         $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Marca agregada con éxito!'));
+         return $cadena;
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
@@ -90,41 +112,49 @@ class Marca
       try {
          if (isset($datos['txtCodigo'])) {
             if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
-               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1][0]['codigo'];
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1]['codigo'];
                $query = $this->conn->prepare($sql);
 
                $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
                $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
                $query->execute();
-               return true;
+               $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Marca actualizada con éxito!'));
+               return $cadena;
             } else {
-               return $this->show($datos['txtCodigo'])[1];
+               $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($datos['txtCodigo'])[1]));
+               return $cadena;
             }
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
    public function destroy($codigo)
    {
-      $sql = 'DELETE FROM marca WHERE codigo = :codigo';
+      $sql = 'UPDATE marca SET
+         estado = 0
+         WHERE codigo = :codigo';
 
       try {
          if ($this->show($codigo)[0] == 'EXITO') {
-            $codigo = $this->show($codigo)[1][0]['codigo'];
+            $codigo = $this->show($codigo)[1]['codigo'];
             $query = $this->conn->prepare($sql);
 
             $query->bindValue(':codigo', $codigo);
 
             $query->execute();
-            return true;
+            $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Marca eliminada con éxito!'));
+            return $cadena;
          } else {
-            return $this->show($codigo)[1];
+            $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($codigo)[1]));
+            return $cadena;
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 }

@@ -13,28 +13,30 @@ class UnidadMedida
 
    public function index()
    {
-      $sql = 'SELECT * FROM unidad_medida ORDER BY codigo';
+      $sql = 'SELECT codigo,
+         descripcion FROM unidad_medida WHERE estado = 1 ORDER BY codigo';
 
       $query = $this->conn->prepare($sql);
       $query->execute();
-      $unidadesmedida = $query->fetchAll(PDO::FETCH_ASSOC);
+      $unidadesMedida = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      return $unidadesmedida;
+      $cadena = $this->conexion->arrayToJSONFormat($unidadesMedida);
+      return $cadena;
    }
 
    public function show($codigo)
    {
-      $sql = 'SELECT * FROM unidad_medida WHERE codigo = :codigo';
+      $sql = 'SELECT codigo,
+         descripcion FROM unidad_medida WHERE codigo = :codigo AND estado = 1';
 
       try {
          $query = $this->conn->prepare($sql);
          $query->bindValue(':codigo', $codigo);
          $query->execute();
-         $unidadmedida = $query->fetchAll(PDO::FETCH_ASSOC);
-         //print_r(count($unidadmedida));
+         $unidadMedida = $query->fetch(PDO::FETCH_ASSOC);
 
-         if (count($unidadmedida) > 0) {
-            return ['EXITO', $unidadmedida];
+         if ($unidadMedida != null) {
+            return ['EXITO', $unidadMedida];
          } else {
             return ['ERROR', 'No existe la unidad de medida ingresada'];
          }
@@ -61,23 +63,48 @@ class UnidadMedida
    public function store($datos)
    {
       $sql = 'INSERT INTO unidad_medida(
+         id,
          codigo,
-         descripcion
+         descripcion,
+         estado
       ) VALUES (
+         :id,
          :codigo,
-         :descripcion
+         :descripcion,
+         :estado
       )';
 
       try {
          $query = $this->conn->prepare($sql);
 
-         $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
+         $query->bindValue(':id', ($this->conn->lastInsertId() == 0) ? 1 : null);
+         $query->bindValue(':codigo', 'U');
          $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
+         $query->bindValue(':estado', 1);
 
          $query->execute();
-         return true;
+
+         $this->conn = null;
+         $this->conn = $this->conexion->getConexion();
+         $ultimoID = $this->conn->lastInsertId();
+
+         $codigo = 'U' . $ultimoID;
+
+         $sql = 'UPDATE unidad_medida SET
+         codigo = :codigo
+         WHERE id = :id';
+
+         $query = null;
+         $query = $this->conn->prepare($sql);
+         $query->bindValue(':codigo', $codigo);
+         $query->bindValue(':id', $ultimoID);
+         $query->execute();
+
+         $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Unidad de medida agregada con éxito!'));
+         return $cadena;
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
@@ -90,41 +117,49 @@ class UnidadMedida
       try {
          if (isset($datos['txtCodigo'])) {
             if ($this->show($datos['txtCodigo'])[0] == 'EXITO') {
-               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1][0]['codigo'];
+               $datos['txtCodigo'] = $this->show($datos['txtCodigo'])[1]['codigo'];
                $query = $this->conn->prepare($sql);
 
                $query->bindValue(':codigo', isset($datos['txtCodigo']) ? $datos['txtCodigo'] : '');
                $query->bindValue(':descripcion', isset($datos['txtDescripcion']) ? $datos['txtDescripcion'] : '');
 
                $query->execute();
-               return true;
+               $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Unidad de medida actualizada con éxito!'));
+               return $cadena;
             } else {
-               return $this->show($datos['txtCodigo'])[1];
+               $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($datos['txtCodigo'])[1]));
+               return $cadena;
             }
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 
    public function destroy($codigo)
    {
-      $sql = 'DELETE FROM unidad_medida WHERE codigo = :codigo';
+      $sql = 'UPDATE unidad_medida SET
+         estado = 0
+         WHERE codigo = :codigo';
 
       try {
          if ($this->show($codigo)[0] == 'EXITO') {
-            $codigo = $this->show($codigo)[1][0]['codigo'];
+            $codigo = $this->show($codigo)[1]['codigo'];
             $query = $this->conn->prepare($sql);
 
             $query->bindValue(':codigo', $codigo);
 
             $query->execute();
-            return true;
+            $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Unidad de medida eliminada con éxito!'));
+            return $cadena;
          } else {
-            return $this->show($codigo)[1];
+            $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $this->show($codigo)[1]));
+            return $cadena;
          }
       } catch (PDOException $e) {
-         return $e->getMessage();
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 }

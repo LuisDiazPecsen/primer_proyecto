@@ -3,29 +3,14 @@
 // app/controllers/ProductoController.php
 // app/models/Producto.php
 require_once '../app/models/Producto.php';
-require_once '../app/models/Marca.php';
-require_once '../app/models/Categoria.php';
-require_once '../app/models/UnidadMedida.php';
 
 class ProductoController
 {
    private $producto;
-   private $marca;
-   private $categoria;
-   private $unidadmedida;
 
    public function __construct()
    {
       $this->producto = new Producto();
-   }
-
-   private function viewIndex($productos, $resultado, $mensaje)
-   {
-      $data = array(
-         'index' => 'Inicio',
-         'producto/index' => 'Productos'
-      );
-      require_once '../app/views/producto/index.php';
    }
 
    public function index()

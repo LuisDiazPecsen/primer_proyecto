@@ -11,67 +11,29 @@ class MarcaController
       $this->marca = new Marca();
    }
 
-   private function viewIndex($marcas, $resultado, $mensaje)
+   public function index()
    {
-      $data = array(
-         'index' => 'Inicio',
-         'marca/index' => 'Marcas'
-      );
-
-      require_once '../app/views/marca/index.php';
-   }
-
-   public function index($resultado = null, $mensaje = null)
-   {
-      $marcas = $this->marca->index();
-
-      $this->viewIndex($marcas, $resultado, $mensaje);
+      $cadena = $this->marca->index();
+      echo $cadena;
    }
 
    public function store()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->marca->store($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Marca agregada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->marca->store($_POST);
+      echo $cadena;
    }
 
    public function update()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_POST)) {
-         $resultado = $this->marca->update($_POST);
-         if ($resultado === true) {
-            $mensaje = "¡Marca actualizada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      $this->index($resultado, $mensaje);
+      $cadena = $this->marca->update($_POST);
+      echo $cadena;
    }
 
    public function destroy()
    {
-      $resultado = null;
-      $mensaje = null;
-      if (isset($_GET['codigo'])) {
-         $resultado = $this->marca->destroy($_GET['codigo']);
-         if ($resultado === true) {
-            $mensaje = "¡Marca eliminada con éxito!";
-         } else {
-            $mensaje = $resultado;
-         }
-      }
-      echo $resultado;
-      $this->index($resultado, $mensaje);
+      $params = json_decode(file_get_contents('php://input'), true);
+      $cadena = $this->marca->destroy($params['codigo']);
+      echo $cadena;
    }
 
    public function searchMarca()
