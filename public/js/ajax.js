@@ -564,6 +564,130 @@ const listarTable = function listarTable(json) {
 }
 
 // Inicializa panel de usuario
+const cambiarContrasenia = async function cambiarContrasenia() {
+   let form = new FormData(document.getElementById('formUser'));
+   try {
+      loading();
+      let options = {
+         method: 'POST',
+         body: form
+      },
+         response = await fetch('/primer_proyecto/users/update', options),
+         json = await response.json();
+      if (!response.ok) {
+         throw {
+            status: response.status,
+            statusText: response.statusText
+         };
+      }
+
+      console.log(json);
+      document.getElementById('txtPasswordAntigua').value = '';
+      document.getElementById('txtPasswordNueva').value = '';
+
+      // Código para mostrar resultado
+      const $divAlert = document.createElement('div');
+      if (json[0] == 'EXITO') {
+         $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-success');
+      } else {
+         $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-danger');
+      }
+      $divAlert.setAttribute('role', 'alert');
+      const $iconCheck = document.createElement('i');
+      if (json[0] == 'EXITO') {
+         $iconCheck.setAttribute('class', 'fas fa-check-circle');
+      } else {
+         $iconCheck.setAttribute('class', 'fas fa-exclamation-triangle');
+      }
+      const $mensaje = document.createTextNode(' ' + json[1]);
+      const $btnClose = document.createElement('button');
+      $btnClose.setAttribute('type', 'button');
+      $btnClose.setAttribute('class', 'close');
+      $btnClose.setAttribute('data-dismiss', 'alert');
+      $btnClose.setAttribute('aria-label', 'Close');
+      const $span = document.createElement('span');
+      $span.setAttribute('aria-hidden', 'true');
+      $span.innerHTML = "&times;";
+
+      $btnClose.appendChild($span);
+      $divAlert.appendChild($iconCheck);
+      $divAlert.appendChild($mensaje);
+      $divAlert.appendChild($btnClose);
+
+      // Mostrar alerta de éxito o de error en POST
+      $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
+      setTimeout(() => {
+         $('.alertaResultado').alert('close');
+      }, 3000);
+
+      removeLoading();
+   } catch (error) {
+      let message = error.statusText || "Ocurrió un error";
+      $cuerpoCard.innerHTML = error;
+   }
+}
+
+const validarFormUsuario = function validarFormUsuario() {
+   var $inputsList = [];
+   var errorList = [];
+
+   let $form = document.getElementById('formUser');
+   $inputsList = $form.getElementsByTagName('input');
+
+   for (const $input of $inputsList) {
+      switch ($input.name) {
+         case 'txtPasswordAntigua':
+            if ($input.value == '') {
+               errorList.push('La contraseña antigua es obligatoria.');
+            }
+            break;
+         case 'txtPasswordNueva':
+            if ($input.value == '') {
+               errorList.push('La nueva contraseña es obligatoria.');
+            }
+            break;
+         default:
+            break;
+      }
+   }
+
+   if (errorList.length != 0) {
+      var summary = "";
+      errorList.forEach(error => {
+         summary += "<li>" + error + "</li>";
+      });
+
+      console.log("Entró error list");
+      console.log(summary);
+      quitarAlerta();
+
+      const $errorDiv = document.createElement('div');
+      $errorDiv.setAttribute('id', 'errorDiv');
+      $errorDiv.setAttribute('class', 'alert alert-danger alert-dismissible fade show');
+      $errorDiv.setAttribute('role', 'alert');
+      const $ul = document.createElement('ul');
+      $ul.setAttribute('id', 'listaErrores');
+      const $button = document.createElement('button');
+      $button.setAttribute('type', 'button');
+      $button.setAttribute('class', 'close');
+      $button.setAttribute('data-dismiss', 'alert');
+      $button.setAttribute('aria-label', 'Close');
+      const $span = document.createElement('span');
+      $span.setAttribute('aria-hidden', 'true');
+      $span.innerHTML = "&times;";
+      $button.appendChild($span);
+      $errorDiv.appendChild($ul);
+      $errorDiv.appendChild($button);
+
+      document.getElementById('filaErrorUser').appendChild($errorDiv);
+      document.getElementById('listaErrores').innerHTML = summary;
+
+      return false;
+   } else {
+      return true;
+   }
+}
+
 const panelUsuario = async function panelUsuario() {
    try {
       loading();
@@ -579,6 +703,9 @@ const panelUsuario = async function panelUsuario() {
 
       const $formUsuario = document.createElement('form');
       $formUsuario.setAttribute('id', 'formUser');
+
+      const $formGroup0 = document.createElement('div');
+      $formGroup0.setAttribute('id', 'filaErrorUser');
 
       const $formGroup1 = document.createElement('div');
       $formGroup1.setAttribute('class', 'form-group col-md-6');
@@ -624,13 +751,16 @@ const panelUsuario = async function panelUsuario() {
       $aLogout.setAttribute('class', 'btn btn-danger');
       $aLogout.innerHTML = 'Cerrar sesión';
 
-      const $inputSubmit = document.createElement('input');
-      $inputSubmit.setAttribute('type', 'submit');
-      $inputSubmit.setAttribute('class', 'btn btn-primary');
-      $inputSubmit.setAttribute('value', 'Cambiar contraseña');
-      $formGroup4.appendChild($aLogout);
-      $formGroup4.appendChild($inputSubmit);
+      const $btnSubmit = document.createElement('input');
+      $btnSubmit.setAttribute('id', 'btnActualizar');
+      $btnSubmit.setAttribute('type', 'submit');
+      $btnSubmit.setAttribute('class', 'btn btn-primary');
+      $btnSubmit.setAttribute('value', 'Cambiar contraseña');
 
+      $formGroup4.appendChild($aLogout);
+      $formGroup4.appendChild($btnSubmit);
+
+      $formUsuario.appendChild($formGroup0);
       $formUsuario.appendChild($formGroup1);
       $formUsuario.appendChild($formGroup2);
       $formUsuario.appendChild($formGroup3);
@@ -638,8 +768,13 @@ const panelUsuario = async function panelUsuario() {
       $formUsuario.appendChild($inputSubmit);*/
       $formUsuario.appendChild($formGroup4);
 
-
       $cuerpoCard.appendChild($formUsuario);
+      $formUsuario.addEventListener('submit', function (event) {
+         event.preventDefault();
+         if (validarFormUsuario()) {
+            cambiarContrasenia();
+         }
+      });
       removeLoading();
 
    } catch (error) {

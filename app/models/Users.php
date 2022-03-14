@@ -66,7 +66,8 @@ class Users
    public function update($username, $passwordAntigua, $passwordNueva)
    {
       if ($this->login($username, $passwordAntigua) == null) {
-         return null;
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo actualizar la contraseña'));
+         return $cadena;
       }
 
       $sql = 'UPDATE users SET
@@ -79,10 +80,18 @@ class Users
          $query->bindValue(':username', $username);
          $query->bindValue(':passwordAntigua', $passwordAntigua);
          $query->bindValue(':passwordNueva', $passwordNueva);
-         $query->execute();
-         return true;
+         $resultado = $query->execute();
+
+         if ($resultado) {
+            $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Contraseña actualizada correctamente!'));
+            return $cadena;
+         } else {
+            $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo actualizar la contraseña'));
+            return $cadena;
+         }
       } catch (PDOException $e) {
-         return null;
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         return $cadena;
       }
    }
 }

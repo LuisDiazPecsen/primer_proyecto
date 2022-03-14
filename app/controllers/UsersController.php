@@ -61,22 +61,12 @@ class UsersController
    public function update()
    {
       session_start();
-      $resultado = null;
-      $mensaje = null;
-      //print_r($_SESSION['username']);
 
       if (isset($_SESSION['username'])) {
          $passwordAntigua = $_POST['txtPasswordAntigua'];
          $passwordNueva = $_POST['txtPasswordNueva'];
-         $resultado = $this->user->update($_SESSION['username'], $passwordAntigua, $passwordNueva);
-         if ($resultado != null) {
-            $mensaje = 'Se actualizó correctamente la contraseña';
-         } else {
-            $resultado = 'Se ha producido un error';
-            $mensaje = '';
-         }
-
-         require_once '../app/views/users/user.php';
+         $cadena = $this->user->update($_SESSION['username'], $passwordAntigua, $passwordNueva);
+         echo $cadena;
       } else {
          header("Location: /primer_proyecto/users/login.php");
       }

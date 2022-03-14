@@ -41,7 +41,7 @@ class Marca
             return ['ERROR', 'No existe la marca ingresada'];
          }
       } catch (PDOException $e) {
-         return ['ERROR', $e];
+         return ['ERROR', 'No se pudo acceder a la marca ingresada'];
       }
    }
 
@@ -98,7 +98,7 @@ class Marca
          $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Marca agregada con éxito!'));
          return $cadena;
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo agregar la marca'));
          return $cadena;
       }
    }
@@ -127,7 +127,7 @@ class Marca
             }
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo editar la marca'));
          return $cadena;
       }
    }
@@ -153,7 +153,7 @@ class Marca
             return $cadena;
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo eliminar la marca'));
          return $cadena;
       }
    }

@@ -41,7 +41,7 @@ class Categoria
             return ['ERROR', 'No existe la categoría ingresada'];
          }
       } catch (PDOException $e) {
-         return ['ERROR', $e];
+         return ['ERROR', 'No se pudo acceder a la categoría ingresada'];
       }
    }
 
@@ -98,7 +98,7 @@ class Categoria
          $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Categoría agregada con éxito!'));
          return $cadena;
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se puedo agregar la categoría'));
          return $cadena;
       }
    }
@@ -127,7 +127,7 @@ class Categoria
             }
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se puedo editar la categoría'));
          return $cadena;
       }
    }
@@ -153,7 +153,7 @@ class Categoria
             return $cadena;
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo eliminar la categoría'));
          return $cadena;
       }
    }

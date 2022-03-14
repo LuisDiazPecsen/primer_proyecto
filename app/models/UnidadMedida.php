@@ -41,7 +41,7 @@ class UnidadMedida
             return ['ERROR', 'No existe la unidad de medida ingresada'];
          }
       } catch (PDOException $e) {
-         return ['ERROR', $e];
+         return ['ERROR', 'No se pudo acceder a la unidad de medida ingresada'];
       }
    }
 
@@ -98,7 +98,7 @@ class UnidadMedida
          $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Unidad de medida agregada con éxito!'));
          return $cadena;
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo agregar la unidad de medida'));
          return $cadena;
       }
    }
@@ -127,7 +127,7 @@ class UnidadMedida
             }
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo editar la unidad de medida'));
          return $cadena;
       }
    }
@@ -153,7 +153,7 @@ class UnidadMedida
             return $cadena;
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo eliminar la unidad de medida'));
          return $cadena;
       }
    }

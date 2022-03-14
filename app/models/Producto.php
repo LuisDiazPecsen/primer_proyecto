@@ -104,7 +104,7 @@ class Producto
             return ['ERROR', 'No existe el producto ingresado'];
          }
       } catch (PDOException $e) {
-         return ['ERROR', $e];
+         return ['ERROR', 'No se pudo acceder al producto ingresado'];
       }
    }
 
@@ -167,7 +167,7 @@ class Producto
          $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Producto agregado con éxito!'));
          return $cadena;
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo agregar el producto'));
          return $cadena;
       }
    }
@@ -210,7 +210,7 @@ class Producto
             }
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo editar el producto'));
          return $cadena;
       }
    }
@@ -236,7 +236,7 @@ class Producto
             return $cadena;
          }
       } catch (PDOException $e) {
-         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', $e->getMessage()));
+         $cadena = $this->conexion->arrayToJSONFormat(array('ERROR', 'No se pudo eliminar el producto'));
          return $cadena;
       }
    }
