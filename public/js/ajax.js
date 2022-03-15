@@ -800,12 +800,12 @@ const panelUsuario = async function panelUsuario() {
 }
 
 // Agregar cargando
-
 const loading = function loading() {
    const $contenedorCarga = document.getElementById('contenedor_carga');
    $contenedorCarga.style.visibility = 'visible';
 }
 
+// Quitar cargando
 const removeLoading = function removeLoading() {
    const $contenedorCarga = document.getElementById('contenedor_carga');
    $contenedorCarga.style.visibility = 'hidden';
