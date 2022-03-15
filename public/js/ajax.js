@@ -307,6 +307,8 @@ function formulario() {
             submit();
          }
       });
+   } else {
+      document.getElementById('modalBody').children[1].remove();
    }
    // FIN - Formulario
 }
@@ -365,7 +367,6 @@ function titulo() {
          break;
    }
 }
-titulo();
 
 // Inserta tabla de 'productos, unidades de medida, marcas y categorías
 const listarTable = function listarTable(json) {
@@ -695,8 +696,12 @@ const validarFormUsuario = function validarFormUsuario() {
 const panelUsuario = async function panelUsuario() {
    try {
       loading();
-      let response = await fetch('/primer_proyecto/users/user'),
-         json = await response.json();
+
+      let response = await fetch('/primer_proyecto/users/user');
+
+      titulo();
+      activarSideBar();
+      vaciarPlantilla();
 
       if (!response.ok) {
          throw {
@@ -704,6 +709,8 @@ const panelUsuario = async function panelUsuario() {
             statusText: response.statusText
          };
       }
+
+      let json = await response.json();
 
       const $formUsuario = document.createElement('form');
       $formUsuario.setAttribute('id', 'formUser');
@@ -780,11 +787,14 @@ const panelUsuario = async function panelUsuario() {
             cambiarContrasenia();
          }
       });
+
       removeLoading();
 
    } catch (error) {
+      let code = error.status;
       let message = error.statusText || "Ocurrió un error";
-      $cuerpoCard.innerHTML = error;
+      $cuerpoCard.innerHTML = code + ' - ' + message;
+      removeLoading();
    }
    
 }
@@ -806,8 +816,12 @@ const getPage = async () => {
    try {
       if (tipo != 'usuario') {
          loading();
-         let response = await fetch('/primer_proyecto/' + tipo + '/index'),
-            json = await response.json();
+
+         titulo();
+         activarSideBar();
+         vaciarPlantilla();
+         
+         let response = await fetch('/primer_proyecto/' + tipo + '/index');
 
          if (!response.ok) {
             throw {
@@ -816,23 +830,22 @@ const getPage = async () => {
             };
          }
 
-         vaciarPlantilla();
-         titulo();
-         activarSideBar();
+         let json = await response.json();
+
          formulario();
          btnAgregar();
          listarTable(json);
+
          removeLoading();
       } else {
-         vaciarPlantilla();
-         titulo();
-         activarSideBar();
          panelUsuario();
       }
 
    } catch (error) {
+      let code = error.status;
       let message = error.statusText || "Ocurrió un error";
-      $cuerpoCard.innerHTML = error;
+      $cuerpoCard.innerHTML = code + ' - ' + message;
+      removeLoading();
    }
 }
 
@@ -1032,7 +1045,7 @@ function quitarAlerta() {
 // Al hacer click elimina el registro y actualiza la página
 const eliminar = async function eliminar(element) {
    let $codigo = element.getAttribute('id').substring(8);
-   console.log($codigo);
+
    try {
       let options = {
          method: 'POST',
@@ -1041,14 +1054,16 @@ const eliminar = async function eliminar(element) {
             'Content-Type': 'application/json'
          }
       },
-         response = await fetch('/primer_proyecto/' + tipo + '/destroy', options),
-         json = await response.json();
+         response = await fetch('/primer_proyecto/' + tipo + '/destroy', options);
+
       if (!response.ok) {
          throw {
             status: response.status,
             statusText: response.statusText
          };
       }
+
+      let json = await response.json();
 
       // Código para mostrar resultado
       const $divAlert = document.createElement('div');
@@ -1079,16 +1094,20 @@ const eliminar = async function eliminar(element) {
       $divAlert.appendChild($mensaje);
       $divAlert.appendChild($btnClose);
 
+      // Actualizar página
+      getPage();
+
       // Mostrar alerta de éxito o de error en DELETE
       $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
       setTimeout(() => {
          $('.alertaResultado').alert('close');
       }, 3000);
-      // Actualizar página
-      getPage();
+      
    } catch (error) {
+      let code = error.status;
       let message = error.statusText || "Ocurrió un error";
-      $cuerpoCard.innerHTML = error;
+      $cuerpoCard.innerHTML = code + ' - ' + message;
+      removeLoading();
    }
 }
 
@@ -1096,23 +1115,24 @@ const eliminar = async function eliminar(element) {
 const submit = async function submit() {
    let form = new FormData(document.getElementById('form'));
    const $txtCodigo = document.getElementById('txtCodigo');
-   console.log($txtCodigo.getAttribute('value'));
+
    if ($txtCodigo.getAttribute('value') == '') {
       // Create - POST
-      //console.log(form);
       try {
          let options = {
             method: 'POST',
             body: form
          },
-            response = await fetch('/primer_proyecto/' + tipo + '/store', options),
-            json = await response.json();
+            response = await fetch('/primer_proyecto/' + tipo + '/store', options);
+
          if (!response.ok) {
             throw {
                status: response.status,
                statusText: response.statusText
             };
          }
+
+         let json = await response.json();
 
          // Código para mostrar resultado
          const $divAlert = document.createElement('div');
@@ -1142,36 +1162,41 @@ const submit = async function submit() {
          $divAlert.appendChild($iconCheck);
          $divAlert.appendChild($mensaje);
          $divAlert.appendChild($btnClose);
+
+         $('#modal').modal('hide');
+
+         // Listar elementos
+         getPage();
 
          // Mostrar alerta de éxito o de error en POST
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          setTimeout(() => {
             $('.alertaResultado').alert('close');
-         }, 3000);
-         // Listar elementos
-         getPage();
+         }, 3000);     
 
-         $('#modal').modal('hide');
       } catch (error) {
+         let code = error.status;
          let message = error.statusText || "Ocurrió un error";
-         $cuerpoCard.innerHTML = error;
+         $cuerpoCard.innerHTML = code + ' - ' + message;
+         removeLoading();
       }
    } else {
       // Create - POST
-      //console.log(form);
       try {
          let options = {
-            method: 'POST',
-            body: form
-         },
-            response = await fetch('/primer_proyecto/' + tipo + '/update', options),
-            json = await response.json();
+               method: 'POST',
+               body: form
+            },
+            response = await fetch('/primer_proyecto/' + tipo + '/update', options);
+
          if (!response.ok) {
             throw {
                status: response.status,
                statusText: response.statusText
             };
          }
+
+         let json = await response.json();
 
          // Código para mostrar resultado
          const $divAlert = document.createElement('div');
@@ -1201,19 +1226,22 @@ const submit = async function submit() {
          $divAlert.appendChild($iconCheck);
          $divAlert.appendChild($mensaje);
          $divAlert.appendChild($btnClose);
+
+         $('#modal').modal('hide');
+
+         // Listar elementos
+         getPage();
 
          // Mostrar alerta de éxito o de error en PUT
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          setTimeout(() => {
             $('.alertaResultado').alert('close');
          }, 3000);
-         // Listar elementos
-         getPage();
-
-         $('#modal').modal('hide');
       } catch (error) {
+         let code = error.status;
          let message = error.statusText || "Ocurrió un error";
-         $cuerpoCard.innerHTML = error;
+         $cuerpoCard.innerHTML = code + ' - ' + message;
+         removeLoading();
       }
    }
 }
@@ -1566,8 +1594,12 @@ const vaciarPlantilla = function vaciarPlantilla() {
 const index = async function index() {
    try {
       loading();
-      let response = await fetch('/primer_proyecto/index/about'),
-         json = await response.json();
+
+      titulo();
+      activarSideBar();
+      vaciarPlantilla();
+
+      let response = await fetch('/primer_proyecto/index/about');
 
       if (!response.ok) {
          throw {
@@ -1576,18 +1608,17 @@ const index = async function index() {
          };
       }
 
-      titulo();
-      activarSideBar();
-      vaciarPlantilla();
-
+      let json = await response.json();
       const $lorem = document.createTextNode(json);
       $cuerpoCard.appendChild($lorem);
 
       removeLoading();
 
    } catch (error) {
+      let code = error.status;
       let message = error.statusText || "Ocurrió un error";
-      $cuerpoCard.innerHTML = error;
+      $cuerpoCard.innerHTML = code + ' - ' + message;
+      removeLoading();
    }
 }
 
