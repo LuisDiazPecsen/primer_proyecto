@@ -36,7 +36,7 @@ if (!isset($_SESSION['username'])) {
 
 <body class="hold-transition sidebar-mini layout-fixed" id="body">
    <!-- Preloader -->
-   <div id="contenedor_carga" style="visibility: hidden;">
+   <div id="contenedor_carga" style="visibility: visible;">
       <div id="carga">
       </div>
    </div>
@@ -69,7 +69,7 @@ if (!isset($_SESSION['username'])) {
          <!-- Right navbar links -->
          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-               <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+               <a class="nav-link" data-widget="fullscreen" type="button" role="button">
                   <i class="fas fa-expand-arrows-alt"></i>
                </a>
             </li>

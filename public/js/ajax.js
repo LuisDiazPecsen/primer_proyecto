@@ -49,7 +49,7 @@ function activarSideBar() {
    }
 }
 
-// Inserta formulario de Producto
+// Inserta formulario
 function formulario() {
    // INICIO - Formulario
    if (document.getElementById('modalBody').children.length < 2) {
@@ -215,6 +215,7 @@ function formulario() {
          $aUnidadMedida.setAttribute('id', 'btnCambiarUnidadMedida');
          $aUnidadMedida.setAttribute('class', 'btn btn-warning');
          $aUnidadMedida.setAttribute('hidden', 'true');
+         $aUnidadMedida.style.marginTop = '10px';
          $aUnidadMedida.innerHTML = 'Cambiar';
          const $spanUnidadMedida = document.createElement('span');
          $spanUnidadMedida.setAttribute('id', 'unidadMedidaList');
@@ -250,6 +251,7 @@ function formulario() {
          $aMarca.setAttribute('id', 'btnCambiarMarca');
          $aMarca.setAttribute('class', 'btn btn-warning');
          $aMarca.setAttribute('hidden', 'true');
+         $aMarca.style.marginTop = '10px';
          $aMarca.innerHTML = 'Cambiar';
          const $spanMarca = document.createElement('span');
          $spanMarca.setAttribute('id', 'marcaList');
@@ -278,6 +280,7 @@ function formulario() {
          $aCategoria.setAttribute('id', 'btnCambiarCategoria');
          $aCategoria.setAttribute('class', 'btn btn-warning');
          $aCategoria.setAttribute('hidden', 'true');
+         $aCategoria.style.marginTop = '10px';
          $aCategoria.innerHTML = 'Cambiar';
          const $spanCategoria = document.createElement('span');
          $spanCategoria.setAttribute('id', 'categoriaList');
@@ -472,6 +475,7 @@ const listarTable = function listarTable(json) {
       $btnEditar.setAttribute('data-toggle', 'modal');
       $btnEditar.setAttribute('data-target', '#modal');
       $btnEditar.setAttribute('onclick', 'editar(this)');
+      $btnEditar.style.marginRight = '10px';
       /*$btnEditar.addEventListener('click', function() {
          editar(this);
       });*/
@@ -749,6 +753,7 @@ const panelUsuario = async function panelUsuario() {
       $aLogout.setAttribute('href', '/primer_proyecto/users/logout');
       $aLogout.setAttribute('type', 'button');
       $aLogout.setAttribute('class', 'btn btn-danger');
+      $aLogout.style.marginRight = '10px';
       $aLogout.innerHTML = 'Cerrar sesión';
 
       const $btnSubmit = document.createElement('input');
@@ -811,12 +816,17 @@ const getPage = async () => {
             };
          }
 
+         vaciarPlantilla();
+         titulo();
          activarSideBar();
          formulario();
          btnAgregar();
          listarTable(json);
          removeLoading();
       } else {
+         vaciarPlantilla();
+         titulo();
+         activarSideBar();
          panelUsuario();
       }
 
@@ -834,51 +844,52 @@ function inicializarBotonesDireccion() {
    });
    $btnSBUsuario.addEventListener('click', function () {
       tipo = 'usuario';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnSBProducto.addEventListener('click', function () {
       tipo = 'producto';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnSBMarca.addEventListener('click', function () {
       tipo = 'marca';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnSBCategoria.addEventListener('click', function () {
       tipo = 'categoria';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnSBUnidadMedida.addEventListener('click', function () {
       tipo = 'unidadMedida';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnLBIindex.addEventListener('click', function () {
       tipo = 'index';
+      //vaciarPlantilla();
       index();
    })
    $btnLBProducto.addEventListener('click', function () {
       tipo = 'producto';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnLBMarca.addEventListener('click', function () {
       tipo = 'marca';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnLBCategoria.addEventListener('click', function () {
       tipo = 'categoria';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
    $btnLBUnidadMedida.addEventListener('click', function () {
       tipo = 'unidadMedida';
-      index();
+      //vaciarPlantilla();
       getPage();
    });
 }
@@ -1106,9 +1117,9 @@ const submit = async function submit() {
          // Código para mostrar resultado
          const $divAlert = document.createElement('div');
          if (json[0] == 'EXITO') {
-            $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-success');
+            $divAlert.setAttribute('class', 'alert alertaResultado alert-dismissible fade show alert-success');
          } else {
-            $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-danger');
+            $divAlert.setAttribute('class', 'alert alertaResultado alert-dismissible fade show alert-danger');
          }
          $divAlert.setAttribute('role', 'alert');
          const $iconCheck = document.createElement('i');
@@ -1135,8 +1146,8 @@ const submit = async function submit() {
          // Mostrar alerta de éxito o de error en POST
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          setTimeout(() => {
-         $('.alertaResultado').alert('close');
-      }, 3000);
+            $('.alertaResultado').alert('close');
+         }, 3000);
          // Listar elementos
          getPage();
 
@@ -1165,9 +1176,9 @@ const submit = async function submit() {
          // Código para mostrar resultado
          const $divAlert = document.createElement('div');
          if (json[0] == 'EXITO') {
-            $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-success');
+            $divAlert.setAttribute('class', 'alert alertaResultado alert-dismissible fade show alert-success');
          } else {
-            $divAlert.setAttribute('class', 'alert alert-dismissible fade show alert-danger');
+            $divAlert.setAttribute('class', 'alert alertaResultado alert-dismissible fade show alert-danger');
          }
          $divAlert.setAttribute('role', 'alert');
          const $iconCheck = document.createElement('i');
@@ -1194,8 +1205,8 @@ const submit = async function submit() {
          // Mostrar alerta de éxito o de error en PUT
          $cuerpoCard.insertBefore($divAlert, document.getElementById('modal'));
          setTimeout(() => {
-         $('.alertaResultado').alert('close');
-      }, 3000);
+            $('.alertaResultado').alert('close');
+         }, 3000);
          // Listar elementos
          getPage();
 
@@ -1488,11 +1499,7 @@ function validar() {
 }
 // ********   FIN - VALIDACIÓN FORMULARIO   ********
 
-
-const index = function index() {
-   titulo();
-   activarSideBar();
-
+const vaciarPlantilla = function vaciarPlantilla() {
    while ($cuerpoCard.firstChild) {
       $cuerpoCard.removeChild($cuerpoCard.firstChild);
    }
@@ -1552,5 +1559,38 @@ const index = function index() {
    $modalContent.appendChild($form);
    $modalDialog.appendChild($modalContent);
    $modal.appendChild($modalDialog);
+
    $cuerpoCard.appendChild($modal);
 }
+
+const index = async function index() {
+   try {
+      loading();
+      let response = await fetch('/primer_proyecto/index/about'),
+         json = await response.json();
+
+      if (!response.ok) {
+         throw {
+            status: response.status,
+            statusText: response.statusText
+         };
+      }
+
+      titulo();
+      activarSideBar();
+      vaciarPlantilla();
+
+      const $lorem = document.createTextNode(json);
+      $cuerpoCard.appendChild($lorem);
+
+      removeLoading();
+
+   } catch (error) {
+      let message = error.statusText || "Ocurrió un error";
+      $cuerpoCard.innerHTML = error;
+   }
+}
+
+window.addEventListener("load", function() {
+   index();
+});
