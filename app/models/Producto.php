@@ -29,26 +29,29 @@ class Producto
       $arrayFinal = array();
 
       foreach ($productos as $key => $producto) {
-         $sql = 'SELECT descripcion FROM unidad_medida WHERE id = :id';
+         $sql = 'SELECT codigo, descripcion FROM unidad_medida WHERE id = :id';
          $query = $this->conn->prepare($sql);
          $query->bindValue(':id', $producto['unidad_medida_id']);
          $query->execute();
-         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
-         $producto['unidad_medida_descripcion'] = $descripcion['descripcion'];
+         $columnas = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['unidad_medida_codigo'] = $columnas['codigo'];
+         $producto['unidad_medida_descripcion'] = $columnas['descripcion'];
 
-         $sql = 'SELECT descripcion FROM marca WHERE id = :id';
+         $sql = 'SELECT codigo, descripcion FROM marca WHERE id = :id';
          $query = $this->conn->prepare($sql);
          $query->bindValue(':id', $producto['marca_id']);
          $query->execute();
-         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
-         $producto['marca_descripcion'] = $descripcion['descripcion'];
+         $columnas = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['marca_codigo'] = $columnas['codigo'];
+         $producto['marca_descripcion'] = $columnas['descripcion'];
 
-         $sql = 'SELECT descripcion FROM categoria WHERE id = :id';
+         $sql = 'SELECT codigo, descripcion FROM categoria WHERE id = :id';
          $query = $this->conn->prepare($sql);
          $query->bindValue(':id', $producto['categoria_id']);
          $query->execute();
-         $descripcion = $query->fetch(PDO::FETCH_ASSOC);
-         $producto['categoria_descripcion'] = $descripcion['descripcion'];
+         $columnas = $query->fetch(PDO::FETCH_ASSOC);
+         $producto['categoria_codigo'] = $columnas['codigo'];
+         $producto['categoria_descripcion'] = $columnas['descripcion'];
 
          $arrayFinal[] = $producto;
       }
@@ -197,9 +200,9 @@ class Producto
                $query->bindValue(':precio_venta', isset($datos['txtPrecioVenta']) ? $datos['txtPrecioVenta'] : '');
                $query->bindValue(':stock', isset($datos['txtStock']) ? $datos['txtStock'] : '');
                $query->bindValue(':stock_minimo', isset($datos['txtStockMinimo']) ? $datos['txtStockMinimo'] : '');
-               $query->bindValue(':marca_id', isset($datos['txtMarca']) ? $datos['txtMarca'] : '');
-               $query->bindValue(':unidad_medida_id', isset($datos['txtUnidadMedida']) ? $datos['txtUnidadMedida'] : '');
-               $query->bindValue(':categoria_id', isset($datos['txtCategoria']) ? $datos['txtCategoria'] : '');
+               $query->bindValue(':marca_id', intval(substr(explode(' - ', $datos['txtMarca'])[0], 1)));
+               $query->bindValue(':unidad_medida_id', intval(substr(explode(' - ', $datos['txtUnidadMedida'])[0], 1)));
+               $query->bindValue(':categoria_id', intval(substr(explode(' - ', $datos['txtCategoria'])[0], 1)));
 
                $query->execute();
                $cadena = $this->conexion->arrayToJSONFormat(array('EXITO', '¡Producto actualizado con éxito!'));

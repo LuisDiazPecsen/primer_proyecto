@@ -442,17 +442,20 @@ const listarTable = function listarTable(json) {
          let $td = document.createElement('td');
          switch (clave) {
             case 'unidad_medida_id':
-               $td.setAttribute('value', valor);
+               $td.setAttribute('value', elemento.unidad_medida_codigo);
                $td.innerHTML = elemento.unidad_medida_descripcion;
                break;
             case 'marca_id':
-               $td.setAttribute('value', valor);
+               $td.setAttribute('value', elemento.marca_codigo);
                $td.innerHTML = elemento.marca_descripcion;
                break;
             case 'categoria_id':
-               $td.setAttribute('value', valor);
+               $td.setAttribute('value', elemento.categoria_codigo);
                $td.innerHTML = elemento.categoria_descripcion;
                break;
+            case 'unidad_medida_codigo':
+            case 'marca_codigo':
+            case 'categoria_codigo':
             case 'unidad_medida_descripcion':
             case 'marca_descripcion':
             case 'categoria_descripcion':
@@ -1045,6 +1048,7 @@ function quitarAlerta() {
 // Al hacer click elimina el registro y actualiza la página
 const eliminar = async function eliminar(element) {
    let $codigo = element.getAttribute('id').substring(8);
+   loading();
 
    try {
       let options = {
@@ -1115,6 +1119,7 @@ const eliminar = async function eliminar(element) {
 const submit = async function submit() {
    let form = new FormData(document.getElementById('form'));
    const $txtCodigo = document.getElementById('txtCodigo');
+   loading();
 
    if ($txtCodigo.getAttribute('value') == '') {
       // Create - POST

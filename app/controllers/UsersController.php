@@ -75,6 +75,7 @@ class UsersController
    public function logout()
    {
       session_start();
+      session_unset();
       session_destroy();
 
       header('Location: /primer_proyecto/users/login');
