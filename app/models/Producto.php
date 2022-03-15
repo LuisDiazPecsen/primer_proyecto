@@ -13,7 +13,7 @@ class Producto
 
    public function index()
    {
-      $sql = 'SELECT codigo,
+      /*$sql = 'SELECT codigo,
          descripcion,
          precio_compra,
          precio_venta,
@@ -21,14 +21,36 @@ class Producto
          stock_minimo,
          unidad_medida_id,
          marca_id,
-         categoria_id FROM producto WHERE estado = 1 ORDER BY codigo';
+         categoria_id FROM producto WHERE estado = 1 ORDER BY codigo';*/
+
+      $sql = 'SELECT P.codigo, 
+         P.descripcion, 
+         P.precio_compra, 
+         P.precio_venta, 
+         P.stock, 
+         P.stock_minimo, 
+         U.codigo as unidad_medida_codigo, 
+         U.descripcion as unidad_medida_descripcion,
+         M.codigo as marca_codigo,
+         M.descripcion as marca_descripcion,
+         C.codigo as categoria_codigo,
+         C.descripcion as categoria_descripcion
+         FROM PRODUCTO P
+         INNER JOIN UNIDAD_MEDIDA U
+         ON P.unidad_medida_id = U.id
+         INNER JOIN marca M
+         ON P.marca_id = M.id
+         INNER JOIN CATEGORIA c ON
+         P.categoria_id = C.id
+         WHERE P.estado = 1
+         ORDER BY P.codigo';
 
       $query = $this->conn->prepare($sql);
       $query->execute();
       $productos = $query->fetchAll(PDO::FETCH_ASSOC);
       $arrayFinal = array();
 
-      foreach ($productos as $key => $producto) {
+      /*foreach ($productos as $key => $producto) {
          $sql = 'SELECT codigo, descripcion FROM unidad_medida WHERE id = :id';
          $query = $this->conn->prepare($sql);
          $query->bindValue(':id', $producto['unidad_medida_id']);
@@ -54,7 +76,7 @@ class Producto
          $producto['categoria_descripcion'] = $columnas['descripcion'];
 
          $arrayFinal[] = $producto;
-      }
+      }*/
 
       /*$sql = 'SELECT descripcion FROM marca WHERE id = :id';
 
@@ -79,7 +101,7 @@ class Producto
       }*/
 
       //print_r($arrayFinal);
-      $cadena = $this->conexion->arrayToJSONFormat($arrayFinal);
+      $cadena = $this->conexion->arrayToJSONFormat($productos);
       return $cadena;
    }
 

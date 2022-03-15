@@ -438,10 +438,11 @@ const listarTable = function listarTable(json) {
       let $tr = document.createElement('tr');
       $tr.setAttribute('id', elemento.codigo);
       for (const [clave, valor] of Object.entries(elemento)) {
+         console.log(elemento);
          let crear = true;
          let $td = document.createElement('td');
          switch (clave) {
-            case 'unidad_medida_id':
+            /*case 'unidad_medida_id':
                $td.setAttribute('value', elemento.unidad_medida_codigo);
                $td.innerHTML = elemento.unidad_medida_descripcion;
                break;
@@ -452,10 +453,19 @@ const listarTable = function listarTable(json) {
             case 'categoria_id':
                $td.setAttribute('value', elemento.categoria_codigo);
                $td.innerHTML = elemento.categoria_descripcion;
-               break;
+               break;*/
             case 'unidad_medida_codigo':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.unidad_medida_descripcion;
+               break;
             case 'marca_codigo':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.marca_descripcion;
+               break;
             case 'categoria_codigo':
+               $td.setAttribute('value', valor);
+               $td.innerHTML = elemento.categoria_descripcion;
+               break;
             case 'unidad_medida_descripcion':
             case 'marca_descripcion':
             case 'categoria_descripcion':
